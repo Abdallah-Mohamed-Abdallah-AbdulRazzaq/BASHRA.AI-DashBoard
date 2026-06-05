@@ -439,6 +439,18 @@
               "icon": "📝"
             }
           ]
+        },
+        {
+          "name": "frontend-integration",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "00-INTEGRATION-FOUNDATION.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
         }
       ]
     },
@@ -1011,6 +1023,18 @@
               ]
             },
             {
+              "name": "auth",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "dashboard-auth-guard.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
               "name": "clinic",
               "type": "folder",
               "icon": "📁",
@@ -1485,6 +1509,11 @@
           "icon": "📁",
           "children": [
             {
+              "name": "admin-auth.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "api.ts",
               "type": "file",
               "icon": "📘"
@@ -1500,6 +1529,11 @@
               "icon": "📘"
             },
             {
+              "name": "error-utils.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "utils.ts",
               "type": "file",
               "icon": "📘"
@@ -1511,6 +1545,11 @@
           "type": "folder",
           "icon": "📁",
           "children": [
+            {
+              "name": "api.ts",
+              "type": "file",
+              "icon": "📘"
+            },
             {
               "name": "navigation.ts",
               "type": "file",
@@ -1529,6 +1568,11 @@
           "icon": "📘"
         }
       ]
+    },
+    {
+      "name": ".env.example",
+      "type": "file",
+      "icon": "📄"
     },
     {
       "name": ".eslintrc.json",
@@ -1584,10 +1628,15 @@
       "name": "tsconfig.json",
       "type": "file",
       "icon": "⚙️"
+    },
+    {
+      "name": "tsconfig.tsbuildinfo",
+      "type": "file",
+      "icon": "📄"
     }
   ],
   "metadata": {
-    "generated": "2026-06-05T21:25:09.630Z",
+    "generated": "2026-06-05T22:44:06.553Z",
     "generator": "FileTree Pro Extension",
     "version": "0.2.0",
     "showIcons": true,
