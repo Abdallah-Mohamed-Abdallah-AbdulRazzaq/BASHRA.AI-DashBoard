@@ -1,0 +1,507 @@
+{
+  "info": {
+    "name": "Admin Batch 4 - Appointments + Medical Records",
+    "description": "Postman collection for Bashra AI backend Admin Appointments and Admin Medical Records APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "test_patient_id",
+      "value": "1"
+    },
+    {
+      "key": "test_doctor_id",
+      "value": "1"
+    },
+    {
+      "key": "test_schedule_id",
+      "value": ""
+    },
+    {
+      "key": "test_appointment_id",
+      "value": ""
+    },
+    {
+      "key": "test_medical_record_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Admin Appointments",
+      "item": [
+        {
+          "name": "Get Appointment Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/statistics"
+            }
+          }
+        },
+        {
+          "name": "Get Appointment Statistics With Date Filter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/statistics?from_date=2026-06-01&to_date=2026-06-30"
+            }
+          }
+        },
+        {
+          "name": "Get All Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get Appointments By Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments?status=pending&page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Appointment By ID Or UUID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/{{test_appointment_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"schedule_id\": 1,\n  \"scheduled_date\": \"2026-06-10\",\n  \"actual_start_time\": \"10:00:00\",\n  \"appointment_type\": \"consultation\",\n  \"urgency_level\": \"medium\",\n  \"payment_status\": \"pending\",\n  \"language_code\": \"ar\",\n  \"chief_complaint\": \"حكة واحمرار\",\n  \"symptoms_description\": \"أعراض جلدية منذ يومين\",\n  \"notes\": \"Created by admin API test\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/{{test_appointment_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"confirmed\",\n  \"payment_status\": \"paid\",\n  \"urgency_level\": \"medium\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative - Update Appointment Empty Body",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/{{test_appointment_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Appointment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/{{test_appointment_id}}/cancel"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cancellation_reason\": {\n    \"ar\": \"تم الإلغاء بواسطة الإدارة أثناء اختبار API\",\n    \"en\": \"Cancelled by admin during API testing\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Appointment - Destructive",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments/{{test_appointment_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative - User Cannot Access Admin Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments"
+            }
+          }
+        },
+        {
+          "name": "Negative - Doctor Cannot Access Admin Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/appointments"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Medical Records",
+      "item": [
+        {
+          "name": "Get Medical Records Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records/statistics"
+            }
+          }
+        },
+        {
+          "name": "Get Medical Records Statistics With Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records/statistics?from_date=2026-06-01&to_date=2026-06-30"
+            }
+          }
+        },
+        {
+          "name": "Get All Medical Records",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get Medical Records By Patient",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records?patient_id={{test_patient_id}}&page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Medical Records By Doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records?doctor_id={{test_doctor_id}}&page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Patient Medical History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records/patient/{{test_patient_id}}/history"
+            }
+          }
+        },
+        {
+          "name": "Get Medical Record By ID Or UUID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records/{{test_medical_record_id}}"
+            }
+          }
+        },
+        {
+          "name": "Delete Medical Record - Destructive",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records/{{test_medical_record_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative - User Cannot Access Admin Medical Records",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records"
+            }
+          }
+        },
+        {
+          "name": "Negative - Doctor Cannot Access Admin Medical Records",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/medical-records"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

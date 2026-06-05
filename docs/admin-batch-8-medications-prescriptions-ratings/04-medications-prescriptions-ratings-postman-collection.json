@@ -1,0 +1,1113 @@
+{
+  "info": {
+    "name": "Batch 8 - Medications Prescriptions Ratings",
+    "description": "Postman collection for medications, prescription templates, prescriptions, and ratings.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_id",
+      "value": ""
+    },
+    {
+      "key": "patient_id",
+      "value": ""
+    },
+    {
+      "key": "medical_record_id",
+      "value": ""
+    },
+    {
+      "key": "appointment_id",
+      "value": ""
+    },
+    {
+      "key": "medication_id",
+      "value": ""
+    },
+    {
+      "key": "medication_uuid",
+      "value": ""
+    },
+    {
+      "key": "another_medication_id",
+      "value": ""
+    },
+    {
+      "key": "template_id",
+      "value": ""
+    },
+    {
+      "key": "template_item_id",
+      "value": ""
+    },
+    {
+      "key": "prescription_id",
+      "value": ""
+    },
+    {
+      "key": "prescription_uuid",
+      "value": ""
+    },
+    {
+      "key": "rating_id",
+      "value": ""
+    },
+    {
+      "key": "rating_uuid",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Medications",
+      "item": [
+        {
+          "name": "List Medications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Search Medications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications?search=دفعة 8"
+            }
+          }
+        },
+        {
+          "name": "Filter Medications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications?category=dermatology&form_type=cream&is_active=true"
+            }
+          }
+        },
+        {
+          "name": "Get Medication by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/{{medication_id}}"
+            }
+          }
+        },
+        {
+          "name": "Get Medication by UUID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/{{medication_uuid}}"
+            }
+          }
+        },
+        {
+          "name": "Medication Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/categories/list"
+            }
+          }
+        },
+        {
+          "name": "Medications by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/category/dermatology"
+            }
+          }
+        },
+        {
+          "name": "Admin Create Medication",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"كريم اختبار دفعة 8\",\n  \"name_en\": \"Batch 8 Test Cream\",\n  \"scientific_name\": \"Test Scientific Name\",\n  \"category\": \"dermatology\",\n  \"form_type\": \"cream\",\n  \"available_dosages\": [\n    \"1%\",\n    \"2%\"\n  ],\n  \"indications\": \"Skin irritation\",\n  \"warning_alert\": \"Avoid eyes\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Doctor Create Medication",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"مرهم اختبار طبيب دفعة 8\",\n  \"name_en\": \"Batch 8 Doctor Ointment\",\n  \"scientific_name\": \"Doctor Scientific\",\n  \"category\": \"dermatology\",\n  \"form_type\": \"ointment\",\n  \"available_dosages\": [\n    \"5mg\"\n  ],\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Update Medication",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/{{medication_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warning_alert\": \"Updated warning for batch 8\",\n  \"available_dosages\": [\n    \"1%\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Toggle Medication Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/{{medication_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Medication",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications/{{medication_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Invalid Form Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medications"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"دواء نوع خاطئ\",\n  \"name_en\": \"Invalid Type Medication\",\n  \"form_type\": \"invalid\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prescription Templates",
+      "item": [
+        {
+          "name": "List Templates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates"
+            }
+          }
+        },
+        {
+          "name": "List Templates Include Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates?include_items=true"
+            }
+          }
+        },
+        {
+          "name": "Get Template by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template_name\": \"قالب اختبار دفعة 8\",\n  \"description\": \"قالب لعلاج حالة جلدية بسيطة\",\n  \"items\": [\n    {\n      \"medication_id\": \"{{medication_id}}\",\n      \"default_dosage\": \"طبقة رقيقة\",\n      \"default_frequency\": \"مرتين يوميًا\",\n      \"default_duration\": \"7 أيام\",\n      \"default_instructions\": \"ضع الدواء على المنطقة المصابة فقط\",\n      \"default_quantity\": \"1 عبوة\"\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Template",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated template description\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Template Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}/items"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"medication_id\": \"{{another_medication_id}}\",\n  \"default_dosage\": \"مرة واحدة\",\n  \"default_frequency\": \"مرة يوميًا\",\n  \"default_duration\": \"5 أيام\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Template Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}/items/{{template_item_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"default_frequency\": \"ثلاث مرات يوميًا\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Template Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}/items/{{template_item_id}}"
+            }
+          }
+        },
+        {
+          "name": "Increment Template Usage",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}/use"
+            }
+          }
+        },
+        {
+          "name": "Delete Template",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescription-templates/{{template_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prescriptions",
+      "item": [
+        {
+          "name": "List Prescriptions - User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions"
+            }
+          }
+        },
+        {
+          "name": "List Prescriptions - Doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions"
+            }
+          }
+        },
+        {
+          "name": "List Prescriptions - Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions"
+            }
+          }
+        },
+        {
+          "name": "Get Prescriptions by Medical Record",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/medical-record/{{medical_record_id}}"
+            }
+          }
+        },
+        {
+          "name": "Get Prescription by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/{{prescription_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Prescription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"medical_record_id\": \"{{medical_record_id}}\",\n  \"patient_id\": \"{{patient_id}}\",\n  \"medication_name\": \"كريم اختبار دفعة 8\",\n  \"dosage\": \"طبقة رقيقة\",\n  \"frequency\": \"مرتين يوميًا\",\n  \"duration\": \"7 أيام\",\n  \"quantity\": \"1 عبوة\",\n  \"route_of_administration\": \"topical\",\n  \"refills_allowed\": 1,\n  \"is_generic_allowed\": true,\n  \"expiry_date\": \"2026-12-31\",\n  \"translations\": {\n    \"ar\": {\n      \"instructions\": \"يوضع على المنطقة المصابة فقط\",\n      \"indication\": \"احمرار وحكة\",\n      \"pharmacy_notes\": \"يراعى تجنب العين\"\n    },\n    \"en\": {\n      \"instructions\": \"Apply to affected area only\",\n      \"indication\": \"Redness and itching\",\n      \"pharmacy_notes\": \"Avoid eyes\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Prescription",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/{{prescription_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"frequency\": \"مرة يوميًا\",\n  \"quantity\": \"2 عبوة\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Prescription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/{{prescription_id}}/cancel"
+            }
+          }
+        },
+        {
+          "name": "Fill Prescription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/{{prescription_id}}/fill"
+            }
+          }
+        },
+        {
+          "name": "Update Prescription Translation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prescriptions/{{prescription_id}}/translations"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language_code\": \"ar\",\n  \"instructions\": \"تعليمات محدثة\",\n  \"indication\": \"التهاب جلدي بسيط\",\n  \"pharmacy_notes\": \"ملاحظات محدثة\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ratings",
+      "item": [
+        {
+          "name": "List Ratings - User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings"
+            }
+          }
+        },
+        {
+          "name": "List Ratings - Doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings"
+            }
+          }
+        },
+        {
+          "name": "List Ratings - Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings"
+            }
+          }
+        },
+        {
+          "name": "Doctor Rating Stats Public",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/doctor/{{doctor_id}}/stats"
+            }
+          }
+        },
+        {
+          "name": "Get Rating by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Rating",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment_id\": \"{{appointment_id}}\",\n  \"doctor_id\": \"{{doctor_id}}\",\n  \"rating\": 5,\n  \"categories\": {\n    \"communication\": 5,\n    \"punctuality\": 4,\n    \"care_quality\": 5\n  },\n  \"would_recommend\": true,\n  \"is_anonymous\": false,\n  \"translations\": {\n    \"ar\": {\n      \"review_title\": \"تجربة ممتازة\",\n      \"review_comment\": \"الطبيب كان متعاونًا\"\n    },\n    \"en\": {\n      \"review_title\": \"Excellent experience\",\n      \"review_comment\": \"The doctor was helpful\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Rating",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"would_recommend\": true,\n  \"translations\": {\n    \"ar\": {\n      \"review_title\": \"تجربة جيدة\",\n      \"review_comment\": \"تم تحديث التعليق\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Rating",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}"
+            }
+          }
+        },
+        {
+          "name": "Doctor Respond to Rating",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}/respond"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language_code\": \"ar\",\n  \"response\": \"شكرًا على تقييمك، نتمنى لك دوام الصحة.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Flag Rating",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}/flag"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language_code\": \"ar\",\n  \"reason\": \"اختبار إبلاغ إداري\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Update Rating Status - Hidden",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"hidden\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Update Rating Status - Active",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings/{{rating_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Rating Out of Range",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ratings"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment_id\": \"{{appointment_id}}\",\n  \"doctor_id\": \"{{doctor_id}}\",\n  \"rating\": 6\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

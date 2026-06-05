@@ -1,0 +1,46 @@
+section,batch_number,topic,zip_file,relative_path,status,size_bytes
+Admin,1,Admin Authentication + Security + Admin Profile,admin-batch-1-auth-security-profile.zip,all-batch-zips/admin-batch-1-auth-security-profile.zip,FOUND,16744
+Admin,2,Admin User Management + Patient Profiles,admin-batch-2-user-management-patient-profiles.zip,all-batch-zips/admin-batch-2-user-management-patient-profiles.zip,FOUND,8769
+Admin,3,Admin Doctor Management + Doctor Profile Verification + Contact Details,admin-batch-3-doctor-management-profile-contact.zip,all-batch-zips/admin-batch-3-doctor-management-profile-contact.zip,FOUND,11989
+Admin,4,Admin Appointments + Medical Records,admin-batch-4-appointments-medical-records.zip,all-batch-zips/admin-batch-4-appointments-medical-records.zip,FOUND,10653
+Admin,5,Content Management: Health Tips / Articles / Skin Diseases,admin-batch-5-content-management-health-tips-articles-skin-diseases.zip,all-batch-zips/admin-batch-5-content-management-health-tips-articles-skin-diseases.zip,FOUND,12283
+Admin,6,Locations + Files Management,admin-batch-6-locations-files-management.zip,all-batch-zips/admin-batch-6-locations-files-management.zip,FOUND,14065
+Admin,7,Packages / Features / Doctor Subscriptions,admin-batch-7-packages-features-doctor-subscriptions.zip,all-batch-zips/admin-batch-7-packages-features-doctor-subscriptions.zip,FOUND,12636
+Admin,8,Medications / Prescriptions / Ratings,admin-batch-8-medications-prescriptions-ratings.zip,all-batch-zips/admin-batch-8-medications-prescriptions-ratings.zip,FOUND,16805
+Admin,9,Admin AI Usage,admin-batch-9-admin-ai-usage.zip,all-batch-zips/admin-batch-9-admin-ai-usage.zip,FOUND,12892
+Admin,10,Blocked Entities + Cross-Security Testing,admin-batch-10-blocked-entities-cross-security.zip,all-batch-zips/admin-batch-10-blocked-entities-cross-security.zip,FOUND,14364
+Doctor,1,Doctor Authentication + Security + Sessions,doctor-batch-1-auth-security-sessions.zip,all-batch-zips/doctor-batch-1-auth-security-sessions.zip,FOUND,11511
+Doctor,2,Doctor Profile + Basic / Complete Profile + Profile Picture + Deactivate / Reactivate,doctor-batch-2-profile-basic-complete-picture-reactivation.zip,all-batch-zips/doctor-batch-2-profile-basic-complete-picture-reactivation.zip,FOUND,13653
+Doctor,3,Doctor Professional Data + Verification Documents,doctor-batch-3-professional-verification-documents.zip,all-batch-zips/doctor-batch-3-professional-verification-documents.zip,FOUND,14511
+Doctor,4,Doctor Contact Details + Addresses,doctor-batch-4-contact-details-addresses.zip,all-batch-zips/doctor-batch-4-contact-details-addresses.zip,FOUND,12051
+Doctor,5,Doctor Clinics + Clinic Images,doctor-batch-5-clinics-clinic-images.zip,all-batch-zips/doctor-batch-5-clinics-clinic-images.zip,FOUND,13370
+Doctor,6,Doctor Schedules + Availability,doctor-batch-6-schedules-availability.zip,all-batch-zips/doctor-batch-6-schedules-availability.zip,FOUND,14439
+Doctor,7,Doctor Subscriptions,doctor-batch-7-doctor-subscriptions.zip,all-batch-zips/doctor-batch-7-doctor-subscriptions.zip,FOUND,12889
+Doctor,8,Doctor Appointments Lifecycle,doctor-batch-8-appointments-lifecycle.zip,all-batch-zips/doctor-batch-8-appointments-lifecycle.zip,FOUND,13190
+Doctor,9,Doctor Patient Access + Medical Records,doctor-batch-9-patient-access-medical-records.zip,all-batch-zips/doctor-batch-9-patient-access-medical-records.zip,FOUND,14695
+Doctor,10,Medications + Prescription Templates + Prescriptions,doctor-batch-10-medications-templates-prescriptions.zip,all-batch-zips/doctor-batch-10-medications-templates-prescriptions.zip,FOUND,16806
+Doctor,11,Ratings: Doctor View + Doctor Response,doctor-batch-11-ratings-doctor-view-response.zip,all-batch-zips/doctor-batch-11-ratings-doctor-view-response.zip,FOUND,13934
+Doctor,12,Conversations + Chat Users,doctor-batch-12-conversations-chat-users.zip,all-batch-zips/doctor-batch-12-conversations-chat-users.zip,FOUND,13590
+Doctor,13,AI Dermatology Doctor Side,doctor-batch-13-ai-dermatology-doctor-side.zip,all-batch-zips/doctor-batch-13-ai-dermatology-doctor-side.zip,FOUND,14559
+Doctor,14,Doctor Cross-Security + Permission Regression,doctor-batch-14-cross-security-permission-regression.zip,all-batch-zips/doctor-batch-14-cross-security-permission-regression.zip,FOUND,14451
+Patient,1,User Authentication + Security + Sessions,user-batch-01-auth-security-sessions.zip,all-batch-zips/user-batch-01-auth-security-sessions.zip,FOUND,14406
+Patient,2,User Profile + Profile Picture + Deactivate / Reactivate,user-batch-02-profile-picture-reactivation.zip,all-batch-zips/user-batch-02-profile-picture-reactivation.zip,FOUND,12925
+Patient,3,Patient Medical Profile,user-batch-03-patient-medical-profile.zip,all-batch-zips/user-batch-03-patient-medical-profile.zip,FOUND,12219
+Patient,4,Public Discovery: Locations + Health Content + Public Packages,user-batch-04-public-discovery.zip,all-batch-zips/user-batch-04-public-discovery.zip,FOUND,12031
+Patient,5,Public Packages / Features,user-batch-05-public-packages-features.zip,all-batch-zips/user-batch-05-public-packages-features.zip,FOUND,9905
+Patient,6,Patient Addresses,user-batch-06-patient-addresses.zip,all-batch-zips/user-batch-06-patient-addresses.zip,FOUND,12606
+Patient,7,Doctor / Clinic Discovery for Patient,user-batch-07-doctor-clinic-discovery.zip,all-batch-zips/user-batch-07-doctor-clinic-discovery.zip,FOUND,15001
+Patient,8,Patient Appointments Lifecycle,user-batch-08-patient-appointments-lifecycle.zip,all-batch-zips/user-batch-08-patient-appointments-lifecycle.zip,FOUND,15176
+Patient,9,Patient Medical Records + Prescriptions View,user-batch-09-patient-medical-records-prescriptions-view.zip,all-batch-zips/user-batch-09-patient-medical-records-prescriptions-view.zip,FOUND,13518
+Patient,10,Patient Ratings,user-batch-10-patient-ratings.zip,all-batch-zips/user-batch-10-patient-ratings.zip,FOUND,14465
+Patient,11,Patient Conversations + Chat Users,user-batch-11-patient-conversations-chat-users.zip,all-batch-zips/user-batch-11-patient-conversations-chat-users.zip,FOUND,15516
+Patient,12,AI Dermatology Patient Side,user-batch-12-ai-dermatology-patient-side.zip,all-batch-zips/user-batch-12-ai-dermatology-patient-side.zip,FOUND,18261
+Patient,13,Patient Cross-Security + Permission Regression,user-batch-13-patient-cross-security-permission-regression.zip,all-batch-zips/user-batch-13-patient-cross-security-permission-regression.zip,FOUND,15777
+AI Extra,1,AI Dermatology Documentation Batch 1,ai-dermatology-docs-batch-1.zip,all-batch-zips/ai-dermatology-docs-batch-1.zip,FOUND,17665
+AI Extra,2,AI Dermatology Documentation Batch 2,ai-dermatology-docs-batch-2.zip,all-batch-zips/ai-dermatology-docs-batch-2.zip,FOUND,13362
+AI Extra,3,AI Dermatology Documentation Batch 3,ai-dermatology-docs-batch-3.zip,all-batch-zips/ai-dermatology-docs-batch-3.zip,FOUND,17538
+AI Extra,4,AI Dermatology Postman Batch 4,ai-dermatology-docs-batch-4-postman.zip,all-batch-zips/ai-dermatology-docs-batch-4-postman.zip,FOUND,6690
+AI Extra,5,Conversational AI Update,ai-chat-conversational-update.zip,all-batch-zips/ai-chat-conversational-update.zip,FOUND,15511
+AI Extra,6,Conversational AI Final Full,ai-chat-conversational-final-full.zip,all-batch-zips/ai-chat-conversational-final-full.zip,FOUND,33817
+AI Extra,7,Conversational AI Documentation and Testing,conversational-ai-documentation-and-testing.zip,all-batch-zips/conversational-ai-documentation-and-testing.zip,FOUND,9641
+AI Extra,8,Frontend Integration Update,ai-frontend-integration-update.zip,all-batch-zips/ai-frontend-integration-update.zip,FOUND,2396

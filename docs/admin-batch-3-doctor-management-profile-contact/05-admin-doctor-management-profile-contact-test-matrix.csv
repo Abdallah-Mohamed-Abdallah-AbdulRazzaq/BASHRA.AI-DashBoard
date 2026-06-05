@@ -1,0 +1,26 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,Expected DB impact
+Doctor Management,/api/admin/doctors,GET,Any Admin,List doctors with pagination and filters,User/doctor token 403,None
+Doctor Management,/api/admin/doctors/pending,GET,Any Admin,List pending doctors,User/doctor token 403,None
+Doctor Management,/api/admin/doctors/statistics,GET,Any Admin,Return dashboard counts,User/doctor token 403,None
+Doctor Management,/api/admin/doctors/:doctorId,GET,Any Admin,Return doctor details,Invalid doctorId 404,None
+Doctor Management,/api/admin/doctors/:doctorId/status,PATCH,System Admin+,Update status and log action,Normal admin/user forbidden,doctors.status; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/verify,PATCH,System Admin+,Verify/unverify profile,Non-boolean is_verified 400,doctor_profiles.is_verified/verified_by/verification_date; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/verification-status,PATCH,System Admin+,Update verification and approval,Invalid approval_status 400,doctor_profiles fields; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/approval,PATCH,System Admin+,Update approval_status,Invalid approval_status 400,doctor_profiles.approval_status; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/approve,POST,System Admin+,Approve test doctor,Normal admin/user forbidden,doctors.status; doctor_profiles verification/approval; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/reject,POST,System Admin+,Reject test doctor,Missing reason may fail,doctors.status; doctor_profiles.approval_status; admin_logs
+Doctor Management,/api/admin/doctors/:doctorId/suspend,POST,System Admin+,Suspend test doctor,Missing reason may fail,doctors.status; doctor_profiles.approval_status; admin_logs
+Doctor Management,/api/admin/doctors/bulk/status,POST,System Admin+,Bulk update test doctors,Normal admin forbidden,multiple doctors.status; admin_logs
+Doctor Profile,/api/admin/doctors/:doctorId/profile/complete,GET,Admin,Return complete profile,Missing doctor 404,None
+Doctor Profile,/api/admin/doctors/:doctorId/profile/personal,GET,Admin,Return personal data,User/doctor forbidden,None
+Doctor Profile,/api/admin/doctors/:doctorId/profile/professional,GET,Admin,Return professional data,User/doctor forbidden,None
+Doctor Profile,/api/admin/doctors/:doctorId/profile/documents,GET,Admin,Return verification documents,User/doctor forbidden,None
+Doctor Profile,/api/admin/doctors/:doctorId/profile/documents/summary,GET,Admin,Return document summary,User/doctor forbidden,None
+Doctor Profile,/api/admin/doctors/:doctorId/profile/personal,PUT,Admin,Update test personal fields,Invalid body may fail,doctors/doctor_profiles/translations updated
+Doctor Profile,/api/admin/doctors/:doctorId/profile/professional,PUT,Admin,Update test professional fields,Duplicate license_number fails,doctor_profiles/translations updated
+Doctor Profile,/api/admin/doctors/:doctorId/profile/documents/:documentId,PUT,Admin,Approve/reject document,Reject without reason may fail,doctor_verification_documents updated
+Doctor Profile,/api/admin/doctors/:doctorId/profile,DELETE,Admin,Soft delete test profile only,User/doctor forbidden,Potential profile soft delete/destructive impact
+Doctor Profile,/api/admin/doctors/:doctorId/profile/approve,POST,Admin,Approve profile,Missing doctor/profile fails,doctor_profiles approval/verification fields
+Doctor Profile,/api/admin/doctors/:doctorId/profile/reject,POST,Admin,Reject profile,Missing reason may fail,doctor_profiles.approval_status
+Contact Details,/api/doctor-contact-details/all,GET,Any Admin,List all contact details,Doctor/user forbidden,None
+Contact Details,/api/doctor-contact-details/doctor/:doctorId,GET,Any Admin,Return doctor contact details,Doctor/user forbidden,None

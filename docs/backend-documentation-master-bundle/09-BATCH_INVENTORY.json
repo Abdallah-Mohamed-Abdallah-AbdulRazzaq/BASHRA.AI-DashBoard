@@ -1,0 +1,407 @@
+[
+  {
+    "section": "Admin",
+    "batch_number": 1,
+    "topic": "Admin Authentication + Security + Admin Profile",
+    "zip_file": "admin-batch-1-auth-security-profile.zip",
+    "relative_path": "all-batch-zips/admin-batch-1-auth-security-profile.zip",
+    "status": "FOUND",
+    "size_bytes": 16744
+  },
+  {
+    "section": "Admin",
+    "batch_number": 2,
+    "topic": "Admin User Management + Patient Profiles",
+    "zip_file": "admin-batch-2-user-management-patient-profiles.zip",
+    "relative_path": "all-batch-zips/admin-batch-2-user-management-patient-profiles.zip",
+    "status": "FOUND",
+    "size_bytes": 8769
+  },
+  {
+    "section": "Admin",
+    "batch_number": 3,
+    "topic": "Admin Doctor Management + Doctor Profile Verification + Contact Details",
+    "zip_file": "admin-batch-3-doctor-management-profile-contact.zip",
+    "relative_path": "all-batch-zips/admin-batch-3-doctor-management-profile-contact.zip",
+    "status": "FOUND",
+    "size_bytes": 11989
+  },
+  {
+    "section": "Admin",
+    "batch_number": 4,
+    "topic": "Admin Appointments + Medical Records",
+    "zip_file": "admin-batch-4-appointments-medical-records.zip",
+    "relative_path": "all-batch-zips/admin-batch-4-appointments-medical-records.zip",
+    "status": "FOUND",
+    "size_bytes": 10653
+  },
+  {
+    "section": "Admin",
+    "batch_number": 5,
+    "topic": "Content Management: Health Tips / Articles / Skin Diseases",
+    "zip_file": "admin-batch-5-content-management-health-tips-articles-skin-diseases.zip",
+    "relative_path": "all-batch-zips/admin-batch-5-content-management-health-tips-articles-skin-diseases.zip",
+    "status": "FOUND",
+    "size_bytes": 12283
+  },
+  {
+    "section": "Admin",
+    "batch_number": 6,
+    "topic": "Locations + Files Management",
+    "zip_file": "admin-batch-6-locations-files-management.zip",
+    "relative_path": "all-batch-zips/admin-batch-6-locations-files-management.zip",
+    "status": "FOUND",
+    "size_bytes": 14065
+  },
+  {
+    "section": "Admin",
+    "batch_number": 7,
+    "topic": "Packages / Features / Doctor Subscriptions",
+    "zip_file": "admin-batch-7-packages-features-doctor-subscriptions.zip",
+    "relative_path": "all-batch-zips/admin-batch-7-packages-features-doctor-subscriptions.zip",
+    "status": "FOUND",
+    "size_bytes": 12636
+  },
+  {
+    "section": "Admin",
+    "batch_number": 8,
+    "topic": "Medications / Prescriptions / Ratings",
+    "zip_file": "admin-batch-8-medications-prescriptions-ratings.zip",
+    "relative_path": "all-batch-zips/admin-batch-8-medications-prescriptions-ratings.zip",
+    "status": "FOUND",
+    "size_bytes": 16805
+  },
+  {
+    "section": "Admin",
+    "batch_number": 9,
+    "topic": "Admin AI Usage",
+    "zip_file": "admin-batch-9-admin-ai-usage.zip",
+    "relative_path": "all-batch-zips/admin-batch-9-admin-ai-usage.zip",
+    "status": "FOUND",
+    "size_bytes": 12892
+  },
+  {
+    "section": "Admin",
+    "batch_number": 10,
+    "topic": "Blocked Entities + Cross-Security Testing",
+    "zip_file": "admin-batch-10-blocked-entities-cross-security.zip",
+    "relative_path": "all-batch-zips/admin-batch-10-blocked-entities-cross-security.zip",
+    "status": "FOUND",
+    "size_bytes": 14364
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 1,
+    "topic": "Doctor Authentication + Security + Sessions",
+    "zip_file": "doctor-batch-1-auth-security-sessions.zip",
+    "relative_path": "all-batch-zips/doctor-batch-1-auth-security-sessions.zip",
+    "status": "FOUND",
+    "size_bytes": 11511
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 2,
+    "topic": "Doctor Profile + Basic / Complete Profile + Profile Picture + Deactivate / Reactivate",
+    "zip_file": "doctor-batch-2-profile-basic-complete-picture-reactivation.zip",
+    "relative_path": "all-batch-zips/doctor-batch-2-profile-basic-complete-picture-reactivation.zip",
+    "status": "FOUND",
+    "size_bytes": 13653
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 3,
+    "topic": "Doctor Professional Data + Verification Documents",
+    "zip_file": "doctor-batch-3-professional-verification-documents.zip",
+    "relative_path": "all-batch-zips/doctor-batch-3-professional-verification-documents.zip",
+    "status": "FOUND",
+    "size_bytes": 14511
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 4,
+    "topic": "Doctor Contact Details + Addresses",
+    "zip_file": "doctor-batch-4-contact-details-addresses.zip",
+    "relative_path": "all-batch-zips/doctor-batch-4-contact-details-addresses.zip",
+    "status": "FOUND",
+    "size_bytes": 12051
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 5,
+    "topic": "Doctor Clinics + Clinic Images",
+    "zip_file": "doctor-batch-5-clinics-clinic-images.zip",
+    "relative_path": "all-batch-zips/doctor-batch-5-clinics-clinic-images.zip",
+    "status": "FOUND",
+    "size_bytes": 13370
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 6,
+    "topic": "Doctor Schedules + Availability",
+    "zip_file": "doctor-batch-6-schedules-availability.zip",
+    "relative_path": "all-batch-zips/doctor-batch-6-schedules-availability.zip",
+    "status": "FOUND",
+    "size_bytes": 14439
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 7,
+    "topic": "Doctor Subscriptions",
+    "zip_file": "doctor-batch-7-doctor-subscriptions.zip",
+    "relative_path": "all-batch-zips/doctor-batch-7-doctor-subscriptions.zip",
+    "status": "FOUND",
+    "size_bytes": 12889
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 8,
+    "topic": "Doctor Appointments Lifecycle",
+    "zip_file": "doctor-batch-8-appointments-lifecycle.zip",
+    "relative_path": "all-batch-zips/doctor-batch-8-appointments-lifecycle.zip",
+    "status": "FOUND",
+    "size_bytes": 13190
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 9,
+    "topic": "Doctor Patient Access + Medical Records",
+    "zip_file": "doctor-batch-9-patient-access-medical-records.zip",
+    "relative_path": "all-batch-zips/doctor-batch-9-patient-access-medical-records.zip",
+    "status": "FOUND",
+    "size_bytes": 14695
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 10,
+    "topic": "Medications + Prescription Templates + Prescriptions",
+    "zip_file": "doctor-batch-10-medications-templates-prescriptions.zip",
+    "relative_path": "all-batch-zips/doctor-batch-10-medications-templates-prescriptions.zip",
+    "status": "FOUND",
+    "size_bytes": 16806
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 11,
+    "topic": "Ratings: Doctor View + Doctor Response",
+    "zip_file": "doctor-batch-11-ratings-doctor-view-response.zip",
+    "relative_path": "all-batch-zips/doctor-batch-11-ratings-doctor-view-response.zip",
+    "status": "FOUND",
+    "size_bytes": 13934
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 12,
+    "topic": "Conversations + Chat Users",
+    "zip_file": "doctor-batch-12-conversations-chat-users.zip",
+    "relative_path": "all-batch-zips/doctor-batch-12-conversations-chat-users.zip",
+    "status": "FOUND",
+    "size_bytes": 13590
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 13,
+    "topic": "AI Dermatology Doctor Side",
+    "zip_file": "doctor-batch-13-ai-dermatology-doctor-side.zip",
+    "relative_path": "all-batch-zips/doctor-batch-13-ai-dermatology-doctor-side.zip",
+    "status": "FOUND",
+    "size_bytes": 14559
+  },
+  {
+    "section": "Doctor",
+    "batch_number": 14,
+    "topic": "Doctor Cross-Security + Permission Regression",
+    "zip_file": "doctor-batch-14-cross-security-permission-regression.zip",
+    "relative_path": "all-batch-zips/doctor-batch-14-cross-security-permission-regression.zip",
+    "status": "FOUND",
+    "size_bytes": 14451
+  },
+  {
+    "section": "Patient",
+    "batch_number": 1,
+    "topic": "User Authentication + Security + Sessions",
+    "zip_file": "user-batch-01-auth-security-sessions.zip",
+    "relative_path": "all-batch-zips/user-batch-01-auth-security-sessions.zip",
+    "status": "FOUND",
+    "size_bytes": 14406
+  },
+  {
+    "section": "Patient",
+    "batch_number": 2,
+    "topic": "User Profile + Profile Picture + Deactivate / Reactivate",
+    "zip_file": "user-batch-02-profile-picture-reactivation.zip",
+    "relative_path": "all-batch-zips/user-batch-02-profile-picture-reactivation.zip",
+    "status": "FOUND",
+    "size_bytes": 12925
+  },
+  {
+    "section": "Patient",
+    "batch_number": 3,
+    "topic": "Patient Medical Profile",
+    "zip_file": "user-batch-03-patient-medical-profile.zip",
+    "relative_path": "all-batch-zips/user-batch-03-patient-medical-profile.zip",
+    "status": "FOUND",
+    "size_bytes": 12219
+  },
+  {
+    "section": "Patient",
+    "batch_number": 4,
+    "topic": "Public Discovery: Locations + Health Content + Public Packages",
+    "zip_file": "user-batch-04-public-discovery.zip",
+    "relative_path": "all-batch-zips/user-batch-04-public-discovery.zip",
+    "status": "FOUND",
+    "size_bytes": 12031
+  },
+  {
+    "section": "Patient",
+    "batch_number": 5,
+    "topic": "Public Packages / Features",
+    "zip_file": "user-batch-05-public-packages-features.zip",
+    "relative_path": "all-batch-zips/user-batch-05-public-packages-features.zip",
+    "status": "FOUND",
+    "size_bytes": 9905
+  },
+  {
+    "section": "Patient",
+    "batch_number": 6,
+    "topic": "Patient Addresses",
+    "zip_file": "user-batch-06-patient-addresses.zip",
+    "relative_path": "all-batch-zips/user-batch-06-patient-addresses.zip",
+    "status": "FOUND",
+    "size_bytes": 12606
+  },
+  {
+    "section": "Patient",
+    "batch_number": 7,
+    "topic": "Doctor / Clinic Discovery for Patient",
+    "zip_file": "user-batch-07-doctor-clinic-discovery.zip",
+    "relative_path": "all-batch-zips/user-batch-07-doctor-clinic-discovery.zip",
+    "status": "FOUND",
+    "size_bytes": 15001
+  },
+  {
+    "section": "Patient",
+    "batch_number": 8,
+    "topic": "Patient Appointments Lifecycle",
+    "zip_file": "user-batch-08-patient-appointments-lifecycle.zip",
+    "relative_path": "all-batch-zips/user-batch-08-patient-appointments-lifecycle.zip",
+    "status": "FOUND",
+    "size_bytes": 15176
+  },
+  {
+    "section": "Patient",
+    "batch_number": 9,
+    "topic": "Patient Medical Records + Prescriptions View",
+    "zip_file": "user-batch-09-patient-medical-records-prescriptions-view.zip",
+    "relative_path": "all-batch-zips/user-batch-09-patient-medical-records-prescriptions-view.zip",
+    "status": "FOUND",
+    "size_bytes": 13518
+  },
+  {
+    "section": "Patient",
+    "batch_number": 10,
+    "topic": "Patient Ratings",
+    "zip_file": "user-batch-10-patient-ratings.zip",
+    "relative_path": "all-batch-zips/user-batch-10-patient-ratings.zip",
+    "status": "FOUND",
+    "size_bytes": 14465
+  },
+  {
+    "section": "Patient",
+    "batch_number": 11,
+    "topic": "Patient Conversations + Chat Users",
+    "zip_file": "user-batch-11-patient-conversations-chat-users.zip",
+    "relative_path": "all-batch-zips/user-batch-11-patient-conversations-chat-users.zip",
+    "status": "FOUND",
+    "size_bytes": 15516
+  },
+  {
+    "section": "Patient",
+    "batch_number": 12,
+    "topic": "AI Dermatology Patient Side",
+    "zip_file": "user-batch-12-ai-dermatology-patient-side.zip",
+    "relative_path": "all-batch-zips/user-batch-12-ai-dermatology-patient-side.zip",
+    "status": "FOUND",
+    "size_bytes": 18261
+  },
+  {
+    "section": "Patient",
+    "batch_number": 13,
+    "topic": "Patient Cross-Security + Permission Regression",
+    "zip_file": "user-batch-13-patient-cross-security-permission-regression.zip",
+    "relative_path": "all-batch-zips/user-batch-13-patient-cross-security-permission-regression.zip",
+    "status": "FOUND",
+    "size_bytes": 15777
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 1,
+    "topic": "AI Dermatology Documentation Batch 1",
+    "zip_file": "ai-dermatology-docs-batch-1.zip",
+    "relative_path": "all-batch-zips/ai-dermatology-docs-batch-1.zip",
+    "status": "FOUND",
+    "size_bytes": 17665
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 2,
+    "topic": "AI Dermatology Documentation Batch 2",
+    "zip_file": "ai-dermatology-docs-batch-2.zip",
+    "relative_path": "all-batch-zips/ai-dermatology-docs-batch-2.zip",
+    "status": "FOUND",
+    "size_bytes": 13362
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 3,
+    "topic": "AI Dermatology Documentation Batch 3",
+    "zip_file": "ai-dermatology-docs-batch-3.zip",
+    "relative_path": "all-batch-zips/ai-dermatology-docs-batch-3.zip",
+    "status": "FOUND",
+    "size_bytes": 17538
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 4,
+    "topic": "AI Dermatology Postman Batch 4",
+    "zip_file": "ai-dermatology-docs-batch-4-postman.zip",
+    "relative_path": "all-batch-zips/ai-dermatology-docs-batch-4-postman.zip",
+    "status": "FOUND",
+    "size_bytes": 6690
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 5,
+    "topic": "Conversational AI Update",
+    "zip_file": "ai-chat-conversational-update.zip",
+    "relative_path": "all-batch-zips/ai-chat-conversational-update.zip",
+    "status": "FOUND",
+    "size_bytes": 15511
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 6,
+    "topic": "Conversational AI Final Full",
+    "zip_file": "ai-chat-conversational-final-full.zip",
+    "relative_path": "all-batch-zips/ai-chat-conversational-final-full.zip",
+    "status": "FOUND",
+    "size_bytes": 33817
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 7,
+    "topic": "Conversational AI Documentation and Testing",
+    "zip_file": "conversational-ai-documentation-and-testing.zip",
+    "relative_path": "all-batch-zips/conversational-ai-documentation-and-testing.zip",
+    "status": "FOUND",
+    "size_bytes": 9641
+  },
+  {
+    "section": "AI Extra",
+    "batch_number": 8,
+    "topic": "Frontend Integration Update",
+    "zip_file": "ai-frontend-integration-update.zip",
+    "relative_path": "all-batch-zips/ai-frontend-integration-update.zip",
+    "status": "FOUND",
+    "size_bytes": 2396
+  }
+]

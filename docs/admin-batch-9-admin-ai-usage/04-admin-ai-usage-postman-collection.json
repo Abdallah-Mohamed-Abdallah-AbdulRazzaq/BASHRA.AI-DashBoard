@@ -1,0 +1,584 @@
+{
+  "info": {
+    "name": "Batch 9 - Admin AI Usage",
+    "description": "Postman collection for Admin AI Usage overview, user usage, and policy management.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "super_admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "user_id",
+      "value": "1"
+    },
+    {
+      "key": "package_id",
+      "value": ""
+    },
+    {
+      "key": "policy_id",
+      "value": ""
+    },
+    {
+      "key": "period_key",
+      "value": "2026-06"
+    }
+  ],
+  "item": [
+    {
+      "name": "Overview",
+      "item": [
+        {
+          "name": "Overview - Current Period",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/overview?period_key={{period_key}}"
+            }
+          }
+        },
+        {
+          "name": "Overview - No Period",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/overview"
+            }
+          }
+        },
+        {
+          "name": "Negative Overview Invalid Period",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/overview?period_key=2026/06"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Usage",
+      "item": [
+        {
+          "name": "Admin Get User AI Usage",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/users/{{user_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative User Not Found",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/users/999999999"
+            }
+          }
+        },
+        {
+          "name": "User Facing AI Usage",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ai-dermatology/usage"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Policies",
+      "item": [
+        {
+          "name": "List Policies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "List Active User Policies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies?scope_type=user&is_active=true&page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get Policy by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/{{policy_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Get Missing Policy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/999999999"
+            }
+          }
+        },
+        {
+          "name": "Create User Policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Batch 9 User AI Usage\",\n  \"scope_type\": \"user\",\n  \"user_id\": \"{{user_id}}\",\n  \"max_total_requests_per_month\": 120,\n  \"max_chat_messages_per_month\": 80,\n  \"max_image_analyses_per_month\": 40,\n  \"max_document_analyses_per_month\": 15,\n  \"max_files_per_session\": 10,\n  \"max_tokens_per_request\": 8000,\n  \"is_active\": true,\n  \"priority\": 5\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Global Policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Batch 9 Global AI Usage\",\n  \"scope_type\": \"global\",\n  \"max_total_requests_per_month\": 30,\n  \"max_chat_messages_per_month\": 30,\n  \"max_image_analyses_per_month\": 10,\n  \"max_document_analyses_per_month\": 5,\n  \"max_files_per_session\": 5,\n  \"max_tokens_per_request\": 4000,\n  \"is_active\": true,\n  \"priority\": 100\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Package Policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Batch 9 Package AI Usage\",\n  \"scope_type\": \"package\",\n  \"package_id\": \"{{package_id}}\",\n  \"max_total_requests_per_month\": 200,\n  \"max_chat_messages_per_month\": 150,\n  \"max_image_analyses_per_month\": 60,\n  \"max_document_analyses_per_month\": 30,\n  \"max_files_per_session\": 15,\n  \"max_tokens_per_request\": 12000,\n  \"is_active\": true,\n  \"priority\": 20\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Policy",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/{{policy_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"max_total_requests_per_month\": 150,\n  \"max_chat_messages_per_month\": 100,\n  \"max_image_analyses_per_month\": 50,\n  \"priority\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "Deactivate Policy",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/{{policy_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Reactivate Policy",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/{{policy_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": true\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests",
+      "item": [
+        {
+          "name": "Negative Normal Admin Create Policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Should Fail Normal Admin\",\n  \"scope_type\": \"global\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative User Token Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/overview"
+            }
+          }
+        },
+        {
+          "name": "Negative No Token Policies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            }
+          }
+        },
+        {
+          "name": "Negative User Policy Missing User ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Invalid User Policy\",\n  \"scope_type\": \"user\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Package Policy Missing Package ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"Invalid Package Policy\",\n  \"scope_type\": \"package\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Invalid Policy Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_name\": \"AI\",\n  \"scope_type\": \"global\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Invalid Status Body",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/ai-usage/policies/{{policy_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": \"maybe\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

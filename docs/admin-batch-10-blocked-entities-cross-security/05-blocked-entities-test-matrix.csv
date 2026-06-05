@@ -1,0 +1,15 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,DB impact,Cross-security notes
+Read,/api/admin/blocked-entities,GET,Any Admin,List with filters/pagination,No token 401; user token 403,Read blocked_entities joined to entity tables,
+Read,/api/admin/blocked-entities/statistics,GET,Any Admin,Return summary/top blockers,No token/user token denied,Read blocked_entities/admins,
+Read,/api/admin/blocked-entities/check,GET,Any Admin,Return is_blocked and block_info,Missing entity_id/type 400; invalid entity_type 400,May set expired block is_active=0,Does not restore entity status on expiry
+Read,/api/admin/blocked-entities/:blockId,GET,Any Admin,Return block + entity details,Missing block 404,Read blocked_entities and entity table,
+Read,/api/admin/blocked-entities/history/:entity_type/:entity_id,GET,Any Admin,Return entity block history,Invalid entity_type 400; missing entity 404,Read blocked_entities and entity table,
+Mutation,/api/admin/blocked-entities/block,POST,System Admin+,Block user/doctor/assistant/admin,Reason short 400; temporary missing/past date 400; duplicate 409,"Insert blocked_entities, set status suspended, revoke auth_tokens, end login_sessions, admin_logs",Old tokens fail; login fails
+Mutation,/api/admin/blocked-entities/unblock,POST,System Admin+,Unblock active block,Not blocked 404; non-super cannot admin unblock,"Set is_active=0, removed_at, status active, admin_logs",Login should work after unblock
+Mutation,/api/admin/blocked-entities/:blockId,PATCH,System Admin+,Update block type/date/reason,Inactive/missing block 404; no fields 400; past date 400,"Update blocked_entities, admin_logs",
+Mutation,/api/admin/blocked-entities/bulk/block,POST,System Admin+,Bulk block valid entities,Empty entities 400; invalid item goes to failed,Insert multiple blocks and update statuses,Warning: invalid IDs can fail due FK
+Mutation,/api/admin/blocked-entities/bulk/unblock,POST,System Admin+,Bulk unblock valid entities,Empty entities 400; not blocked goes to failed,Deactivate multiple blocks and restore statuses,
+Mutation,/api/admin/blocked-entities/auto-unblock,POST,System Admin+,Unblock expired temporary blocks,No token/user token denied,Deactivate expired blocks and restore statuses,Preferred over check endpoint for full restore
+Admin safety,/block admin,POST,Super Admin only,Super admin blocks another test admin,System admin 403; self block 400,"Admin status suspended, tokens revoked",Never block only super admin
+Auth,/api/auth-user/login,POST,Public,Login works before block and after unblock,Fails during block/suspended status,failed_logins on failures,SecurityService checks suspended and blocked
+Protected token,Any protected route,GET,Entity token,Works before block,After block token fails,"auth_tokens revoked, login_sessions ended",Usually Token revoked or expired

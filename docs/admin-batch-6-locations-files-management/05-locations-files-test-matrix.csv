@@ -1,0 +1,34 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,Expected DB impact
+Countries Cities,/api/countries-cities,GET,Public,List all/filter by level/parent,None,None
+Countries Cities,/api/countries-cities/countries,GET,Public,List countries,None,None
+Countries Cities,/api/countries-cities/cities/:country_id,GET,Public,List cities under country,Invalid/missing data returns empty or error depending DB,None
+Countries Cities,/api/countries-cities/regions/:city_id,GET,Public,List regions under city,None,None
+Countries Cities,/api/countries-cities/districts/:region_id,GET,Public,List districts under region,None,None
+Countries Cities,/api/countries-cities/hierarchy/:id,GET,Public,Return full hierarchy,Missing location 404,None
+Countries Cities,/api/countries-cities/search,GET,Public,Search names,Missing q 400,None
+Countries Cities,/api/countries-cities/:id,GET,Public,Get by id,Missing location 404,None
+Countries Cities,/api/countries-cities,POST,Admin,Create country/city/region/district,Invalid level 400; missing parent 400,"Insert countries_cities, optional image file"
+Countries Cities,/api/countries-cities/:id,PUT,Admin,Update names/parent/image,No fields 400; missing row 404,"Update countries_cities, optional replace image"
+Countries Cities,/api/countries-cities/:id,DELETE,Admin,Delete disposable location,Missing row 404,Delete countries_cities and possibly children by FK cascade
+Addresses,/api/addresses,GET,Authenticated entity,List current entity addresses,No token 401/403,None
+Addresses,/api/addresses/primary,GET,Authenticated entity,Get primary address,No primary 404,None
+Addresses,/api/addresses/:id,GET,Authenticated owner entity,Get own address,Other entity 404,None
+Addresses,/api/addresses,POST,Authenticated entity,Create address,Missing address_line1 400,Insert addresses and addressable
+Addresses,/api/addresses/:id,PUT,Authenticated owner entity,Update own address,No fields 400; other entity 404,Update addresses
+Addresses,/api/addresses/:id/set-primary,PATCH,Authenticated owner entity,Set own address primary,Other entity 404,Update addresses primary flags
+Addresses,/api/addresses/:id,DELETE,Authenticated owner entity,Delete own disposable address,Other entity 404,Delete addresses
+Doctors By Location,/api/doctors-by-location,GET,Public,List doctors by location,Missing countries_cities_id 400,None
+Doctors By Location,/api/doctors-by-location/count,GET,Public,Count doctors by location,Missing countries_cities_id 400,None
+Doctors By Location,/api/doctors-by-location/grouped,GET,Public,Group doctors by location,Missing/invalid level_type 400,None
+Doctors By Location,/api/doctors-by-location/search,GET,Public,Search doctors by filters,Missing countries_cities_id 400,None
+Doctors By Location,/api/doctors-by-location/nearby,GET,Public,Find nearby doctors,Missing/invalid coordinates 400,None
+Files,/api/files,GET,Super Admin effective,List files with filters,Non-super admin should be checked,None
+Files,/api/files/statistics,GET,Super Admin effective,File statistics,No token 401/403,None
+Files,/api/files/:uuid,GET,Super Admin effective,Get file by UUID,Missing file 404,Update access_count/last_accessed_at
+Files,/api/files/uploader/:entityType/:entityId,GET,Super Admin effective,Get by uploader,Invalid type may produce SQL error,None
+Files,/api/files/related/:relatedToType/:relatedToId,GET,Super Admin effective,Get by related entity,None,None
+Files,/api/files/:uuid,PUT,Super Admin effective,Update allowed metadata,No valid fields 500,Update files and admin_logs
+Files,/api/files/:uuid,DELETE,Super Admin effective,Soft delete file,Missing file 500 from service,Update is_deleted/deleted_at and admin_logs
+Files,/api/files/:uuid/restore,POST,Super Admin effective,Restore soft-deleted file,Missing uuid may still return success if no row affected; verify DB,Update is_deleted/deleted_at and admin_logs
+Files,/api/files/cleanup/expired,POST,Super Admin effective,Cleanup expired files,Use caution,Soft-delete expired files and admin_logs
+Files,/api/files/bulk-delete,POST,Super Admin effective,Bulk soft delete,Empty uuids 400,Update files and admin_logs

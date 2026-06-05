@@ -1,0 +1,11 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,Expected DB impact
+Admin Users,/api/admin/users/stats,GET,Admin,Admin token returns stats,User token returns 403,None
+Admin Users,/api/admin/users,GET,Admin,Returns paginated users,User token returns 403,None
+Admin Users,/api/admin/users/search,GET,Admin,Search by query/email/uuid/status,Invalid email/uuid validation,None
+Admin Users,/api/admin/users/status/:status,GET,Admin,Valid status returns users,Invalid status fails,None
+Admin Users,/api/admin/users/:id,GET,Admin,Existing user returns details,Missing/non-number id fails,None
+Admin Users,/api/admin/users/:id/medical,GET,Admin,Existing patient profile returns medical data,User with no profile behavior recorded,None
+Admin Users,/api/admin/users/:id/logs,GET,Admin,Returns logs or empty list,User token returns 403,None
+Admin Users,/api/admin/users/:id/status,PUT,Super Admin,Updates user status,Non-super admin returns 403,users.status updated; admin_logs may be created
+Patient Profiles,/api/patient-profiles/all,GET,Admin,Admin lists patient profiles,User/doctor should not access all list,None
+Patient Profiles,/api/patient-profiles/patient/:userId,GET,Admin/Doctor/Assistant,Allowed roles can read by users.id,Normal user token returns 403,None

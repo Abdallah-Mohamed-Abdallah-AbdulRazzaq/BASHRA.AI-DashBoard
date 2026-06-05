@@ -1,0 +1,30 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,Expected DB impact
+Daily Tips,/api/health-tips/daily-tips,GET,Public current code,List paginated daily tips,page/limit <= 0 returns 400,None
+Daily Tips,/api/health-tips/daily-tips/active,GET,Public current code,List active daily tips,None,None
+Daily Tips,/api/health-tips/daily-tips/latest,GET,Public current code,Return latest active tip,No active tips returns 404,None
+Daily Tips,/api/health-tips/daily-tips/:id,GET,Public current code,Return tip by ID,Invalid ID 400; missing 404,None
+Daily Tips,/api/health-tips/daily-tips,POST,Any Admin,Create daily tip,User token 403; validation 400,Insert daily_tips
+Daily Tips,/api/health-tips/daily-tips/:id,PUT,Any Admin,Update daily tip,Missing row 404; validation 400,Update daily_tips
+Daily Tips,/api/health-tips/daily-tips/:id/toggle-status,PATCH,Any Admin,Toggle is_active,Missing row 404,Update is_active/updated_by
+Daily Tips,/api/health-tips/daily-tips/:id,DELETE,Any Admin,Delete disposable tip,Missing row 404,Delete from daily_tips
+Medical Articles,/api/health-tips/medical-articles,GET,Public current code,List paginated articles,page/limit <= 0 returns 400,None
+Medical Articles,/api/health-tips/medical-articles/active,GET,Public current code,List active articles,None,None
+Medical Articles,/api/health-tips/medical-articles/:id,GET,Public current code,Return article by ID,Invalid ID 400; missing 404,None
+Medical Articles,/api/health-tips/medical-articles,POST,Any Admin,Create article,User token 403; validation 400,Insert medical_articles
+Medical Articles,/api/health-tips/medical-articles/:id,PUT,Any Admin,Update article,Missing row 404; validation 400,Update medical_articles
+Medical Articles,/api/health-tips/medical-articles/:id/toggle-status,PATCH,Any Admin,Toggle is_active,Missing row 404,Update is_active/updated_by
+Medical Articles,/api/health-tips/medical-articles/:id,DELETE,Any Admin,Delete disposable article,Missing row 404,Delete from medical_articles
+Skin Diseases,/api/health-tips/skin-diseases,GET,Public current code,List paginated skin diseases,page/limit <= 0 returns 400,None
+Skin Diseases,/api/health-tips/skin-diseases/active,GET,Public current code,List active skin diseases,None,None
+Skin Diseases,/api/health-tips/skin-diseases/:id,GET,Public current code,Return disease by ID,Invalid ID 400; missing 404,None
+Skin Diseases,/api/health-tips/skin-diseases,POST,Any Admin,Create skin disease,Invalid website_link 400,Insert skin_diseases_info
+Skin Diseases,/api/health-tips/skin-diseases/:id,PUT,Any Admin,Update skin disease,Missing row 404; validation 400,Update skin_diseases_info
+Skin Diseases,/api/health-tips/skin-diseases/:id/toggle-status,PATCH,Any Admin,Toggle is_active,Missing row 404,Update is_active/updated_by
+Skin Diseases,/api/health-tips/skin-diseases/:id,DELETE,Any Admin,Delete disposable skin disease,Missing row 404,Delete from skin_diseases_info
+Advanced,/api/health-tips/advanced/statistics,GET,Any Admin,Return 3 table stats,User/doctor forbidden if not admin,None
+Advanced,/api/health-tips/advanced/search,GET,User/Doctor/Assistant,Search active mixed content,q < 2 returns 400,None
+Advanced,/api/health-tips/advanced/recent,GET,User/Doctor/Assistant,Return active recent mixed content,No token unauthorized,None
+Advanced,/api/health-tips/advanced/by-admin/:adminId,GET,Any Admin,Return content created by admin,User/doctor forbidden,None
+Advanced,/api/health-tips/advanced/bulk-status,PATCH,Any Admin,Bulk update is_active,Invalid type/status/ids returns 400,Update selected table rows
+Advanced,/api/health-tips/advanced/export,GET,Any Admin,Export JSON content,format=csv returns 400,None
+Advanced,/api/health-tips/advanced/validate,POST,Any Admin,Validate payload,Invalid payload returns 400,None

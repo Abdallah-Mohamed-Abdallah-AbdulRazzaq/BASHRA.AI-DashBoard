@@ -1,0 +1,30 @@
+ID,Area,Method,Endpoint,Required Role,Test Type,Expected Status,Expected Result,DB Verification
+T01,Auth,POST,/api/auth-admin/login,Public,Positive,200,Admin login returns tokens,auth_tokens + login_sessions
+T02,Auth,POST,/api/auth-admin/login,Public,Negative,401,Wrong password rejected,failed_logins
+T03,Auth,POST,/api/auth-admin/refresh-token,Refresh Token,Positive,200,New tokens returned,auth_tokens
+T04,Auth,GET,/api/auth-admin/sessions,None,Negative,401,Authorization header missing,None
+T05,Auth,GET,/api/auth-admin/sessions,Non-admin token,Negative,403,Insufficient permissions,None
+T06,Security Read,GET,/api/auth-admin/sessions,Any Admin,Positive,200,Sessions returned,login_sessions
+T07,Security Read,GET,/api/auth-admin/security/stats,Any Admin,Positive,200,Stats returned,admin_logs failed_logins login_sessions blocked_entities
+T08,Security Read,GET,/api/auth-admin/security/admin-logs,Any Admin,Positive,200,Logs with pagination,admin_logs
+T09,Security Read,GET,/api/auth-admin/security/admin-logs?action=BLOCK_ENTITY,Any Admin,Positive,200,Filtered logs,admin_logs
+T10,Security Read,GET,/api/auth-admin/security/failed-logins,Any Admin,Positive,200,Failed attempts returned,failed_logins
+T11,Security Read,GET,/api/auth-admin/security/blocked-entities,Any Admin,Positive,200,Blocked entities returned,blocked_entities
+T12,Security Action,POST,/api/auth-admin/security/block-entity,clinic_admin,Negative,403,clinic_admin cannot block,blocked_entities unchanged
+T13,Security Action,POST,/api/auth-admin/security/block-entity,system_admin or super_admin,Positive,200,Entity blocked,blocked_entities + admin_logs
+T14,Security Action,GET,Any protected endpoint as blocked user,Blocked User,Negative,403,Blocked account rejected,blocked_entities
+T15,Security Action,POST,/api/auth-admin/security/unblock-entity,system_admin or super_admin,Positive,200,Entity unblocked,blocked_entities + admin_logs
+T16,Security Action,POST,/api/auth-admin/security/update-entity-status,system_admin or super_admin,Positive,200,Entity status updated,users/doctors/assistants + admin_logs
+T17,Security Action,POST,/api/auth-admin/security/revoke-sessions,system_admin or super_admin,Positive,200,Sessions/tokens revoked,auth_tokens + login_sessions + admin_logs
+T18,Security Action,POST,/api/auth-admin/security/end-session,system_admin or super_admin,Positive,200,Single session ended,login_sessions + admin_logs
+T19,Super Admin,POST,/api/auth-admin/register,clinic_admin,Negative,403,Non-super admin cannot create admin,admins unchanged
+T20,Super Admin,POST,/api/auth-admin/register,super_admin,Positive,201,New admin created,admins + admin_logs
+T21,Super Admin,POST,/api/auth-admin/security/manual-cleanup,super_admin,Positive,200,Cleanup completed,admin_logs
+T22,Profile,GET,/api/profile-admin,Any Admin,Positive,200,Current admin profile returned,admin_profiles + translations
+T23,Profile,GET,/api/profile-admin/complete,Any Admin,Positive,200,Account profile translations returned,admins + admin_profiles + translations
+T24,Profile,PUT,/api/profile-admin,Any Admin,Positive,200,Profile updated,admin_profiles + admin_profile_translations
+T25,Profile,PUT,/api/profile-admin,Any Admin,Positive,200,Translations updated,admin_profile_translations
+T26,Profile,PUT,/api/profile-admin,Any Admin,Negative,400,Invalid gender rejected,None
+T27,Profile,POST,/api/profile-admin/picture,Any Admin,Positive,200,Profile picture uploaded,files + admin_profiles
+T28,Profile,DELETE,/api/profile-admin/picture,Any Admin,Positive,200,Profile picture removed,admin_profiles
+T29,Profile,DELETE/PATCH,/api/profile-admin and /api/profile-admin/reactivate,Test Admin,Positive,200,Admin deactivated then reactivated,admins

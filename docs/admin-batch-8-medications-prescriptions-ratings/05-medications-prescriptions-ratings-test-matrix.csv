@@ -1,0 +1,35 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,DB impact
+Medications,/api/medications,GET,Admin or Doctor,List/filter/search/paginate,No token/user token should fail,None
+Medications,/api/medications/categories/list,GET,Admin or Doctor,List active categories,No token/user token should fail,None
+Medications,/api/medications/category/:category,GET,Admin or Doctor,List active meds by category,Missing category with no data returns empty,None
+Medications,/api/medications/:id,GET,Admin or Doctor,Get by ID/UUID,Missing medication 404,None
+Medications,/api/medications,POST,Admin or Doctor,Create medication,Missing name 400; duplicate 400; invalid form_type 400,Insert medications
+Medications,/api/medications/:id,PUT,Admin,Update medication,Doctor forbidden; empty body 400; invalid form_type 400,Update medications
+Medications,/api/medications/:id/toggle-status,PATCH,Admin,Toggle active,Doctor forbidden; missing medication 404,Update is_active
+Medications,/api/medications/:id,DELETE,Admin,Delete unused medication,Used in template 400,Delete medications
+Templates,/api/prescription-templates,GET,Doctor,List own templates,Admin/user forbidden,None
+Templates,/api/prescription-templates/:id,GET,Doctor,Get own template with items,Other doctor template 404,None
+Templates,/api/prescription-templates,POST,Doctor,Create template with items,Missing template_name 400; inactive medication item error,Insert prescription_templates/items
+Templates,/api/prescription-templates/:id,PUT,Doctor,Update name/description,No fields 400; not owner 404,Update prescription_templates
+Templates,/api/prescription-templates/:id,DELETE,Doctor,Delete own template,Not owner 404,Delete template and cascade items
+Templates,/api/prescription-templates/:id/items,POST,Doctor,Add item,Duplicate medication 400; inactive med 404,Insert prescription_template_items
+Templates,/api/prescription-templates/:id/items/:itemId,PUT,Doctor,Update item,No fields 400; not owner/item missing 404,Update prescription_template_items
+Templates,/api/prescription-templates/:id/items/:itemId,DELETE,Doctor,Delete item,Missing item 404,Delete prescription_template_items
+Templates,/api/prescription-templates/:id/use,PATCH,Doctor,Increment usage,Not owner 404,Increment usage_count
+Prescriptions,/api/prescriptions,GET,User/Doctor/Admin,Role-filtered list,No token forbidden,None
+Prescriptions,/api/prescriptions/medical-record/:recordId,GET,User/Doctor/Admin,Role-filtered by record,Unauthorized role no data,None
+Prescriptions,/api/prescriptions/:id,GET,User/Doctor/Admin,Get by ID/UUID,Wrong owner 404,None
+Prescriptions,/api/prescriptions,POST,Doctor,Create prescription,Missing fields 400; invalid medical record 404; current lang bug may 500,Insert prescriptions/translations
+Prescriptions,/api/prescriptions/:id,PUT,Doctor,Update active own prescription,Filled/cancelled 400; no fields 400,Update prescriptions
+Prescriptions,/api/prescriptions/:id/cancel,PATCH,Doctor,Cancel active own prescription,Filled/cancelled 400; current lang bug may 500,Update status cancelled
+Prescriptions,/api/prescriptions/:id/fill,PATCH,Authenticated,Fill active prescription,Cancelled/expired/no refills; current lang bug may 500,Update status/refills/fill date
+Prescriptions,/api/prescriptions/:id/translations,POST,Doctor,Upsert translation,Missing language_code 400,Insert/update prescription_translations
+Ratings,/api/ratings,GET,User/Doctor/Admin,Role-filtered list,No token forbidden,None
+Ratings,/api/ratings/doctor/:doctor_id/stats,GET,Public,Stats for active ratings,No ratings returns zeros,None
+Ratings,/api/ratings/:id,GET,User/Doctor/Admin,Role-filtered get,Wrong owner 404,None
+Ratings,/api/ratings,POST,User,Create rating for completed appointment,Incomplete appointment 400; duplicate 409; rating out of range 400,Insert ratings/translations and update stats
+Ratings,/api/ratings/:id,PUT,User,Update own rating,Wrong owner 404; out of range 400,Update ratings/translations and stats
+Ratings,/api/ratings/:id,DELETE,User,Delete own rating,Wrong owner 404,Delete rating/translations and update stats
+Ratings,/api/ratings/:id/respond,POST,Doctor,Respond to own rating,Missing language/response 400; wrong doctor 404,Update/insert rating_translation and responded_at
+Ratings,/api/ratings/:id/flag,PATCH,Admin,Flag rating,Missing reason 400,Update rating flag fields and translation reason
+Ratings,/api/ratings/:id/status,PATCH,Admin,Set active/hidden/removed,Invalid status 400,Update status and stats

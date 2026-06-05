@@ -1,0 +1,707 @@
+{
+  "info": {
+    "name": "Admin Batch 5 - Content Management Health Tips Articles Skin Diseases",
+    "description": "Postman collection for Bashra AI backend content management APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "assistant_token",
+      "value": ""
+    },
+    {
+      "key": "admin_id",
+      "value": "1"
+    },
+    {
+      "key": "daily_tip_id",
+      "value": ""
+    },
+    {
+      "key": "medical_article_id",
+      "value": ""
+    },
+    {
+      "key": "skin_disease_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Daily Tips",
+      "item": [
+        {
+          "name": "Get All Daily Tips",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Active Daily Tips",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/active?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Latest Daily Tip",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/latest"
+            }
+          }
+        },
+        {
+          "name": "Get Daily Tip By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/{{daily_tip_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Daily Tip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"نصيحة اختبار عن ترطيب الجلد\",\n  \"title_en\": \"Test skin hydration tip\",\n  \"description_ar\": \"احرص على ترطيب الجلد يوميًا باستخدام مرطب مناسب لنوع بشرتك.\",\n  \"description_en\": \"Moisturize your skin daily using a product suitable for your skin type.\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Daily Tip",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/{{daily_tip_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"نصيحة اختبار محدثة عن ترطيب الجلد\",\n  \"title_en\": \"Updated test skin hydration tip\",\n  \"description_ar\": \"استخدم مرطبًا مناسبًا بعد الاستحمام وحافظ على شرب الماء.\",\n  \"description_en\": \"Use a suitable moisturizer after showering and stay hydrated.\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Toggle Daily Tip Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/{{daily_tip_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Delete Daily Tip - Destructive",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips/{{daily_tip_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Medical Articles",
+      "item": [
+        {
+          "name": "Get All Medical Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Active Medical Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles/active?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Medical Article By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles/{{medical_article_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Medical Article",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"مقال اختبار عن البشرة الحساسة\",\n  \"title_en\": \"Test article about sensitive skin\",\n  \"sub_title_ar\": \"نصائح للبشرة الحساسة\",\n  \"sub_title_en\": \"Tips for sensitive skin\",\n  \"description_ar\": \"البشرة الحساسة تحتاج إلى روتين لطيف وتجنب المنتجات المعطرة.\",\n  \"description_en\": \"Sensitive skin needs a gentle routine and avoiding fragranced products.\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Medical Article",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles/{{medical_article_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"مقال اختبار محدث عن البشرة الحساسة\",\n  \"title_en\": \"Updated test article about sensitive skin\",\n  \"sub_title_ar\": \"روتين لطيف للبشرة الحساسة\",\n  \"sub_title_en\": \"Gentle routine for sensitive skin\",\n  \"description_ar\": \"اختر منتجات خالية من العطور وقم باختبار المنتج على منطقة صغيرة أولًا.\",\n  \"description_en\": \"Choose fragrance-free products and patch test first.\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Toggle Medical Article Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles/{{medical_article_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Delete Medical Article - Destructive",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/medical-articles/{{medical_article_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skin Diseases",
+      "item": [
+        {
+          "name": "Get All Skin Diseases",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Active Skin Diseases",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases/active?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Skin Disease By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases/{{skin_disease_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Skin Disease",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"الأكزيما اختبار\",\n  \"title_en\": \"Test Eczema\",\n  \"description_ar\": \"الأكزيما حالة جلدية تسبب الحكة والجفاف والاحمرار وقد تحتاج إلى متابعة طبية.\",\n  \"description_en\": \"Eczema is a skin condition that causes itching, dryness, and redness.\",\n  \"website_link\": \"https://example.com/eczema\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Skin Disease",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases/{{skin_disease_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"الأكزيما اختبار محدث\",\n  \"title_en\": \"Updated Test Eczema\",\n  \"description_ar\": \"الأكزيما قد تسبب الحكة والجفاف وتحتاج إلى تجنب المهيجات وترطيب الجلد.\",\n  \"description_en\": \"Eczema may cause itching and dryness and requires avoiding irritants.\",\n  \"website_link\": \"https://example.com/eczema-updated\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Toggle Skin Disease Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases/{{skin_disease_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Delete Skin Disease - Destructive",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/skin-diseases/{{skin_disease_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Advanced Health Content",
+      "item": [
+        {
+          "name": "Get Advanced Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/statistics"
+            }
+          }
+        },
+        {
+          "name": "Search Content As User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/search?q=اكزيما&page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Negative Search Too Short",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/search?q=ا&page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get Recent Content As User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/recent?limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Content By Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/by-admin/{{admin_id}}?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Bulk Status Daily Tip",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/bulk-status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    1\n  ],\n  \"type\": \"daily_tip\",\n  \"status\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Export Content JSON",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/export?type=all&is_active=true&format=json"
+            }
+          }
+        },
+        {
+          "name": "Export Unsupported Format",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/export?type=all&format=csv"
+            }
+          }
+        },
+        {
+          "name": "Validate Skin Disease Payload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/advanced/validate"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"skin_disease\",\n  \"data\": {\n    \"title_ar\": \"الأكزيما\",\n    \"description_ar\": \"الأكزيما حالة جلدية تسبب الحكة والجفاف والاحمرار.\",\n    \"website_link\": \"https://example.com/eczema\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative User Cannot Create Daily Tip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health-tips/daily-tips"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_ar\": \"نصيحة اختبار\",\n  \"description_ar\": \"وصف اختبار طويل بما يكفي للنجاح لو كان أدمن.\",\n  \"is_active\": true\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

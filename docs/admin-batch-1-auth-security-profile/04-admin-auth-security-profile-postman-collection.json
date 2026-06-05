@@ -1,0 +1,1317 @@
+{
+  "info": {
+    "name": "Bashra AI - Admin Batch 1 - Auth Security Profile",
+    "description": "Admin Authentication + Security + Admin Profile tests. Base URL should be http://localhost:3006/api in local environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006/api"
+    },
+    {
+      "key": "super_admin_email",
+      "value": ""
+    },
+    {
+      "key": "super_admin_password",
+      "value": ""
+    },
+    {
+      "key": "system_admin_email",
+      "value": ""
+    },
+    {
+      "key": "system_admin_password",
+      "value": ""
+    },
+    {
+      "key": "clinic_admin_email",
+      "value": ""
+    },
+    {
+      "key": "clinic_admin_password",
+      "value": ""
+    },
+    {
+      "key": "super_admin_access_token",
+      "value": ""
+    },
+    {
+      "key": "super_admin_refresh_token",
+      "value": ""
+    },
+    {
+      "key": "system_admin_access_token",
+      "value": ""
+    },
+    {
+      "key": "clinic_admin_access_token",
+      "value": ""
+    },
+    {
+      "key": "target_user_id",
+      "value": "1"
+    },
+    {
+      "key": "target_session_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Admin Auth",
+      "item": [
+        {
+          "name": "Login - Super Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "login"
+              ]
+            },
+            "description": "Save tokens manually from response.tokens.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{super_admin_email}}\",\n  \"password\": \"{{super_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - System Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "login"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{system_admin_email}}\",\n  \"password\": \"{{system_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Clinic Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "login"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{clinic_admin_email}}\",\n  \"password\": \"{{clinic_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Wrong Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "login"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{super_admin_email}}\",\n  \"password\": \"wrong-password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/refresh-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "refresh-token"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{super_admin_refresh_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request Password Reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/request-password-reset",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "request-password-reset"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{super_admin_email}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request Password Reset OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/request-password-reset-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "request-password-reset-otp"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{super_admin_email}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password - Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/reset-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "reset-password"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"replace-token\",\n  \"newPassword\": \"NewPassword123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password - OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/reset-password-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "reset-password-otp"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{super_admin_email}}\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"NewPassword123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout - Super Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "logout"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 - Security Read APIs",
+      "item": [
+        {
+          "name": "Get Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/sessions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "sessions"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Security Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security-logs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security-logs"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Security Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "stats"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Security Alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/alerts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "alerts"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get System Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/system-sessions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "system-sessions"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Admin Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/admin-logs?limit=20&offset=0",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "admin-logs?limit=20&offset=0"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Failed Logins",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/failed-logins?hours=24&limit=20&offset=0&entityType=admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "failed-logins?hours=24&limit=20&offset=0&entityType=admin"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Blocked Entities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/blocked-entities?isActive=true&limit=20&offset=0",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "blocked-entities?isActive=true&limit=20&offset=0"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 - Security Actions System Admin",
+      "item": [
+        {
+          "name": "Negative - Clinic Admin Cannot Block",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/block-entity",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "block-entity"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{clinic_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"blockType\": \"temporary\",\n  \"blockedUntil\": \"2026-12-31T23:59:59.000Z\",\n  \"reason\": \"Permission negative test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Block User - System Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/block-entity",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "block-entity"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"blockType\": \"temporary\",\n  \"blockedUntil\": \"2026-12-31T23:59:59.000Z\",\n  \"reason\": \"Manual test temporary user block\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unblock User - System Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/unblock-entity",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "unblock-entity"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"reason\": \"Manual test unblock user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Revoke User Sessions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/revoke-sessions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "revoke-sessions"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"reason\": \"Manual test revoke user sessions\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Status - Suspended",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/update-entity-status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "update-entity-status"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"status\": \"suspended\",\n  \"reason\": \"Manual test suspend user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Status - Active",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/update-entity-status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "update-entity-status"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"{{target_user_id}}\",\n  \"entityType\": \"user\",\n  \"status\": \"active\",\n  \"reason\": \"Manual test restore user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/end-session",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "end-session"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{system_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"{{target_session_id}}\",\n  \"reason\": \"Manual test end session\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 - Super Admin Only",
+      "item": [
+        {
+          "name": "Register New Clinic Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "register"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"batch1.clinic.admin@example.com\",\n  \"phone\": \"+201000000001\",\n  \"password\": \"AdminPass123!\",\n  \"adminType\": \"clinic_admin\",\n  \"full_name\": \"Batch One Clinic Admin\",\n  \"language_code\": \"ar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Manual Cleanup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth-admin/security/manual-cleanup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth-admin",
+                "security",
+                "manual-cleanup"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 - Admin Profile",
+      "item": [
+        {
+          "name": "Get Admin Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile-admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Complete Admin Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile-admin/complete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin",
+                "complete"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Admin Profile - Flat",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile-admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date_of_birth\": \"1990-01-01\",\n  \"gender\": \"male\",\n  \"nationality\": \"Egyptian\",\n  \"emergency_contact_phone\": \"+201000000002\",\n  \"timezone\": \"Africa/Cairo\",\n  \"language_preference\": \"ar\",\n  \"full_name\": \"مدير النظام التجريبي\",\n  \"job_title\": \"مدير نظام\",\n  \"department\": \"الإدارة التقنية\",\n  \"emergency_contact_name\": \"جهة اتصال طارئة\",\n  \"emergency_contact_relationship\": \"Brother\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Admin Profile - Translations",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile-admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timezone\": \"Africa/Cairo\",\n  \"language_preference\": \"ar\",\n  \"translations\": {\n    \"ar\": {\n      \"full_name\": \"مدير النظام\",\n      \"job_title\": \"مشرف عام\",\n      \"department\": \"الإدارة\"\n    },\n    \"en\": {\n      \"full_name\": \"System Admin\",\n      \"job_title\": \"Super Administrator\",\n      \"department\": \"Management\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Admin Profile - Invalid Gender",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile-admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gender\": \"invalid_value\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Profile Picture",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile-admin/picture",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin",
+                "picture"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile_picture",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Profile Picture",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile-admin/picture",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile-admin",
+                "picture"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{super_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

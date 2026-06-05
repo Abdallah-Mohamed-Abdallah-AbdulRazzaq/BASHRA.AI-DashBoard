@@ -1,0 +1,601 @@
+{
+  "info": {
+    "name": "Admin Batch 3 - Doctor Management + Profile + Contact Details",
+    "description": "Postman collection for Bashra AI backend Admin Doctor Management, Doctor Profile Verification, and Contact Details APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "system_admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "test_doctor_id",
+      "value": "1"
+    },
+    {
+      "key": "test_document_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Admin Doctor Management",
+      "item": [
+        {
+          "name": "Get Doctor Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/statistics"
+            }
+          }
+        },
+        {
+          "name": "Get All Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors?page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get Pending Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/pending?page=1&limit=10"
+            }
+          }
+        },
+        {
+          "name": "Get Doctor Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}"
+            }
+          }
+        },
+        {
+          "name": "Update Doctor Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inactive\",\n  \"reason\": \"Testing doctor status update\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Verify Doctor Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/verify"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_verified\": true,\n  \"reason\": \"Testing doctor verification\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Verification Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/verification-status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_verified\": true,\n  \"approval_status\": \"approved\",\n  \"reason\": \"Testing comprehensive verification status\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Approval Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/approval"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approval_status\": \"pending\",\n  \"reason\": \"Testing approval status update\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Approve Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/approve"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing full doctor approval\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reject Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/reject"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing doctor rejection\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Suspend Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/suspend"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing doctor suspension\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Bulk Update Doctors Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/bulk/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorIds\": [\n    1\n  ],\n  \"status\": \"active\",\n  \"reason\": \"Testing bulk doctor status update\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative - User Cannot List Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors"
+            }
+          }
+        },
+        {
+          "name": "Negative - Doctor Cannot List Admin Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor Profile Management",
+      "item": [
+        {
+          "name": "Get Complete Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/complete"
+            }
+          }
+        },
+        {
+          "name": "Get Personal Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/personal"
+            }
+          }
+        },
+        {
+          "name": "Get Professional Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/professional"
+            }
+          }
+        },
+        {
+          "name": "Get Documents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/documents"
+            }
+          }
+        },
+        {
+          "name": "Get Documents Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/documents/summary"
+            }
+          }
+        },
+        {
+          "name": "Update Personal Data",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/personal"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+201000000000\",\n  \"date_of_birth\": \"1988-01-01\",\n  \"gender\": \"male\",\n  \"nationality\": \"Egyptian\",\n  \"emergency_contact_phone\": \"+201111111111\",\n  \"timezone\": \"Africa/Cairo\",\n  \"language_preference\": \"ar\",\n  \"translations\": {\n    \"ar\": {\n      \"full_name\": \"دكتور اختبار\",\n      \"emergency_contact_name\": \"جهة اتصال\",\n      \"emergency_contact_relationship\": \"brother\"\n    },\n    \"en\": {\n      \"full_name\": \"Test Doctor\",\n      \"emergency_contact_name\": \"Contact Person\",\n      \"emergency_contact_relationship\": \"brother\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Professional Data",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/professional"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"years_of_experience\": 10,\n  \"medical_school\": \"Test Medical School\",\n  \"graduation_year\": 2014,\n  \"board_certifications\": [\n    \"Dermatology Board\"\n  ],\n  \"languages_spoken\": [\n    \"ar\",\n    \"en\"\n  ],\n  \"translations\": {\n    \"ar\": {\n      \"specialty\": \"جلدية\",\n      \"sub_specialty\": \"أمراض جلدية\",\n      \"biography\": \"سيرة اختبارية\"\n    },\n    \"en\": {\n      \"specialty\": \"Dermatology\",\n      \"sub_specialty\": \"Dermatology\",\n      \"biography\": \"Test biography\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Document Status - Approve",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/documents/{{test_document_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Approve Doctor Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/approve"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing profile approval\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reject Doctor Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile/reject"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing profile rejection\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Doctor Profile - Dangerous",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/doctors/{{test_doctor_id}}/profile"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Testing soft delete doctor profile\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor Contact Details - Admin Read",
+      "item": [
+        {
+          "name": "Get All Contact Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-contact-details/all"
+            }
+          }
+        },
+        {
+          "name": "Get All Contact Details Filtered",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-contact-details/all?doctor_id={{test_doctor_id}}"
+            }
+          }
+        },
+        {
+          "name": "Get Contact Details By Doctor ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-contact-details/doctor/{{test_doctor_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative - Doctor Cannot Access Admin Contact List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-contact-details/all"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

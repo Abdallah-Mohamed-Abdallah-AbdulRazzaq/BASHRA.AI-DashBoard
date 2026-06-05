@@ -1,0 +1,10 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,DB impact,Notes
+Overview,/api/admin/ai-usage/overview,GET,Admin,Return counters/provider/policies summary,Invalid period_key 400; user token forbidden,"Read ai_usage_counters, ai_provider_logs, ai_usage_policies",Provider summary currently all-time
+User Usage,/api/admin/ai-usage/users/:userId,GET,Admin,"Return user, active policies, counters, recent events",Missing user 404; user token forbidden,"Read users, ai_usage_counters, ai_usage_events, ai_usage_policies",Active policies include user/global
+Policies,/api/admin/ai-usage/policies,GET,Admin,List policies with filters and pagination,Invalid scope_type/is_active/page validation,Read ai_usage_policies,"Ordered active desc, priority asc, created desc"
+Policies,/api/admin/ai-usage/policies/:id,GET,Admin,Get policy by id,Missing policy 404,Read ai_usage_policies,
+Policies,/api/admin/ai-usage/policies,POST,Super Admin,Create global/user/package policy,Normal admin forbidden; user scope missing user_id 400; package scope missing package_id 400,"Insert ai_usage_policies, admin_logs",Package policy stored but not applied by AIUsageService
+Policies,/api/admin/ai-usage/policies/:id,PATCH,Super Admin,Update policy limits/scope/status/priority,Missing policy 404; invalid body 400,"Update ai_usage_policies, insert admin_logs",
+Policies,/api/admin/ai-usage/policies/:id/status,PATCH,Super Admin,Activate/deactivate policy,Invalid is_active 400; normal admin forbidden,"Update is_active, insert admin_logs",Deactivate log severity high
+User Cross-check,/api/ai-dermatology/usage,GET,User,Shows effective policy and remaining limits,No user token forbidden,May create monthly counter if missing,Uses AIUsageService user/global selection
+Usage Events,AI request flow,N/A,User,Successful AI request increments counters and event log,Limit exceeded returns blocked reason,"Insert ai_usage_events, update ai_usage_counters",Failed/blocked events do not increment counters

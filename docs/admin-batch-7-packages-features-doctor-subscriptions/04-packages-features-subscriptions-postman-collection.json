@@ -1,0 +1,1081 @@
+{
+  "info": {
+    "name": "Admin Batch 7 - Packages Features Doctor Subscriptions",
+    "description": "Postman collection for subscription packages, features, public packages, and doctor subscription flows.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "feature_id",
+      "value": ""
+    },
+    {
+      "key": "feature_id_2",
+      "value": ""
+    },
+    {
+      "key": "package_id",
+      "value": ""
+    },
+    {
+      "key": "package_feature_id",
+      "value": ""
+    },
+    {
+      "key": "subscription_id",
+      "value": ""
+    },
+    {
+      "key": "doctor_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Admin Features",
+      "item": [
+        {
+          "name": "Get All Features",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features"
+            }
+          }
+        },
+        {
+          "name": "Get Active Features",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features?is_active=true"
+            }
+          }
+        },
+        {
+          "name": "Get Feature By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features/{{feature_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Feature",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"ميزة اختبار عدد الاستشارات\",\n  \"name_en\": \"Test Consultations Feature\",\n  \"unit_ar\": \"استشارة\",\n  \"unit_en\": \"consultations\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Second Feature",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"ميزة اختبار الظهور\",\n  \"name_en\": \"Test Visibility Feature\",\n  \"unit_ar\": \"مرة\",\n  \"unit_en\": \"times\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Feature",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features/{{feature_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unit_ar\": \"استشارة شهرية\",\n  \"unit_en\": \"monthly consultations\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Toggle Feature Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features/{{feature_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Delete Feature",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features/{{feature_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Create Duplicate Feature",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/features"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"ميزة اختبار عدد الاستشارات\",\n  \"name_en\": \"Duplicate\",\n  \"is_active\": true\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Packages",
+      "item": [
+        {
+          "name": "Get All Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages"
+            }
+          }
+        },
+        {
+          "name": "Get Packages Include Features",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages?include_features=true"
+            }
+          }
+        },
+        {
+          "name": "Get Active Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages?is_active=true&include_features=true"
+            }
+          }
+        },
+        {
+          "name": "Get Package By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages/{{package_id}}"
+            }
+          }
+        },
+        {
+          "name": "Create Package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"باقة اختبار شهرية\",\n  \"name_en\": \"Monthly Test Package\",\n  \"secondary_name_ar\": \"مناسبة للاختبار\",\n  \"secondary_name_en\": \"Suitable for testing\",\n  \"duration_days\": 30,\n  \"price\": 100,\n  \"currency_code\": \"EGP\",\n  \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Package",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages/{{package_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 150,\n  \"duration_days\": 45\n}"
+            }
+          }
+        },
+        {
+          "name": "Toggle Package Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages/{{package_id}}/toggle-status"
+            }
+          }
+        },
+        {
+          "name": "Delete Package",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages/{{package_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Create Invalid Package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/packages"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name_ar\": \"باقة خاطئة\",\n  \"duration_days\": 0,\n  \"price\": -1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Package Features",
+      "item": [
+        {
+          "name": "Get Package Features",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features/package/{{package_id}}"
+            }
+          }
+        },
+        {
+          "name": "Get Feature Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features/feature/{{feature_id}}"
+            }
+          }
+        },
+        {
+          "name": "Add Feature To Package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"package_id\": \"{{package_id}}\",\n  \"feature_id\": \"{{feature_id}}\",\n  \"feature_value\": \"10\",\n  \"is_included\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Bulk Add Features",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features/bulk"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"package_id\": \"{{package_id}}\",\n  \"features\": [\n    {\n      \"feature_id\": \"{{feature_id_2}}\",\n      \"feature_value\": \"نعم\",\n      \"is_included\": true\n    },\n    {\n      \"feature_id\": 999999,\n      \"feature_value\": \"invalid\",\n      \"is_included\": true\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Package Feature",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features/{{package_feature_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"feature_value\": \"20\",\n  \"is_included\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Package Feature",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features/{{package_feature_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Duplicate Package Feature",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/package-features"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"package_id\": \"{{package_id}}\",\n  \"feature_id\": \"{{feature_id}}\",\n  \"feature_value\": \"10\",\n  \"is_included\": true\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Packages Features",
+      "item": [
+        {
+          "name": "Public Get Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages"
+            }
+          }
+        },
+        {
+          "name": "Public Get Package By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages/{{package_id}}"
+            }
+          }
+        },
+        {
+          "name": "Public Packages Comparison",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages/comparison"
+            }
+          }
+        },
+        {
+          "name": "Public Featured Package",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages/featured"
+            }
+          }
+        },
+        {
+          "name": "Public Cheapest Package",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages/cheapest"
+            }
+          }
+        },
+        {
+          "name": "Public Premium Package",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/packages/premium"
+            }
+          }
+        },
+        {
+          "name": "Public Features",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/public/features"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor Subscription - Doctor",
+      "item": [
+        {
+          "name": "Doctor Subscribe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/subscribe"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"package_id\": \"{{package_id}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Doctor My Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/my-subscriptions"
+            }
+          }
+        },
+        {
+          "name": "Doctor My Pending Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/my-subscriptions?status=pending"
+            }
+          }
+        },
+        {
+          "name": "Doctor Current Subscription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/current"
+            }
+          }
+        },
+        {
+          "name": "Doctor Cancel Pending Subscription",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/{{subscription_id}}/cancel"
+            }
+          }
+        },
+        {
+          "name": "Negative Doctor Duplicate Subscribe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/subscribe"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"package_id\": \"{{package_id}}\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor Subscription - Admin",
+      "item": [
+        {
+          "name": "Admin All Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/all"
+            }
+          }
+        },
+        {
+          "name": "Admin Pending Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/all?status=pending"
+            }
+          }
+        },
+        {
+          "name": "Admin Filter By Doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/all?doctor_id={{doctor_id}}"
+            }
+          }
+        },
+        {
+          "name": "Admin Filter By Package",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/all?package_id={{package_id}}"
+            }
+          }
+        },
+        {
+          "name": "Admin Get Subscription By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}"
+            }
+          }
+        },
+        {
+          "name": "Admin Approve Subscription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}/approve"
+            }
+          }
+        },
+        {
+          "name": "Admin Update Subscription",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_trial\": false,\n  \"end_date\": \"2026-12-31\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Expire Subscription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}/expire"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Manual test\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Subscription",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}"
+            }
+          }
+        },
+        {
+          "name": "Negative Approve Active Or Non Pending Subscription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-subscriptions/admin/{{subscription_id}}/approve"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

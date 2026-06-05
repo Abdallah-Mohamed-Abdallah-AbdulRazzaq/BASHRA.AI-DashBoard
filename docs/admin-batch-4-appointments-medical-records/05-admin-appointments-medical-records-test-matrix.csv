@@ -1,0 +1,13 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,Expected DB impact
+Appointments,/api/admin/appointments/statistics,GET,Admin,Returns counts and revenue summary,User/doctor forbidden,None
+Appointments,/api/admin/appointments,GET,Admin,Returns paginated appointment list with filters,User/doctor forbidden,None
+Appointments,/api/admin/appointments/:id,GET,Admin,Returns appointment details by id/uuid,Missing id 404,None
+Appointments,/api/admin/appointments,POST,Admin,Creates appointment using active doctor schedule,Missing fields 400; conflict 409,appointments insert; appointment_translations insert if text provided
+Appointments,/api/admin/appointments/:id,PUT,Admin,Updates appointment fields,Empty body 400,appointments updated
+Appointments,/api/admin/appointments/:id/cancel,PATCH,Admin,Cancels appointment with reason,Already cancelled 400,appointments.status/cancelled fields updated; appointment_translations updated
+Appointments,/api/admin/appointments/:id,DELETE,Admin,Deletes disposable appointment,Missing id 404,appointments row deleted; translations cascade expected
+Medical Records,/api/admin/medical-records/statistics,GET,Admin,Returns record counts and unique patients/doctors,User/doctor forbidden,None
+Medical Records,/api/admin/medical-records/patient/:patient_id/history,GET,Admin,Returns patient info and record history,Missing patient 404,None
+Medical Records,/api/admin/medical-records,GET,Admin,Returns paginated medical records with filters,User/doctor forbidden,None
+Medical Records,/api/admin/medical-records/:id,GET,Admin,Returns medical record by id/uuid with translations,Missing record 404,None
+Medical Records,/api/admin/medical-records/:id,DELETE,Admin,Deletes disposable medical record,Missing record 404,medical_records row deleted; translations cascade expected

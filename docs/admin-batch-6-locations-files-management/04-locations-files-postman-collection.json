@@ -1,0 +1,984 @@
+{
+  "info": {
+    "name": "Admin Batch 6 - Locations + Files Management",
+    "description": "Postman collection for Bashra AI backend Locations and Files Management APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "super_admin_token",
+      "value": ""
+    },
+    {
+      "key": "country_id",
+      "value": ""
+    },
+    {
+      "key": "city_id",
+      "value": ""
+    },
+    {
+      "key": "region_id",
+      "value": ""
+    },
+    {
+      "key": "district_id",
+      "value": ""
+    },
+    {
+      "key": "test_country_id",
+      "value": ""
+    },
+    {
+      "key": "test_city_id",
+      "value": ""
+    },
+    {
+      "key": "address_id",
+      "value": ""
+    },
+    {
+      "key": "file_uuid",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Countries Cities - Public Read",
+      "item": [
+        {
+          "name": "Get All Locations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Countries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/countries?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Cities By Country",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/cities/{{country_id}}?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Regions By City",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/regions/{{city_id}}?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Districts By Region",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/districts/{{region_id}}?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Hierarchy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/hierarchy/{{district_id}}?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Search Locations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/search?q=القاهرة&level_type=city&lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Get Location By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/{{country_id}}?lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Negative Search Missing q",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/search"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Countries Cities - Admin Write",
+      "item": [
+        {
+          "name": "Create Test Country",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities"
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name_ar",
+                  "value": "دولة اختبار",
+                  "type": "text"
+                },
+                {
+                  "key": "name_en",
+                  "value": "Test Country",
+                  "type": "text"
+                },
+                {
+                  "key": "level_type",
+                  "value": "country",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Test City",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities"
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name_ar",
+                  "value": "مدينة اختبار",
+                  "type": "text"
+                },
+                {
+                  "key": "name_en",
+                  "value": "Test City",
+                  "type": "text"
+                },
+                {
+                  "key": "level_type",
+                  "value": "city",
+                  "type": "text"
+                },
+                {
+                  "key": "parent_id",
+                  "value": "{{test_country_id}}",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Negative Create City Without Parent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities"
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name_ar",
+                  "value": "مدينة بدون أب",
+                  "type": "text"
+                },
+                {
+                  "key": "name_en",
+                  "value": "City Without Parent",
+                  "type": "text"
+                },
+                {
+                  "key": "level_type",
+                  "value": "city",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Test City",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/{{test_city_id}}"
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name_ar",
+                  "value": "مدينة اختبار محدثة",
+                  "type": "text"
+                },
+                {
+                  "key": "name_en",
+                  "value": "Updated Test City",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Test City",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/{{test_city_id}}"
+            }
+          }
+        },
+        {
+          "name": "Delete Test Country",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/countries-cities/{{test_country_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Create Address As User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address_line1\": \"شارع اختبار 10\",\n  \"address_line2\": \"الدور الثاني\",\n  \"postal_code\": \"11765\",\n  \"countries_cities_id\": 1,\n  \"latitude\": 30.0444,\n  \"longitude\": 31.2357,\n  \"type\": \"home\",\n  \"is_primary\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Get My Addresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses"
+            }
+          }
+        },
+        {
+          "name": "Get Primary Address",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/primary"
+            }
+          }
+        },
+        {
+          "name": "Get Address By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/{{address_id}}"
+            }
+          }
+        },
+        {
+          "name": "Update Address",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/{{address_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address_line1\": \"شارع اختبار محدث\",\n  \"latitude\": 30.05,\n  \"longitude\": 31.24,\n  \"is_primary\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Set Primary Address",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/{{address_id}}/set-primary"
+            }
+          }
+        },
+        {
+          "name": "Negative Other Entity Cannot Access Address",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{doctor_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/{{address_id}}"
+            }
+          }
+        },
+        {
+          "name": "Delete Address",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/addresses/{{address_id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctors By Location",
+      "item": [
+        {
+          "name": "Get Doctors By Location",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location?countries_cities_id={{city_id}}&include_children=true&page=1&limit=20&lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Negative Doctors By Location Missing ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location"
+            }
+          }
+        },
+        {
+          "name": "Get Doctors Count By Location",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/count?countries_cities_id={{city_id}}&include_children=true"
+            }
+          }
+        },
+        {
+          "name": "Grouped Doctors By Location",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/grouped?level_type=city&parent_id={{country_id}}&lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Negative Grouped Missing Level Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/grouped"
+            }
+          }
+        },
+        {
+          "name": "Search Doctors By Location",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/search?countries_cities_id={{city_id}}&specialization=جلدية&min_experience=1&sort_by=rating&order=desc&page=1&limit=20&lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Nearby Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/nearby?latitude=30.0444&longitude=31.2357&radius=10&page=1&limit=20&lang=ar"
+            }
+          }
+        },
+        {
+          "name": "Negative Nearby Invalid Coordinates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors-by-location/nearby?latitude=999&longitude=31.2357"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Files Management - Super Admin",
+      "item": [
+        {
+          "name": "Get All Files",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files?page=1&limit=50"
+            }
+          }
+        },
+        {
+          "name": "Get Files With Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files?fileCategory=medical_image&isPublic=false&page=1&limit=20"
+            }
+          }
+        },
+        {
+          "name": "Get File Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/statistics"
+            }
+          }
+        },
+        {
+          "name": "Get File By UUID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/{{file_uuid}}"
+            }
+          }
+        },
+        {
+          "name": "Get Files By Uploader",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/uploader/user/1?limit=50&offset=0"
+            }
+          }
+        },
+        {
+          "name": "Get Files By Related Entity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/related/ai_session/1?limit=50&offset=0"
+            }
+          }
+        },
+        {
+          "name": "Update File Metadata",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/{{file_uuid}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_public\": false,\n  \"metadata\": {\n    \"manual_test\": true,\n    \"reviewed_by\": \"super_admin\"\n  },\n  \"virus_scan_status\": \"clean\",\n  \"virus_scan_date\": \"2026-06-05 12:00:00\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Update File Unknown Field",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/{{file_uuid}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unknown_field\": \"x\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete File Soft",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/{{file_uuid}}?deleteFromDisk=false"
+            }
+          }
+        },
+        {
+          "name": "Restore File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/{{file_uuid}}/restore"
+            }
+          }
+        },
+        {
+          "name": "Bulk Delete Files",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/bulk-delete"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uuids\": [\n    \"uuid-1\",\n    \"uuid-2\"\n  ],\n  \"deleteFromDisk\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Bulk Delete Empty",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/bulk-delete"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uuids\": [],\n  \"deleteFromDisk\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Cleanup Expired Files",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/files/cleanup/expired"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

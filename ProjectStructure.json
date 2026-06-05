@@ -1,0 +1,1596 @@
+{
+  "name": "BashraAI-Admin-Dashboard",
+  "path": "e:\\Work and Projects\\BASHRA.AI\\Frontend-Dashboard\\BashraAI-Admin-Dashboard",
+  "type": "directory",
+  "children": [
+    {
+      "name": "docs",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "admin-batch-1-auth-security-profile",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-admin-auth-security-profile-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-admin-auth-security-profile-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-admin-auth-security-profile-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-admin-auth-security-profile-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-admin-auth-security-profile-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-10-blocked-entities-cross-security",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-blocked-entities-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-blocked-entities-cross-security-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-blocked-entities-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-blocked-entities-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-blocked-entities-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-2-user-management-patient-profiles",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-admin-user-management-patient-profiles-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-admin-user-management-patient-profiles-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-admin-user-management-patient-profiles-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-admin-user-management-patient-profiles-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-admin-user-management-patient-profiles-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-3-doctor-management-profile-contact",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-admin-doctor-management-profile-contact-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-admin-doctor-management-profile-contact-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-admin-doctor-management-profile-contact-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-admin-doctor-management-profile-contact-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-admin-doctor-management-profile-contact-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-4-appointments-medical-records",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-admin-appointments-medical-records-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-admin-appointments-medical-records-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-admin-appointments-medical-records-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-admin-appointments-medical-records-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-admin-appointments-medical-records-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-5-content-management-health-tips-articles-skin-diseases",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-content-management-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-content-management-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-content-management-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-content-management-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-content-management-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-6-locations-files-management",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-locations-files-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-locations-files-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-locations-files-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-locations-files-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-locations-files-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-7-packages-features-doctor-subscriptions",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-packages-features-subscriptions-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-packages-features-subscriptions-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-packages-features-subscriptions-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-packages-features-subscriptions-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-packages-features-subscriptions-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-8-medications-prescriptions-ratings",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-medications-prescriptions-ratings-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-medications-prescriptions-ratings-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-medications-prescriptions-ratings-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-medications-prescriptions-ratings-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-medications-prescriptions-ratings-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "admin-batch-9-admin-ai-usage",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "01-admin-ai-usage-api-docs.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-admin-ai-usage-manual-testing.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-admin-ai-usage-sql-verification.sql",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "04-admin-ai-usage-postman-collection.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "05-admin-ai-usage-test-matrix.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "name": "backend-documentation-master-bundle",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "00-MASTER_BACKEND_DOCUMENTATION_INDEX.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "01-ROLE_BASED_API_MAP.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "02-PERMISSION_SECURITY_MATRIX.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "03-POSTMAN_SQL_FILES_INDEX.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "04-PRODUCTION_READINESS_CHECKLIST.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "05-KNOWN_REGRESSIONS_AND_REVIEW_POINTS.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "06-AI_DERMATOLOGY_INTEGRATION_SUMMARY.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "07-DOCUMENTATION_COVERAGE_STATUS.md",
+              "type": "file",
+              "icon": "📝"
+            },
+            {
+              "name": "08-BATCH_INVENTORY.csv",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "09-BATCH_INVENTORY.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "icon": "📝"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "fonts",
+          "type": "folder",
+          "icon": "📁"
+        },
+        {
+          "name": "images",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "BashraAI_logo-1024.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-16.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-180.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-192.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-32.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-48.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "BashraAI_logo-512.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "auth-illustration-1.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "auth-illustration-2.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "auth-illustration-3.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "auth-illustration-4.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "auth-illustration.svg",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "logo.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "og-image.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "og-image.webp",
+              "type": "file",
+              "icon": "📄"
+            }
+          ]
+        },
+        {
+          "name": "locales",
+          "type": "folder",
+          "icon": "📁"
+        }
+      ]
+    },
+    {
+      "name": "src",
+      "type": "folder",
+      "icon": "📁",
+      "children": [
+        {
+          "name": "app",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "[lang]",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "(auth)",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "email-sent",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "email-verification",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "email-verification-otp",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "forgot-password",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "login",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "register",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "reset-password",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "layout.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "(dashboard)",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "address-management",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "cities",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "countries",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "districts",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "hierarchy",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "regions",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "clinic",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "doctors",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "details",
+                              "type": "folder",
+                              "icon": "📁",
+                              "children": [
+                                {
+                                  "name": "page.tsx",
+                                  "type": "file",
+                                  "icon": "⚛️"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "patients",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "details",
+                              "type": "folder",
+                              "icon": "📁",
+                              "children": [
+                                {
+                                  "name": "page.tsx",
+                                  "type": "file",
+                                  "icon": "⚛️"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "dashboard",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "admin",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "health-tips",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "articles",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "daily-tips",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "skin-diseases",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "packages-system",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "features",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "package-features",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "packages",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "settings",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "profile",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "layout.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "page.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "layout.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "api",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "chat",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "route.ts",
+                      "type": "file",
+                      "icon": "📘"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "apple-icon.png",
+              "type": "file",
+              "icon": "🖼️"
+            },
+            {
+              "name": "favicon.ico",
+              "type": "file",
+              "icon": "📄"
+            },
+            {
+              "name": "globals.css",
+              "type": "file",
+              "icon": "🎨"
+            },
+            {
+              "name": "layout.tsx",
+              "type": "file",
+              "icon": "⚛️"
+            }
+          ]
+        },
+        {
+          "name": "components",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "address-management",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "address-header.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "address-hierarchy-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "address-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "cities-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "countries-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "districts-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "regions-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "clinic",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "doctors",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "details",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "tabs",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "contact-details-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "general-info-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "profile-details-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "schedules-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "subscriptions-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "doctor-details-header.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "doctor-details-view.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "doctor-card.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-filter.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-grid.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-list.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-view-toggle.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctors-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "patients",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "details",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "tabs",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "ai-diagnosis-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "appointments-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "general-info-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "medical-records-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "patient-profiles-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "patient-tabs.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "prescriptions-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            },
+                            {
+                              "name": "transactions-tab.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "patient-details-header.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "patient-details-view.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "patient-card.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-filter.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-grid.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-list.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-view-toggle.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patients-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "dashboard",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "dashboard-header.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "dashboard-widgets.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "stats-card.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "health-tips",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "articles-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "daily-tip-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "daily-tips-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "medical-article-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "skin-disease-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "skin-diseases-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "layout",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "footer",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "footer.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "header",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "ai-assistant-chat.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "notifications-popover.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "profile-popover.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "sidebar",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "sidebar.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "packages-system",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "feature-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "features-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "package-feature-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "package-features-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "package-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "packages-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "settings",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "profile-settings-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "shared",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "dictionary-provider.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "theme-provider.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "ui",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "icons",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "auth-icons.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "dashboard-icons.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "icons.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "sidebar-icons.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "custom-dropdown.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "constants",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "menu-data.ts",
+              "type": "file",
+              "icon": "📘"
+            }
+          ]
+        },
+        {
+          "name": "dictionaries",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "ar.json",
+              "type": "file",
+              "icon": "⚙️"
+            },
+            {
+              "name": "en.json",
+              "type": "file",
+              "icon": "⚙️"
+            }
+          ]
+        },
+        {
+          "name": "hooks",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "use-sidebar-store.ts",
+              "type": "file",
+              "icon": "📘"
+            }
+          ]
+        },
+        {
+          "name": "lib",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "api.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "cropUtils.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "dictionary.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "utils.ts",
+              "type": "file",
+              "icon": "📘"
+            }
+          ]
+        },
+        {
+          "name": "types",
+          "type": "folder",
+          "icon": "📁",
+          "children": [
+            {
+              "name": "navigation.ts",
+              "type": "file",
+              "icon": "📘"
+            }
+          ]
+        },
+        {
+          "name": "i18n.config.ts",
+          "type": "file",
+          "icon": "📘"
+        },
+        {
+          "name": "middleware.ts",
+          "type": "file",
+          "icon": "📘"
+        }
+      ]
+    },
+    {
+      "name": ".eslintrc.json",
+      "type": "file",
+      "icon": "⚙️"
+    },
+    {
+      "name": ".gitignore",
+      "type": "file",
+      "icon": "📁"
+    },
+    {
+      "name": "Project-Directory-Structure.md",
+      "type": "file",
+      "icon": "📝"
+    },
+    {
+      "name": "ProjectStructure.json",
+      "type": "file",
+      "icon": "⚙️"
+    },
+    {
+      "name": "next-env.d.ts",
+      "type": "file",
+      "icon": "📘"
+    },
+    {
+      "name": "next.config.mjs",
+      "type": "file",
+      "icon": "📄"
+    },
+    {
+      "name": "package-lock.json",
+      "type": "file",
+      "icon": "⚙️"
+    },
+    {
+      "name": "package.json",
+      "type": "file",
+      "icon": "📦"
+    },
+    {
+      "name": "postcss.config.js",
+      "type": "file",
+      "icon": "📜"
+    },
+    {
+      "name": "tailwind.config.ts",
+      "type": "file",
+      "icon": "📘"
+    },
+    {
+      "name": "tsconfig.json",
+      "type": "file",
+      "icon": "⚙️"
+    }
+  ],
+  "metadata": {
+    "generated": "2026-06-05T21:25:09.630Z",
+    "generator": "FileTree Pro Extension",
+    "version": "0.2.0",
+    "showIcons": true,
+    "maxDepth": 10
+  }
+}

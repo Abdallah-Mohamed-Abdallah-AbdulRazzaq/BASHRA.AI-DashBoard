@@ -1,0 +1,36 @@
+Area,Endpoint,Method,Permission,Positive test,Negative test,DB impact
+Features,/api/features,GET,Admin,List all/filter active,No token/doctor token forbidden,None
+Features,/api/features/:id,GET,Admin,Get feature,Missing feature 404,None
+Features,/api/features,POST,Admin,Create feature,Missing name_ar 400; duplicate name_ar 400,Insert features
+Features,/api/features/:id,PUT,Admin,Update feature,No fields 400; duplicate name_ar 400,Update features
+Features,/api/features/:id/toggle-status,PATCH,Admin,Toggle active,Missing feature 404,Update is_active
+Features,/api/features/:id,DELETE,Admin,Delete unused feature,Used in package_features 400,Delete features
+Packages,/api/packages,GET,Admin,List all/include features,No token/doctor token forbidden,None
+Packages,/api/packages/:id,GET,Admin,Get package with features,Missing package 404,None
+Packages,/api/packages,POST,Admin,Create package,Missing required fields 400; invalid duration/price 400,Insert packages
+Packages,/api/packages/:id,PUT,Admin,Update package,No fields 400; invalid duration/price 400,Update packages
+Packages,/api/packages/:id/toggle-status,PATCH,Admin,Toggle active,Missing package 404,Update is_active
+Packages,/api/packages/:id,DELETE,Admin,Delete unused package,Used in doctor_subscriptions 400,Delete packages and cascade package_features
+Package Features,/api/package-features/package/:packageId,GET,Admin,Get package features,Missing package 404,None
+Package Features,/api/package-features/feature/:featureId,GET,Admin,Get feature packages,Missing feature 404,None
+Package Features,/api/package-features,POST,Admin,Add feature to package,Missing fields 400; duplicate 400,Insert package_features
+Package Features,/api/package-features/bulk,POST,Admin,Bulk add features,Empty features 400; per item errors array,Insert valid package_features
+Package Features,/api/package-features/:id,PUT,Admin,Update package feature,No fields 400; missing row 404,Update package_features
+Package Features,/api/package-features/:id,DELETE,Admin,Delete relationship,Missing row 404,Delete package_features
+Public Packages,/api/public/packages,GET,Public,List active packages,No active packages -> empty array,None
+Public Packages,/api/public/packages/:id,GET,Public,Get active package,Inactive/missing package 404,None
+Public Packages,/api/public/packages/comparison,GET,Public,Comparison matrix,No active packages -> empty packages,None
+Public Packages,/api/public/packages/featured,GET,Public,Featured package,No active packages 404,None
+Public Packages,/api/public/packages/cheapest,GET,Public,Cheapest package,No active packages 404,None
+Public Packages,/api/public/packages/premium,GET,Public,Premium package,No active packages 404,None
+Public Features,/api/public/features,GET,Public,List active features,No active features -> empty array,None
+Doctor Subscriptions,/api/doctor-subscriptions/subscribe,POST,Doctor,Create pending subscription,Missing package 400; inactive package 400; already active/pending 400,Insert or renew doctor_subscriptions
+Doctor Subscriptions,/api/doctor-subscriptions/my-subscriptions,GET,Doctor,List own subscriptions,No token/admin token forbidden,None
+Doctor Subscriptions,/api/doctor-subscriptions/current,GET,Doctor,Get active subscription,No active subscription 404,None
+Doctor Subscriptions,/api/doctor-subscriptions/:id/cancel,DELETE,Doctor,Cancel pending own subscription,Non-pending 400; not owner 404,Update status canceled
+Admin Subscriptions,/api/doctor-subscriptions/admin/all,GET,Admin,List/filter all subscriptions,No token/doctor token forbidden,None
+Admin Subscriptions,/api/doctor-subscriptions/admin/:id,GET,Admin,Get subscription with features,Missing subscription 404,None
+Admin Subscriptions,/api/doctor-subscriptions/admin/:id/approve,PATCH,Admin,Approve pending subscription,Non-pending 400,Update subscription active and doctor current_subscription_id
+Admin Subscriptions,/api/doctor-subscriptions/admin/:id,PUT,Admin,Update status/trial/dates,No fields 400,Update doctor_subscriptions
+Admin Subscriptions,/api/doctor-subscriptions/admin/:id/expire,PATCH,Admin,Expire subscription,Missing subscription 404,Update status expired and clear current_subscription_id
+Admin Subscriptions,/api/doctor-subscriptions/admin/:id,DELETE,Admin,Delete disposable subscription,Missing subscription 404,Delete doctor_subscriptions and clear current_subscription_id

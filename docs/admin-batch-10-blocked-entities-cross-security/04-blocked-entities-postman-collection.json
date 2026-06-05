@@ -1,0 +1,764 @@
+{
+  "info": {
+    "name": "Batch 10 - Blocked Entities + Cross-Security",
+    "description": "Postman collection for blocked entities CRUD/security testing.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3006"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "system_admin_token",
+      "value": ""
+    },
+    {
+      "key": "super_admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token_before_block",
+      "value": ""
+    },
+    {
+      "key": "target_user_id",
+      "value": "1"
+    },
+    {
+      "key": "target_doctor_id",
+      "value": "1"
+    },
+    {
+      "key": "target_assistant_id",
+      "value": ""
+    },
+    {
+      "key": "target_admin_id",
+      "value": ""
+    },
+    {
+      "key": "current_super_admin_id",
+      "value": ""
+    },
+    {
+      "key": "block_id",
+      "value": ""
+    },
+    {
+      "key": "future_date",
+      "value": "2026-12-31T23:59:59.000Z"
+    },
+    {
+      "key": "target_user_email",
+      "value": ""
+    },
+    {
+      "key": "target_user_password",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Discovery and Read",
+      "item": [
+        {
+          "name": "List Active Blocks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities?page=1&limit=20&is_active=true"
+            }
+          }
+        },
+        {
+          "name": "List All Blocks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities?page=1&limit=20&is_active=false"
+            }
+          }
+        },
+        {
+          "name": "Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/statistics"
+            }
+          }
+        },
+        {
+          "name": "Check User Block Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/check?entity_id={{target_user_id}}&entity_type=user"
+            }
+          }
+        },
+        {
+          "name": "Get Block Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/{{block_id}}"
+            }
+          }
+        },
+        {
+          "name": "Get User Block History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/history/user/{{target_user_id}}?page=1&limit=20"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth Cross-Security",
+      "item": [
+        {
+          "name": "Login Target User Before Block",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth-user/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{target_user_email}}\",\n  \"password\": \"{{target_user_password}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Protected API With User Token Before/After Block",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token_before_block}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ai-dermatology/usage"
+            }
+          }
+        },
+        {
+          "name": "Login Target User After Block",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth-user/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{target_user_email}}\",\n  \"password\": \"{{target_user_password}}\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mutations",
+      "item": [
+        {
+          "name": "Block User Temporary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"temporary\",\n  \"blocked_until\": \"{{future_date}}\",\n  \"reason\": \"Security test temporary user block reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Block User Permanent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Security test permanent user block reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Block User Warning",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"warning\",\n  \"reason\": \"Testing warning behavior as active block\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Block",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/{{block_id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"block_type\": \"permanent\",\n  \"blocked_until\": null,\n  \"reason\": \"Updated block reason for security testing\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Unblock User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/unblock"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"reason\": \"Security test unblock reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Bulk Block User and Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/bulk/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entities\": [\n    {\n      \"entity_id\": \"{{target_user_id}}\",\n      \"entity_type\": \"user\"\n    },\n    {\n      \"entity_id\": \"{{target_doctor_id}}\",\n      \"entity_type\": \"doctor\"\n    }\n  ],\n  \"block_type\": \"temporary\",\n  \"blocked_until\": \"{{future_date}}\",\n  \"reason\": \"Bulk security test block reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Bulk Unblock User and Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/bulk/unblock"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entities\": [\n    {\n      \"entity_id\": \"{{target_user_id}}\",\n      \"entity_type\": \"user\"\n    },\n    {\n      \"entity_id\": \"{{target_doctor_id}}\",\n      \"entity_type\": \"doctor\"\n    }\n  ],\n  \"reason\": \"Bulk security test unblock reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Auto Unblock Expired",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/auto-unblock"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Entity Tests",
+      "item": [
+        {
+          "name": "System Admin Cannot Block Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_admin_id}}\",\n  \"entity_type\": \"admin\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Testing admin block permission\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Super Admin Cannot Block Self",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{current_super_admin_id}}\",\n  \"entity_type\": \"admin\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Testing self block prevention\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Super Admin Blocks Test Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_admin_id}}\",\n  \"entity_type\": \"admin\",\n  \"block_type\": \"temporary\",\n  \"blocked_until\": \"{{future_date}}\",\n  \"reason\": \"Testing super admin blocking another admin\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Super Admin Unblocks Test Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/unblock"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_admin_id}}\",\n  \"entity_type\": \"admin\",\n  \"reason\": \"Unblocking test admin\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests",
+      "item": [
+        {
+          "name": "Negative Missing Entity ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_type\": \"user\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Missing entity id test reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Invalid Entity Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"patient\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Invalid entity type validation reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Temporary Missing Date",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"temporary\",\n  \"reason\": \"Missing temporary date reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Temporary Past Date",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"temporary\",\n  \"blocked_until\": \"2020-01-01T00:00:00.000Z\",\n  \"reason\": \"Past date validation reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Short Reason",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{system_admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"short\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative Normal Admin Cannot Block",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities/block"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entity_id\": \"{{target_user_id}}\",\n  \"entity_type\": \"user\",\n  \"block_type\": \"permanent\",\n  \"reason\": \"Normal admin permission should fail\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Negative No Token List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "ar"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/blocked-entities?page=1&limit=20"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
