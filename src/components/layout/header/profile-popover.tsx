@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { User, Settings, Bell, CreditCard, LogOut } from "lucide-react";
 import { useDictionary } from "@/components/shared/dictionary-provider";
-import { useRouter, useParams } from "next/navigation"; // 👈 استيراد التوجيه
+import { useRouter, useParams } from "next/navigation";
+import { getCurrentAdminFromStorage, logoutAdminLocal } from "@/lib/admin-auth";
+import { apiPost } from "@/lib/api";
+import { getAdminAccessToken } from "@/lib/api";
 
 interface ProfilePopoverProps {
   isOpen: boolean;
@@ -13,18 +16,40 @@ interface ProfilePopoverProps {
 
 export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
   const { dictionary, isRTL } = useDictionary();
-  const router = useRouter(); // 👈 تفعيل الموجه
+  const router = useRouter();
   const params = useParams();
   const lang = params.lang as string;
 
+  const admin = getCurrentAdminFromStorage();
+
+  const handleNavigateToProfile = () => {
+    onClose();
+    router.push(`/${lang}/settings/profile`);
+  };
+
+  const handleLogout = useCallback(async () => {
+    setLoggingOut(true);
+    try {
+      if (getAdminAccessToken()) {
+        await apiPost('/api/auth-admin/logout', {}, { auth: true }).catch(() => {});
+      }
+    } finally {
+      logoutAdminLocal();
+      setLoggingOut(false);
+      onClose();
+      router.replace(`/${lang}/login`);
+    }
+  }, [onClose, router, lang]);
+
   if (!isOpen) return null;
 
-  // 👈 دالة الانتقال لصفحة الإعدادات
-  const handleNavigateToProfile = () => {
-    onClose(); // إغلاق القائمة أولاً
-    router.push(`/${lang}/settings/profile`); // الانتقال للمسار
-  };
+  const displayName = admin?.full_name || admin?.email || dictionary.profile.name;
+  const displayRole = admin?.admin_type
+    ? admin.admin_type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+    : dictionary.profile.role;
+  const profileImage = admin?.profile_picture_url;
 
   return (
     <>
@@ -36,17 +61,22 @@ export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
         
         <div className="flex items-center gap-3 px-4 py-4 border-b border-border bg-secondary/10">
           <div className="relative h-10 w-10 flex-shrink-0">
-             <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100&auto=format&fit=crop" alt={dictionary.profile.name} className="h-full w-full rounded-full object-cover border border-border" />
-             <span className={cn("absolute bottom-0 h-2.5 w-2.5 rounded-full bg-success border-2 border-card", isRTL ? "left-0" : "right-0")}></span>
+            {profileImage ? (
+              <img src={profileImage} alt={displayName} className="h-full w-full rounded-full object-cover border border-border" />
+            ) : (
+              <div className="h-full w-full rounded-full bg-brand-primary flex items-center justify-center text-white text-sm font-bold border border-border">
+                {displayName.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <span className={cn("absolute bottom-0 h-2.5 w-2.5 rounded-full bg-success border-2 border-card", isRTL ? "left-0" : "right-0")}></span>
           </div>
           <div className="flex flex-col overflow-hidden">
-            <h4 className="text-[14px] font-semibold text-foreground truncate">{dictionary.profile.name}</h4>
-            <p className="text-[12px] text-muted-foreground truncate">{dictionary.profile.role}</p>
+            <h4 className="text-[14px] font-semibold text-foreground truncate">{displayName}</h4>
+            <p className="text-[12px] text-muted-foreground truncate">{displayRole}</p>
           </div>
         </div>
 
         <div className="flex flex-col py-2">
-          {/* 👈 ربط الزر بدالة الانتقال */}
           <button onClick={handleNavigateToProfile} className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-foreground hover:bg-secondary/50 hover:text-primary transition-colors group">
             <User size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
             {dictionary.profile.profile_settings}
@@ -74,9 +104,13 @@ export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
         </div>
 
         <div className="border-t border-border mt-1 p-2">
-          <button className="flex w-full items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium text-destructive hover:bg-destructive/10 transition-colors">
+          <button
+            onClick={handleLogout}
+            disabled={loggingOut}
+            className="flex w-full items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
+          >
             <LogOut size={16} />
-            {dictionary.profile.logout}
+            {loggingOut ? 'Logging out...' : dictionary.profile.logout}
           </button>
         </div>
       </div>

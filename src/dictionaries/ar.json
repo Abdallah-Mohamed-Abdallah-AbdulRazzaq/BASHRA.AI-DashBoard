@@ -6,7 +6,8 @@
     "logout": "تسجيل الخروج",
     "search_placeholder": "بحث...",
     "upgrade_pro": "الترقية للاحترافية",
-    "upgrade_desc": "شاهد فيديو دقيقة واحدة وابدأ باستخدام بريكلنيك كالمحترفين"
+    "upgrade_desc": "شاهد فيديو دقيقة واحدة وابدأ باستخدام بريكلنيك كالمحترفين",
+    "loading": "جارٍ التحميل..."
   },
   "auth": {
     "overlay_title": "وصول سلس للرعاية الصحية مع عيادة ذكية ومتطورة",
@@ -56,7 +57,16 @@
     "otp_placeholder": "info@example.com",
     "didnt_receive_code": "لم تستلم الرمز؟",
     "resend_code": "إعادة إرسال",
-    "verify_proceed": "تحقق وتابع"
+    "verify_proceed": "تحقق وتابع",
+    "password_required": "كلمة المرور مطلوبة",
+    "logging_in": "تسجيل الدخول...",
+    "sending": "جاري الإرسال...",
+    "invalid_reset_link": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
+    "password_min_length": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+    "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
+    "password_reset_success": "تم إعادة تعيين كلمة المرور بنجاح!",
+    "redirecting_to_login": "جاري التوجيه إلى صفحة تسجيل الدخول...",
+    "resetting": "جاري إعادة التعيين..."
   },
   "sidebar": {
     "main_menu": "القائمة الرئيسية",
@@ -618,7 +628,10 @@
     
     "system_preferences": "تفضيلات النظام",
     "timezone": "المنطقة الزمنية",
-    "language": "لغة النظام"
+    "language": "لغة النظام",
+    "save_success": "تم تحديث الملف الشخصي بنجاح",
+    "picture_uploaded": "تم تحديث الصورة الشخصية",
+    "picture_deleted": "تم إزالة الصورة الشخصية"
   },
   "packages": {
     "features_title": "ميزات النظام",

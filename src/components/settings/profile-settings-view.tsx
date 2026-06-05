@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { 
   UserCircle2, Globe, Building2, Smartphone, 
   MonitorDot, CreditCard, Settings2, ChevronDown, 
-  Image as ImageIcon 
+  Image as ImageIcon, Loader2
 } from "lucide-react";
+import { apiGet, apiPut, apiUpload, apiDelete } from "@/lib/api";
+import { getApiErrorMessage } from "@/lib/error-utils";
+import type { AdminCompleteProfile, ApiSuccessResponse, PictureUploadResponse } from "@/types/api";
 
 interface ProfileSettingsViewProps {
   t: any;
@@ -15,36 +18,171 @@ interface ProfileSettingsViewProps {
 export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
   const [activeMenu, setActiveMenu] = useState("account");
   const [activeSubMenu, setActiveSubMenu] = useState("profile");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // --- محاكاة بيانات الـ Admin بناءً على الـ SQL ---
-  const [adminData, setAdminData] = useState({
-    // من جدول: admins
-    email: "admin@bashraai.com",
-    phone: "+1 234 567 8900",
-    admin_type: "super_admin", // super_admin, system_admin, clinic_admin
-    
-    // من جدول: admin_profiles
-    date_of_birth: "1985-10-15",
-    gender: "male", // male, female, other, prefer_not_to_say
-    nationality: "American",
-    profile_picture_url: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop",
-    emergency_contact_phone: "+1 987 654 3210",
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    phone: "",
+    admin_type: "",
+    date_of_birth: "",
+    gender: "",
+    nationality: "",
+    profile_picture_url: "",
+    emergency_contact_phone: "",
     timezone: "UTC",
     language_preference: "en",
-    hire_date: "2020-01-01",
-    
-    // من جدول: admin_profile_translations
-    full_name: "John Doe",
-    job_title: "Chief Technical Officer",
-    department: "IT & Engineering",
-    emergency_contact_name: "Jane Doe",
-    emergency_contact_relationship: "Spouse"
+    hire_date: "",
+    full_name: "",
+    job_title: "",
+    department: "",
+    emergency_contact_name: "",
+    emergency_contact_relationship: "",
   });
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadProfile() {
+      try {
+        const res = await apiGet<ApiSuccessResponse<AdminCompleteProfile>>(
+          '/api/profile-admin/complete'
+        );
+        if (cancelled) return;
+        const { account, profile } = res.data;
+        setFormData({
+          email: account.email || "",
+          phone: account.phone || "",
+          admin_type: account.admin_type || "",
+          date_of_birth: profile.date_of_birth || "",
+          gender: profile.gender || "",
+          nationality: profile.nationality || "",
+          profile_picture_url: profile.profile_picture_url || "",
+          emergency_contact_phone: profile.emergency_contact_phone || "",
+          timezone: profile.timezone || "UTC",
+          language_preference: profile.language_preference || "en",
+          hire_date: profile.hire_date || "",
+          full_name: profile.full_name || "",
+          job_title: profile.job_title || "",
+          department: profile.department || "",
+          emergency_contact_name: profile.emergency_contact_name || "",
+          emergency_contact_relationship: profile.emergency_contact_relationship || "",
+        });
+      } catch (err) {
+        if (!cancelled) {
+          setError(getApiErrorMessage(err));
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    loadProfile();
+    return () => { cancelled = true; };
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setError(null);
+    setSuccess(null);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      const body: Record<string, string> = {};
+      const fields: (keyof typeof formData)[] = [
+        'full_name', 'job_title', 'department',
+        'date_of_birth', 'gender', 'nationality',
+        'emergency_contact_phone', 'emergency_contact_name', 'emergency_contact_relationship',
+        'timezone', 'language_preference',
+      ];
+      for (const field of fields) {
+        if (formData[field]) body[field] = formData[field];
+      }
+      await apiPut<ApiSuccessResponse<unknown>>('/api/profile-admin', body);
+      setSuccess(t.settings?.save_success || 'Profile updated successfully');
+    } catch (err) {
+      setError(getApiErrorMessage(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleProfilePictureClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleProfilePictureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError(null);
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('profile_picture', file);
+      const res = await apiUpload<PictureUploadResponse>(
+        '/api/profile-admin/picture',
+        formDataUpload
+      );
+      setFormData(prev => ({ ...prev, profile_picture_url: res.data.profile_picture_url }));
+      setSuccess(t.settings?.picture_uploaded || 'Profile picture updated');
+    } catch (err) {
+      setError(getApiErrorMessage(err));
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleDeleteProfilePicture = async () => {
+    if (!formData.profile_picture_url) return;
+    setUploading(true);
+    setError(null);
+    try {
+      await apiDelete('/api/profile-admin/picture');
+      setFormData(prev => ({ ...prev, profile_picture_url: '' }));
+      setSuccess(t.settings?.picture_deleted || 'Profile picture removed');
+    } catch (err) {
+      setError(getApiErrorMessage(err));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center bg-[#F5F6F8]">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 size={32} className="animate-spin text-brand-primary" />
+          <p className="text-sm text-[#6C7688]">{t.common?.loading || 'Loading...'}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6 w-full p-4 sm:p-6 bg-[#F5F6F8] min-h-screen">
       
       <h2 className="text-[22px] font-bold text-[#0A1B39]">{t.settings.title}</h2>
+
+      {error && (
+        <div className="w-full rounded-[8px] border border-[#EF1E1E] bg-red-50 px-4 py-3">
+          <p className="text-[13px] font-medium text-[#EF1E1E]">{error}</p>
+        </div>
+      )}
+
+      {success && (
+        <div className="w-full rounded-[8px] border border-green-500 bg-green-50 px-4 py-3">
+          <p className="text-[13px] font-medium text-green-700">{success}</p>
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6 w-full">
         
@@ -109,34 +247,106 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
               {/* Profile Image Upload */}
               <div className="flex flex-col gap-2">
                 <label className="text-[13px] font-semibold text-[#0A1B39]">{t.settings.profile_image}</label>
-                <div className="relative w-[80px] h-[80px] rounded-full border border-[#E7E8EB] bg-[#F5F6F8] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity overflow-hidden group shadow-sm">
-                  <img src={adminData.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ImageIcon size={20} className="text-white" />
+                <div className="flex items-end gap-3">
+                  <div
+                    onClick={handleProfilePictureClick}
+                    className="relative w-[80px] h-[80px] rounded-full border border-[#E7E8EB] bg-[#F5F6F8] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity overflow-hidden group shadow-sm"
+                  >
+                    {formData.profile_picture_url ? (
+                      <img src={formData.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <UserCircle2 size={36} className="text-[#9DA4B0]" />
+                    )}
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      {uploading ? (
+                        <Loader2 size={20} className="animate-spin text-white" />
+                      ) : (
+                        <ImageIcon size={20} className="text-white" />
+                      )}
+                    </div>
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleProfilePictureUpload}
+                  />
+                  <div className="flex flex-col gap-1">
+                    {formData.profile_picture_url && (
+                      <button
+                        onClick={handleDeleteProfilePicture}
+                        disabled={uploading}
+                        className="text-[12px] font-medium text-[#EF1E1E] hover:underline disabled:opacity-50"
+                      >
+                        {t.address?.remove_image || 'Remove'}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Grid Form */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-                <InputGroup label={t.settings.full_name} value={adminData.full_name} required />
-                <InputGroup label={t.settings.email} value={adminData.email} required type="email" dir="ltr" />
-                <InputGroup label={t.settings.phone} value={adminData.phone} required type="tel" dir="ltr" />
-                <InputGroup label={t.settings.dob} value={adminData.date_of_birth} type="date" dir="ltr" />
-                <SelectGroup label={t.settings.gender} value={adminData.gender} options={["male", "female", "other", "prefer_not_to_say"]} />
-                <InputGroup label={t.settings.nationality} value={adminData.nationality} />
+                <InputGroup
+                  label={t.settings.full_name}
+                  name="full_name"
+                  value={formData.full_name}
+                  onChange={handleChange}
+                  required
+                />
+                <InputGroup
+                  label={t.settings.email}
+                  value={formData.email}
+                  type="email"
+                  dir="ltr"
+                  readonly
+                />
+                <InputGroup
+                  label={t.settings.phone}
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  type="tel"
+                  dir="ltr"
+                />
+                <InputGroup
+                  label={t.settings.dob}
+                  name="date_of_birth"
+                  value={formData.date_of_birth}
+                  onChange={handleChange}
+                  type="date"
+                  dir="ltr"
+                />
+                <SelectGroup
+                  label={t.settings.gender}
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  options={["male", "female", "other", "prefer_not_to_say"]}
+                />
+                <InputGroup
+                  label={t.settings.nationality}
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </div>
 
-          {/* Section 2: Employment Details (Read-only usually for Admins) */}
+          {/* Section 2: Employment Details (Read-only) */}
           <div className="p-6 border-b border-[#E7E8EB] bg-[#FAFBFC]/50">
             <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.employment_details}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-              <InputGroup label={t.settings.job_title} value={adminData.job_title} readonly />
-              <InputGroup label={t.settings.department} value={adminData.department} readonly />
-              <InputGroup label={t.settings.admin_type} value={adminData.admin_type.replace('_', ' ').toUpperCase()} readonly />
-              <InputGroup label={t.settings.hire_date} value={adminData.hire_date} type="date" readonly dir="ltr" />
+              <InputGroup label={t.settings.job_title} value={formData.job_title} readonly />
+              <InputGroup label={t.settings.department} value={formData.department} readonly />
+              <InputGroup
+                label={t.settings.admin_type}
+                value={formData.admin_type.replace(/_/g, ' ').toUpperCase()}
+                readonly
+              />
+              <InputGroup label={t.settings.hire_date} value={formData.hire_date} type="date" readonly dir="ltr" />
             </div>
           </div>
 
@@ -144,9 +354,26 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
           <div className="p-6 border-b border-[#E7E8EB]">
             <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.emergency_contact}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-              <InputGroup label={t.settings.contact_name} value={adminData.emergency_contact_name} />
-              <InputGroup label={t.settings.relationship} value={adminData.emergency_contact_relationship} />
-              <InputGroup label={t.settings.phone} value={adminData.emergency_contact_phone} type="tel" dir="ltr" />
+              <InputGroup
+                label={t.settings.contact_name}
+                name="emergency_contact_name"
+                value={formData.emergency_contact_name}
+                onChange={handleChange}
+              />
+              <InputGroup
+                label={t.settings.relationship}
+                name="emergency_contact_relationship"
+                value={formData.emergency_contact_relationship}
+                onChange={handleChange}
+              />
+              <InputGroup
+                label={t.settings.phone}
+                name="emergency_contact_phone"
+                value={formData.emergency_contact_phone}
+                onChange={handleChange}
+                type="tel"
+                dir="ltr"
+              />
             </div>
           </div>
 
@@ -154,17 +381,38 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
           <div className="p-6">
             <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.system_preferences}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-              <SelectGroup label={t.settings.timezone} value={adminData.timezone} options={["UTC", "GMT", "EST", "PST", "AST"]} dir="ltr" />
-              <SelectGroup label={t.settings.language} value={adminData.language_preference} options={["en", "ar"]} />
+              <SelectGroup
+                label={t.settings.timezone}
+                name="timezone"
+                value={formData.timezone}
+                onChange={handleChange}
+                options={["UTC", "GMT", "EST", "PST", "AST", "Africa/Cairo", "Asia/Riyadh"]}
+                dir="ltr"
+              />
+              <SelectGroup
+                label={t.settings.language}
+                name="language_preference"
+                value={formData.language_preference}
+                onChange={handleChange}
+                options={["en", "ar"]}
+              />
             </div>
           </div>
 
           {/* Footer Actions */}
           <div className="p-5 border-t border-[#E7E8EB] bg-[#FAFBFC] flex items-center justify-end gap-3 rounded-b-[12px]">
-            <button className="px-5 py-2.5 bg-[#F5F6F8] text-[#0A1B39] text-[13px] font-bold rounded-[8px] hover:bg-[#E7E8EB] transition-colors border border-[#E7E8EB]">
+            <button
+              onClick={() => window.location.reload()}
+              className="px-5 py-2.5 bg-[#F5F6F8] text-[#0A1B39] text-[13px] font-bold rounded-[8px] hover:bg-[#E7E8EB] transition-colors border border-[#E7E8EB]"
+            >
               {t.settings.cancel}
             </button>
-            <button className="px-5 py-2.5 bg-[#2E37A4] text-white text-[13px] font-bold rounded-[8px] hover:bg-[#252D88] transition-colors shadow-sm">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="px-5 py-2.5 bg-[#2E37A4] text-white text-[13px] font-bold rounded-[8px] hover:bg-[#252D88] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {saving && <Loader2 size={14} className="animate-spin" />}
               {t.settings.save_changes}
             </button>
           </div>
@@ -177,14 +425,16 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
 }
 
 // --- Helper Components ---
-const InputGroup = ({ label, value, required, type = "text", dir = "auto", readonly = false }: any) => (
+const InputGroup = ({ label, name, value, onChange, required, type = "text", dir = "auto", readonly = false }: any) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-[13px] font-semibold text-[#0A1B39]">
       {label} {required && <span className="text-[#EF1E1E]">*</span>}
     </label>
     <input 
       type={type} 
-      defaultValue={value}
+      name={name}
+      value={value}
+      onChange={onChange}
       readOnly={readonly}
       dir={dir}
       className={cn(
@@ -195,12 +445,14 @@ const InputGroup = ({ label, value, required, type = "text", dir = "auto", reado
   </div>
 );
 
-const SelectGroup = ({ label, value, options, dir = "auto" }: any) => (
+const SelectGroup = ({ label, name, value, onChange, options, dir = "auto" }: any) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-[13px] font-semibold text-[#0A1B39]">{label}</label>
     <div className="relative">
       <select 
-        defaultValue={value} 
+        name={name}
+        value={value}
+        onChange={onChange}
         dir={dir}
         className="w-full h-[42px] px-3 bg-white border border-[#E7E8EB] rounded-[8px] text-[14px] text-[#0A1B39] appearance-none focus:outline-none focus:border-[#2E37A4] transition-colors cursor-pointer capitalize"
       >

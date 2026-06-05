@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogoIcon } from "@/components/ui/icons/sidebar-icons";
 import { MailIcon } from "@/components/ui/icons/auth-icons";
 import { useDictionary } from "@/components/shared/dictionary-provider";
+import { requestPasswordReset } from "@/lib/admin-auth";
+import { getApiErrorMessage } from "@/lib/error-utils";
 
-// --- مكون إدخال (نفس المستخدم في الصفحات السابقة لضمان التناسق) ---
 interface FormInputProps {
   id: string;
   label: string;
@@ -40,15 +42,31 @@ const FormInput = ({ id, label, type, placeholder, value, onChange, icon }: Form
   );
 };
 
-// --- الصفحة الرئيسية ---
 export default function ForgotPasswordPage() {
   const { dictionary, lang } = useDictionary();
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Reset Password for:", email);
-    // Add logic to send reset email here
+    setError(null);
+
+    if (!email.trim()) {
+      setError(dictionary.auth.enter_email || 'Email is required');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await requestPasswordReset(email);
+      router.push(`/${lang}/email-sent`);
+    } catch (err) {
+      setError(getApiErrorMessage(err, lang as 'ar' | 'en'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,9 +104,21 @@ export default function ForgotPasswordPage() {
             icon={<MailIcon />}
           />
 
+          {/* Error Message */}
+          {error && (
+            <div className="w-full rounded-[6px] border border-[#EF1E1E] bg-red-50 px-4 py-3 text-center">
+              <p className="font-inter text-[13px] font-medium text-[#EF1E1E]">{error}</p>
+            </div>
+          )}
+
           {/* Reset Button */}
-          <button type="submit" className="flex h-[38px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[6px] bg-brand-primary text-brand-white font-inter text-[14px] font-medium leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99]">
-            {dictionary.auth.reset_btn}
+          <button type="submit" disabled={loading} className="flex h-[38px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[6px] bg-brand-primary text-brand-white font-inter text-[14px] font-medium leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed">
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {dictionary.auth.sending || 'Sending...'}
+              </span>
+            ) : dictionary.auth.reset_btn}
           </button>
 
           {/* Return to Login */}

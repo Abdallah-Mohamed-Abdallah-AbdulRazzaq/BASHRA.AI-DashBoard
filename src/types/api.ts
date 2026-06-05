@@ -46,3 +46,52 @@ export type ApiResponseData<T> = {
   pagination?: PaginationMeta;
   [key: string]: unknown;
 };
+
+export type AdminProfileTranslation = {
+  full_name?: string;
+  job_title?: string;
+  department?: string;
+};
+
+export type AdminCompleteProfile = {
+  account: {
+    id: number;
+    uuid?: string;
+    email: string;
+    phone?: string | null;
+    admin_type: AdminType;
+    status: string;
+    is_active: number;
+  };
+  profile: {
+    id: number;
+    admin_id: number;
+    date_of_birth?: string | null;
+    gender?: string | null;
+    nationality?: string | null;
+    profile_picture_url?: string | null;
+    emergency_contact_phone?: string | null;
+    timezone?: string;
+    language_preference?: string;
+    hire_date?: string | null;
+    full_name?: string | null;
+    job_title?: string | null;
+    department?: string | null;
+    emergency_contact_name?: string | null;
+    emergency_contact_relationship?: string | null;
+  };
+  translations: {
+    ar?: AdminProfileTranslation;
+    en?: AdminProfileTranslation;
+  };
+};
+
+export type PictureUploadResponse = {
+  success: true;
+  message?: string;
+  data: {
+    profile_picture_url: string;
+    file_uuid: string;
+    file_id: number;
+  };
+};

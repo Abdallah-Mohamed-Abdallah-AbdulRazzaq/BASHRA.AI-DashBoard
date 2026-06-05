@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   AiIcon, CalendarIcon, CommandIcon, NotificationIcon,
@@ -11,8 +11,8 @@ import { HamburgerIcon, SearchIconMobile } from "@/components/ui/icons/sidebar-i
 import { NotificationsPopover } from "./notifications-popover";
 import { ProfilePopover } from "./profile-popover";
 import { useDictionary } from "@/components/shared/dictionary-provider";
+import { getCurrentAdminFromStorage } from "@/lib/admin-auth";
 
-// 👇 استيراد مكون الشات الجديد
 import { AiAssistantChat } from "./ai-assistant-chat"; 
 
 export function Header() {
@@ -20,12 +20,13 @@ export function Header() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
-  // 👇 State للتحكم بفتح وإغلاق الشات
   const [isAiChatOpen, setIsAiChatOpen] = useState(false); 
   
   const { dictionary } = useDictionary();
   const router = useRouter();
   const pathname = usePathname();
+
+  const admin = useMemo(() => getCurrentAdminFromStorage(), []);
 
   const toggleLanguage = () => {
     if (!pathname) return;
@@ -91,7 +92,13 @@ export function Header() {
 
           <div className="relative">
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="relative flex h-8 w-8 items-center justify-center rounded-full ring-2 ring-transparent hover:ring-border transition-all cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100&auto=format&fit=crop" alt="User" className="h-full w-full rounded-full object-cover"/>
+              {admin?.profile_picture_url ? (
+                <img src={admin.profile_picture_url} alt="User" className="h-full w-full rounded-full object-cover"/>
+              ) : (
+                <div className="h-full w-full rounded-full bg-brand-primary flex items-center justify-center text-white text-sm font-bold">
+                  {(admin?.full_name || admin?.email || 'U').charAt(0).toUpperCase()}
+                </div>
+              )}
               <div className="absolute bottom-0 right-[1px] flex items-center justify-center rounded-[20px] bg-background p-[2px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="5" height="5" viewBox="0 0 5 5" fill="none"><path d="M5 2.5C5 3.88071 3.88071 5 2.5 5C1.11929 5 0 3.88071 0 2.5C0 1.11929 1.11929 0 2.5 0C3.88071 0 5 1.11929 5 2.5Z" fill="#27AE60"/></svg>
               </div>

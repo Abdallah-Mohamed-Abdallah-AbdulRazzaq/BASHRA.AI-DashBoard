@@ -6,7 +6,8 @@
     "logout": "Log Out",
     "search_placeholder": "Search...",
     "upgrade_pro": "Upgrade To Pro",
-    "upgrade_desc": "Check 1 min video and begin use Preclinic like a pro"
+    "upgrade_desc": "Check 1 min video and begin use Preclinic like a pro",
+    "loading": "Loading..."
   },
   "auth": {
     "overlay_title": "Seamless healthcare access with smart, modern clinic",
@@ -56,7 +57,16 @@
     "otp_placeholder": "info@example.com",
     "didnt_receive_code": "Didn't receive code?",
     "resend_code": "Resend Code",
-    "verify_proceed": "Verify & Proceed"
+    "verify_proceed": "Verify & Proceed",
+    "password_required": "Password is required",
+    "logging_in": "Logging in...",
+    "sending": "Sending...",
+    "invalid_reset_link": "Invalid or expired reset link",
+    "password_min_length": "Password must be at least 6 characters",
+    "passwords_do_not_match": "Passwords do not match",
+    "password_reset_success": "Password reset successfully!",
+    "redirecting_to_login": "Redirecting to login...",
+    "resetting": "Resetting..."
   },
   "sidebar": {
     "main_menu": "Main Menu",
@@ -618,7 +628,10 @@
     
     "system_preferences": "System Preferences",
     "timezone": "Timezone",
-    "language": "Language Preference"
+    "language": "Language Preference",
+    "save_success": "Profile updated successfully",
+    "picture_uploaded": "Profile picture updated",
+    "picture_deleted": "Profile picture removed"
   },
   "packages": {
     "features_title": "System Features",

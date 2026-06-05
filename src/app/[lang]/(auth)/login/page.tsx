@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogoIcon } from "@/components/ui/icons/sidebar-icons";
 import { 
   MailIcon, 
@@ -13,8 +14,9 @@ import {
   AppleIcon 
 } from "@/components/ui/icons/auth-icons";
 import { useDictionary } from "@/components/shared/dictionary-provider";
+import { loginAdmin } from "@/lib/admin-auth";
+import { getApiErrorMessage } from "@/lib/error-utils";
 
-// --- مكون إدخال قابل لإعادة الاستخدام (نفس المستخدم في صفحة التسجيل) ---
 interface FormInputProps {
   id: string;
   label: string;
@@ -62,25 +64,45 @@ const FormInput = ({
   );
 };
 
-// --- الصفحة الرئيسية لتسجيل الدخول ---
 export default function LoginPage() {
   const { dictionary, lang } = useDictionary();
+  const router = useRouter();
 
-  // State
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login Data:", { ...formData, rememberMe });
-    // Add Login Logic Here (API Call)
+    setError(null);
+
+    if (!formData.email.trim()) {
+      setError(dictionary.auth.enter_email || 'Email is required');
+      return;
+    }
+    if (!formData.password) {
+      setError(dictionary.auth.password_required || 'Password is required');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await loginAdmin({ email: formData.email, password: formData.password });
+      router.replace(`/${lang}/dashboard/admin`);
+    } catch (err) {
+      setError(getApiErrorMessage(err, lang as 'ar' | 'en'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -157,9 +179,21 @@ export default function LoginPage() {
           </div>
 
           {/* Login Button */}
-          <button type="submit" className="flex h-[38px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[6px] bg-brand-primary text-brand-white font-inter text-[14px] font-medium leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99]">
-            {dictionary.auth.login}
+          <button type="submit" disabled={loading} className="flex h-[38px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[6px] bg-brand-primary text-brand-white font-inter text-[14px] font-medium leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed">
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {dictionary.auth.logging_in || 'Logging in...'}
+              </span>
+            ) : dictionary.auth.login}
           </button>
+
+          {/* Error Message */}
+          {error && (
+            <div className="w-full rounded-[6px] border border-[#EF1E1E] bg-red-50 px-4 py-3 text-center">
+              <p className="font-inter text-[13px] font-medium text-[#EF1E1E]">{error}</p>
+            </div>
+          )}
 
           {/* Divider */}
           <div className="flex items-center gap-[12px] self-stretch">

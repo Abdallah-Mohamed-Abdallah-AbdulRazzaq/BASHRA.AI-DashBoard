@@ -103,6 +103,49 @@ export async function getAdminProfile(): Promise<AdminSession> {
   return response.data;
 }
 
+export async function requestPasswordReset(
+  email: string
+): Promise<ApiSuccessResponse<undefined>> {
+  return apiPost<ApiSuccessResponse<undefined>>(
+    '/api/auth-admin/request-password-reset',
+    { email },
+    { auth: false }
+  );
+}
+
+export async function resetPassword(
+  token: string,
+  newPassword: string
+): Promise<ApiSuccessResponse<undefined>> {
+  return apiPost<ApiSuccessResponse<undefined>>(
+    '/api/auth-admin/reset-password',
+    { token, newPassword },
+    { auth: false }
+  );
+}
+
+export async function requestPasswordResetOtp(
+  email: string
+): Promise<ApiSuccessResponse<undefined>> {
+  return apiPost<ApiSuccessResponse<undefined>>(
+    '/api/auth-admin/request-password-reset-otp',
+    { email },
+    { auth: false }
+  );
+}
+
+export async function resetPasswordOtp(
+  email: string,
+  otp: string,
+  newPassword: string
+): Promise<ApiSuccessResponse<undefined>> {
+  return apiPost<ApiSuccessResponse<undefined>>(
+    '/api/auth-admin/reset-password-otp',
+    { email, otp, newPassword },
+    { auth: false }
+  );
+}
+
 export async function refreshAdminToken(
   refreshToken: string
 ): Promise<{ accessToken: string; refreshToken: string }> {
