@@ -41,6 +41,16 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
           { title: t.sidebar.all_patients, href: `/${lang}/clinic/patients` },
           { title: t.sidebar.patient_details, href: `/${lang}/clinic/patients/details` },
         ]
+      },
+      {
+        title: t.sidebar.appointments || t.clinic?.appointments || "Appointments",
+        icon: CalendarDays,
+        href: `/${lang}/clinic/appointments`
+      },
+      {
+        title: t.clinic?.medical_records || "Medical Records",
+        icon: Activity,
+        href: `/${lang}/clinic/medical-records`
       }
     ],
   },

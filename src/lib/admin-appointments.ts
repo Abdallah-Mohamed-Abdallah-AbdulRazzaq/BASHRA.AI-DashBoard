@@ -1,24 +1,29 @@
-import { apiDelete, apiGet } from '@/lib/api';
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from '@/lib/api';
 
 import type {
-  DeleteMedicalRecordResponse,
-  MedicalRecordDetailsResponse,
-  MedicalRecordListParams,
-  MedicalRecordListResponse,
-  MedicalRecordStatisticsParams,
-  MedicalRecordStatisticsResponse,
-  PatientMedicalHistoryResponse,
-} from '@/types/admin-medical-records';
+  AppointmentDetailsResponse,
+  AppointmentListParams,
+  AppointmentListResponse,
+  AppointmentStatisticsParams,
+  AppointmentStatisticsResponse,
+  CancelAppointmentPayload,
+  CancelAppointmentResponse,
+  CreateAppointmentPayload,
+  CreateAppointmentResponse,
+  DeleteAppointmentResponse,
+  UpdateAppointmentPayload,
+  UpdateAppointmentResponse,
+} from '@/types/admin-appointments';
 
-const ADMIN_MEDICAL_RECORDS_BASE = '/api/admin/medical-records';
+const ADMIN_APPOINTMENTS_BASE = '/api/admin/appointments';
 
 type ApiQueryParams = Record<
   string,
   string | number | boolean | null | undefined
 >;
 
-function buildMedicalRecordStatisticsParams(
-  params?: MedicalRecordStatisticsParams
+function buildAppointmentStatisticsParams(
+  params?: AppointmentStatisticsParams
 ): ApiQueryParams | undefined {
   if (!params) return undefined;
 
@@ -29,15 +34,18 @@ function buildMedicalRecordStatisticsParams(
   };
 }
 
-function buildMedicalRecordListParams(
-  params?: MedicalRecordListParams
+function buildAppointmentListParams(
+  params?: AppointmentListParams
 ): ApiQueryParams | undefined {
   if (!params) return undefined;
 
   return {
-    patient_id: params.patient_id,
+    status: params.status,
     doctor_id: params.doctor_id,
-    record_status: params.record_status,
+    patient_id: params.patient_id,
+    appointment_type: params.appointment_type,
+    urgency_level: params.urgency_level,
+    payment_status: params.payment_status,
     from_date: params.from_date,
     to_date: params.to_date,
     page: params.page,
@@ -45,37 +53,51 @@ function buildMedicalRecordListParams(
   };
 }
 
-export function getMedicalRecordStatistics(
-  params?: MedicalRecordStatisticsParams
-) {
-  return apiGet<MedicalRecordStatisticsResponse>(
-    `${ADMIN_MEDICAL_RECORDS_BASE}/statistics`,
+export function getAppointmentStatistics(params?: AppointmentStatisticsParams) {
+  return apiGet<AppointmentStatisticsResponse>(
+    `${ADMIN_APPOINTMENTS_BASE}/statistics`,
     {
-      params: buildMedicalRecordStatisticsParams(params),
+      params: buildAppointmentStatisticsParams(params),
     }
   );
 }
 
-export function getPatientMedicalHistory(patientId: number | string) {
-  return apiGet<PatientMedicalHistoryResponse>(
-    `${ADMIN_MEDICAL_RECORDS_BASE}/patient/${patientId}/history`
-  );
-}
-
-export function getAdminMedicalRecords(params?: MedicalRecordListParams) {
-  return apiGet<MedicalRecordListResponse>(ADMIN_MEDICAL_RECORDS_BASE, {
-    params: buildMedicalRecordListParams(params),
+export function getAdminAppointments(params?: AppointmentListParams) {
+  return apiGet<AppointmentListResponse>(ADMIN_APPOINTMENTS_BASE, {
+    params: buildAppointmentListParams(params),
   });
 }
 
-export function getAdminMedicalRecordById(id: number | string) {
-  return apiGet<MedicalRecordDetailsResponse>(
-    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+export function getAdminAppointmentById(id: number | string) {
+  return apiGet<AppointmentDetailsResponse>(`${ADMIN_APPOINTMENTS_BASE}/${id}`);
+}
+
+export function createAdminAppointment(payload: CreateAppointmentPayload) {
+  return apiPost<CreateAppointmentResponse>(ADMIN_APPOINTMENTS_BASE, payload);
+}
+
+export function updateAdminAppointment(
+  id: number | string,
+  payload: UpdateAppointmentPayload
+) {
+  return apiPut<UpdateAppointmentResponse>(
+    `${ADMIN_APPOINTMENTS_BASE}/${id}`,
+    payload
   );
 }
 
-export function deleteAdminMedicalRecord(id: number | string) {
-  return apiDelete<DeleteMedicalRecordResponse>(
-    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+export function cancelAdminAppointment(
+  id: number | string,
+  payload: CancelAppointmentPayload
+) {
+  return apiPatch<CancelAppointmentResponse>(
+    `${ADMIN_APPOINTMENTS_BASE}/${id}/cancel`,
+    payload
+  );
+}
+
+export function deleteAdminAppointment(id: number | string) {
+  return apiDelete<DeleteAppointmentResponse>(
+    `${ADMIN_APPOINTMENTS_BASE}/${id}`
   );
 }
