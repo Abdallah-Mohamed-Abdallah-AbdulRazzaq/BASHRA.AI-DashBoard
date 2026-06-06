@@ -70,6 +70,7 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
       { title: t.sidebar?.packages || "Packages", icon: Package, href: `/${lang}/packages-system/packages` },
       { title: t.sidebar?.features || "Features", icon: Layers, href: `/${lang}/packages-system/features` },
       { title: t.sidebar?.package_features || "Package Features Mapping", icon: Link, href: `/${lang}/packages-system/package-features` },
+      { title: t.sidebar?.doctor_subscriptions || "Doctor Subscriptions", icon: Stethoscope, href: `/${lang}/packages-system/doctor-subscriptions` },
     ],
   },
 
