@@ -1,41 +1,81 @@
-import { apiGet, apiPost, apiPut, apiPatch, apiDelete } from './api';
+import { apiDelete, apiGet } from '@/lib/api';
+
 import type {
-  AppointmentStatisticsParams,
-  AppointmentStatisticsResponse,
-  AppointmentListParams,
-  AppointmentListResponse,
-  AppointmentDetailResponse,
-  CreateAppointmentPayload,
-  CreateAppointmentResponse,
-  UpdateAppointmentPayload,
-  AppointmentActionResponse,
-  CancelAppointmentPayload,
-} from '@/types/admin-appointments';
+  DeleteMedicalRecordResponse,
+  MedicalRecordDetailsResponse,
+  MedicalRecordListParams,
+  MedicalRecordListResponse,
+  MedicalRecordStatisticsParams,
+  MedicalRecordStatisticsResponse,
+  PatientMedicalHistoryResponse,
+} from '@/types/admin-medical-records';
 
-export async function getAppointmentStatistics(params?: AppointmentStatisticsParams): Promise<AppointmentStatisticsResponse> {
-  return apiGet<AppointmentStatisticsResponse>('/api/admin/appointments/statistics', { params: params as Record<string, string | number | boolean | undefined | null> });
+const ADMIN_MEDICAL_RECORDS_BASE = '/api/admin/medical-records';
+
+type ApiQueryParams = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
+
+function buildMedicalRecordStatisticsParams(
+  params?: MedicalRecordStatisticsParams
+): ApiQueryParams | undefined {
+  if (!params) return undefined;
+
+  return {
+    from_date: params.from_date,
+    to_date: params.to_date,
+    doctor_id: params.doctor_id,
+  };
 }
 
-export async function getAppointments(params?: AppointmentListParams): Promise<AppointmentListResponse> {
-  return apiGet<AppointmentListResponse>('/api/admin/appointments', { params: params as Record<string, string | number | boolean | undefined | null> });
+function buildMedicalRecordListParams(
+  params?: MedicalRecordListParams
+): ApiQueryParams | undefined {
+  if (!params) return undefined;
+
+  return {
+    patient_id: params.patient_id,
+    doctor_id: params.doctor_id,
+    record_status: params.record_status,
+    from_date: params.from_date,
+    to_date: params.to_date,
+    page: params.page,
+    limit: params.limit,
+  };
 }
 
-export async function getAppointmentById(id: number | string): Promise<AppointmentDetailResponse> {
-  return apiGet<AppointmentDetailResponse>(`/api/admin/appointments/${id}`);
+export function getMedicalRecordStatistics(
+  params?: MedicalRecordStatisticsParams
+) {
+  return apiGet<MedicalRecordStatisticsResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/statistics`,
+    {
+      params: buildMedicalRecordStatisticsParams(params),
+    }
+  );
 }
 
-export async function createAppointment(payload: CreateAppointmentPayload): Promise<CreateAppointmentResponse> {
-  return apiPost<CreateAppointmentResponse>('/api/admin/appointments', payload);
+export function getPatientMedicalHistory(patientId: number | string) {
+  return apiGet<PatientMedicalHistoryResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/patient/${patientId}/history`
+  );
 }
 
-export async function updateAppointment(id: number | string, payload: UpdateAppointmentPayload): Promise<AppointmentActionResponse> {
-  return apiPut<AppointmentActionResponse>(`/api/admin/appointments/${id}`, payload);
+export function getAdminMedicalRecords(params?: MedicalRecordListParams) {
+  return apiGet<MedicalRecordListResponse>(ADMIN_MEDICAL_RECORDS_BASE, {
+    params: buildMedicalRecordListParams(params),
+  });
 }
 
-export async function cancelAppointment(id: number | string, payload: CancelAppointmentPayload): Promise<AppointmentActionResponse> {
-  return apiPatch<AppointmentActionResponse>(`/api/admin/appointments/${id}/cancel`, payload);
+export function getAdminMedicalRecordById(id: number | string) {
+  return apiGet<MedicalRecordDetailsResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+  );
 }
 
-export async function deleteAppointment(id: number | string): Promise<AppointmentActionResponse> {
-  return apiDelete<AppointmentActionResponse>(`/api/admin/appointments/${id}`);
+export function deleteAdminMedicalRecord(id: number | string) {
+  return apiDelete<DeleteMedicalRecordResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+  );
 }

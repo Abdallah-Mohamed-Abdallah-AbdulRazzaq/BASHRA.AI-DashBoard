@@ -1,30 +1,81 @@
-import { apiGet, apiDelete } from './api';
+import { apiDelete, apiGet } from '@/lib/api';
+
 import type {
-  MedicalRecordStatisticsParams,
-  MedicalRecordStatisticsResponse,
+  DeleteMedicalRecordResponse,
+  MedicalRecordDetailsResponse,
   MedicalRecordListParams,
   MedicalRecordListResponse,
-  MedicalRecordDetailResponse,
+  MedicalRecordStatisticsParams,
+  MedicalRecordStatisticsResponse,
   PatientMedicalHistoryResponse,
-  MedicalRecordActionResponse,
 } from '@/types/admin-medical-records';
 
-export async function getMedicalRecordStatistics(params?: MedicalRecordStatisticsParams): Promise<MedicalRecordStatisticsResponse> {
-  return apiGet<MedicalRecordStatisticsResponse>('/api/admin/medical-records/statistics', { params: params as Record<string, string | number | boolean | undefined | null> });
+const ADMIN_MEDICAL_RECORDS_BASE = '/api/admin/medical-records';
+
+type ApiQueryParams = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
+
+function buildMedicalRecordStatisticsParams(
+  params?: MedicalRecordStatisticsParams
+): ApiQueryParams | undefined {
+  if (!params) return undefined;
+
+  return {
+    from_date: params.from_date,
+    to_date: params.to_date,
+    doctor_id: params.doctor_id,
+  };
 }
 
-export async function getMedicalRecords(params?: MedicalRecordListParams): Promise<MedicalRecordListResponse> {
-  return apiGet<MedicalRecordListResponse>('/api/admin/medical-records', { params: params as Record<string, string | number | boolean | undefined | null> });
+function buildMedicalRecordListParams(
+  params?: MedicalRecordListParams
+): ApiQueryParams | undefined {
+  if (!params) return undefined;
+
+  return {
+    patient_id: params.patient_id,
+    doctor_id: params.doctor_id,
+    record_status: params.record_status,
+    from_date: params.from_date,
+    to_date: params.to_date,
+    page: params.page,
+    limit: params.limit,
+  };
 }
 
-export async function getMedicalRecordById(id: number | string): Promise<MedicalRecordDetailResponse> {
-  return apiGet<MedicalRecordDetailResponse>(`/api/admin/medical-records/${id}`);
+export function getMedicalRecordStatistics(
+  params?: MedicalRecordStatisticsParams
+) {
+  return apiGet<MedicalRecordStatisticsResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/statistics`,
+    {
+      params: buildMedicalRecordStatisticsParams(params),
+    }
+  );
 }
 
-export async function getPatientMedicalHistory(patientId: number | string): Promise<PatientMedicalHistoryResponse> {
-  return apiGet<PatientMedicalHistoryResponse>(`/api/admin/medical-records/patient/${patientId}/history`);
+export function getPatientMedicalHistory(patientId: number | string) {
+  return apiGet<PatientMedicalHistoryResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/patient/${patientId}/history`
+  );
 }
 
-export async function deleteMedicalRecord(id: number | string): Promise<MedicalRecordActionResponse> {
-  return apiDelete<MedicalRecordActionResponse>(`/api/admin/medical-records/${id}`);
+export function getAdminMedicalRecords(params?: MedicalRecordListParams) {
+  return apiGet<MedicalRecordListResponse>(ADMIN_MEDICAL_RECORDS_BASE, {
+    params: buildMedicalRecordListParams(params),
+  });
+}
+
+export function getAdminMedicalRecordById(id: number | string) {
+  return apiGet<MedicalRecordDetailsResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+  );
+}
+
+export function deleteAdminMedicalRecord(id: number | string) {
+  return apiDelete<DeleteMedicalRecordResponse>(
+    `${ADMIN_MEDICAL_RECORDS_BASE}/${id}`
+  );
 }
