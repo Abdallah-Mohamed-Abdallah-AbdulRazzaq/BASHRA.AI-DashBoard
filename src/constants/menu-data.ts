@@ -5,7 +5,7 @@ import {
   ShieldCheck, Globe, Map, Navigation, Compass, Network,
   HeartPulse, BookOpen, Dna,
   Package, Layers, Link, ServerCog, Settings,
-  Pill, ClipboardList, Star
+  Pill, ClipboardList, Star, Cpu
 } from "lucide-react";
 import { SidebarSection } from "@/types/navigation";
 
@@ -120,5 +120,15 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
       { title: t.sidebar.regions, icon: Navigation, href: `/${lang}/address-management/regions` },
       { title: t.sidebar.districts, icon: Compass, href: `/${lang}/address-management/districts` },
     ],
+  },
+  {
+    title: t.ai_usage?.ai_management || "AI Management",
+    items: [
+      {
+        title: t.ai_usage?.ai_usage || "AI Usage & Policies",
+        icon: Cpu,
+        href: `/${lang}/ai-usage`,
+      }
+    ]
   }
 ];
