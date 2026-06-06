@@ -4,7 +4,8 @@ import {
   Building2, BadgeCheck, Clock, LogOut, Plane, CreditCard, Wallet,
   ShieldCheck, Globe, Map, Navigation, Compass, Network,
   HeartPulse, BookOpen, Dna,
-  Package, Layers, Link, ServerCog, Settings
+  Package, Layers, Link, ServerCog, Settings,
+  Pill, ClipboardList, Star
 } from "lucide-react";
 import { SidebarSection } from "@/types/navigation";
 
@@ -51,6 +52,21 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
         title: t.clinic?.medical_records || "Medical Records",
         icon: Activity,
         href: `/${lang}/clinic/medical-records`
+      },
+      {
+        title: t.sidebar?.medications || "Medications",
+        icon: Pill,
+        href: `/${lang}/clinic/medications`
+      },
+      {
+        title: t.sidebar?.prescriptions || "Prescriptions",
+        icon: ClipboardList,
+        href: `/${lang}/clinic/prescriptions`
+      },
+      {
+        title: t.sidebar?.ratings || "Ratings & Reviews",
+        icon: Star,
+        href: `/${lang}/clinic/ratings`
       }
     ],
   },
