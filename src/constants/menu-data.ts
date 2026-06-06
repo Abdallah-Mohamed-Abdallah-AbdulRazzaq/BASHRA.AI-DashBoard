@@ -86,6 +86,11 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
         icon: ShieldCheck,
         href: `/${lang}/settings/security`,
       },
+      {
+        title: t.sidebar?.files_management || "Files Management",
+        icon: ServerCog,
+        href: `/${lang}/files-management`,
+      },
     ],
   },
 

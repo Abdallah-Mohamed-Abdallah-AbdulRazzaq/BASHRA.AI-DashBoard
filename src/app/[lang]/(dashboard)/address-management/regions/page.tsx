@@ -4,5 +4,5 @@ import RegionsView from "@/components/address-management/regions-view";
 
 export default async function RegionsPage({ params }: { params: { lang: string } }) {
   const dictionary = await getDictionary(params.lang);
-  return <RegionsView t={dictionary} />;
+  return <RegionsView t={dictionary} lang={params.lang} />;
 }

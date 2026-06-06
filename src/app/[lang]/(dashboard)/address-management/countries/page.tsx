@@ -6,5 +6,5 @@ export default async function CountriesPage({ params }: { params: { lang: string
   // جلب الترجمة على الخادم وتمريرها للمكون
   const dictionary = await getDictionary(params.lang);
 
-  return <CountriesView t={dictionary} />;
+  return <CountriesView t={dictionary} lang={params.lang} />;
 }

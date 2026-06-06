@@ -132,7 +132,8 @@
     "package_features": "ربط الميزات بالباقات",
     "account_management": "الحساب والأمان",
     "profile_settings": "إعدادات الملف الشخصي",
-    "security": "الأمان"
+    "security": "الأمان",
+    "files_management": "إدارة الملفات"
   },
   "header": {
     "ai_assistance": "مساعد AI"
@@ -626,7 +627,22 @@
     "cancel_crop": "إلغاء",
     "all_countries": "جميع البلدان",
     "all_cities": "جميع المدن",
-    "all_regions": "جميع المناطق"
+    "all_regions": "جميع المناطق",
+    "all_districts": "جميع الأحياء",
+    "select_district": "اختر الحي",
+    "no_countries_found": "لا توجد بلدان.",
+    "no_regions_found": "لا توجد مناطق.",
+    "no_cities_found": "لا توجد مدن.",
+    "no_districts_found": "لا توجد أحياء.",
+    "latitude": "خط العرض",
+    "longitude": "خط الطول",
+    "is_active": "نشط",
+    "status": "الحالة",
+    "action_success": "تمت العملية بنجاح",
+    "action_failed": "فشلت العملية",
+    "permission_denied": "ليس لديك صلاحية لتنفيذ هذا الإجراء",
+    "retry": "إعادة المحاولة",
+    "confirm_delete": "هل أنت متأكد من حذف هذا الموقع؟"
   },
   "health_tips": {
     "daily_tips_title": "النصائح الصحية اليومية",
@@ -776,6 +792,35 @@
     "included": "مشمولة",
     "not_included": "غير مشمولة",
     "all_packages": "جميع الباقات"
+  },
+  "files_management": {
+    "title": "إدارة الملفات",
+    "all_files": "جميع الملفات",
+    "upload_file": "رفع ملف",
+    "file_details": "تفاصيل الملف",
+    "no_files_found": "لم يتم العثور على ملفات.",
+    "search_files": "بحث في الملفات...",
+    "original_name": "الاسم الأصلي",
+    "mime_type": "النوع",
+    "size": "الحجم",
+    "entity_type": "نوع الكيان",
+    "uploaded_by": "تم الرفع بواسطة",
+    "created_at": "تاريخ الرفع",
+    "is_public": "عام",
+    "virus_scan_status": "حالة الفحص",
+    "restore": "استعادة",
+    "delete": "حذف",
+    "hard_delete": "حذف نهائي",
+    "cleanup_expired": "تنظيف الملفات المنتهية",
+    "bulk_delete": "حذف جماعي",
+    "confirm_delete": "هل أنت متأكد من حذف هذا الملف؟",
+    "confirm_hard_delete": "هل أنت متأكد من الحذف النهائي لهذا الملف؟ لا يمكن التراجع عن هذا الإجراء.",
+    "confirm_cleanup": "هل أنت متأكد من تنظيف الملفات المنتهية الصلاحية؟",
+    "action_success": "تمت العملية بنجاح",
+    "action_failed": "فشلت العملية",
+    "clean": "سليم",
+    "infected": "مصاب",
+    "pending": "قيد الانتظار"
   },
   "ai_chat": {
     "title": "مساعد بشرة الذكي",

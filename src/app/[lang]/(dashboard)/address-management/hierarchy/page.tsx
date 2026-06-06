@@ -4,5 +4,5 @@ import AddressHierarchyView from "@/components/address-management/address-hierar
 
 export default async function AddressHierarchyPage({ params }: { params: { lang: string } }) {
   const dictionary = await getDictionary(params.lang);
-  return <AddressHierarchyView t={dictionary} />;
+  return <AddressHierarchyView t={dictionary} lang={params.lang} />;
 }

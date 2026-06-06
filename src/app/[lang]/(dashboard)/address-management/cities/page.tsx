@@ -5,5 +5,5 @@ import CitiesView from "@/components/address-management/cities-view";
 export default async function CitiesPage({ params }: { params: { lang: string } }) {
   const dictionary = await getDictionary(params.lang);
 
-  return <CitiesView t={dictionary} />;
+  return <CitiesView t={dictionary} lang={params.lang} />;
 }

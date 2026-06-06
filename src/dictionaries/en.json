@@ -132,7 +132,8 @@
     "package_features": "Package Features Mapping",
     "account_management": "Account & Security",
     "profile_settings": "Profile Settings",
-    "security": "Security"
+    "security": "Security",
+    "files_management": "Files Management"
   },
   "header": {
     "ai_assistance": "AI Assistance"
@@ -626,7 +627,22 @@
     "cancel_crop": "Cancel",
     "all_countries": "All Countries",
     "all_cities": "All Cities",
-    "all_regions": "All Regions"
+    "all_regions": "All Regions",
+    "all_districts": "All Districts",
+    "select_district": "Select District",
+    "no_countries_found": "No countries found.",
+    "no_regions_found": "No regions found.",
+    "no_cities_found": "No cities found.",
+    "no_districts_found": "No districts found.",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "is_active": "Is Active",
+    "status": "Status",
+    "action_success": "Action completed successfully",
+    "action_failed": "Action failed",
+    "permission_denied": "Permission Denied",
+    "retry": "Retry",
+    "confirm_delete": "Are you sure you want to delete this location?"
   },
   "health_tips": {
     "daily_tips_title": "Daily Health Tips",
@@ -776,6 +792,35 @@
     "included": "Included",
     "not_included": "Not Included",
     "all_packages": "All Packages"
+  },
+  "files_management": {
+    "title": "Files Management",
+    "all_files": "All Files",
+    "upload_file": "Upload File",
+    "file_details": "File Details",
+    "no_files_found": "No files found.",
+    "search_files": "Search files...",
+    "original_name": "Original Name",
+    "mime_type": "Type",
+    "size": "Size",
+    "entity_type": "Entity Type",
+    "uploaded_by": "Uploaded By",
+    "created_at": "Upload Date",
+    "is_public": "Is Public",
+    "virus_scan_status": "Scan Status",
+    "restore": "Restore",
+    "delete": "Delete",
+    "hard_delete": "Hard Delete",
+    "cleanup_expired": "Cleanup Expired",
+    "bulk_delete": "Bulk Delete",
+    "confirm_delete": "Are you sure you want to delete this file?",
+    "confirm_hard_delete": "Are you sure you want to permanently delete this file? This action cannot be undone.",
+    "confirm_cleanup": "Are you sure you want to cleanup expired files?",
+    "action_success": "Action completed successfully",
+    "action_failed": "Action failed",
+    "clean": "Clean",
+    "infected": "Infected",
+    "pending": "Pending"
   },
   "ai_chat": {
     "title": "Bashra AI Assistant",
