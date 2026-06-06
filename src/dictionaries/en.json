@@ -131,7 +131,10 @@
     "packages_system": "Packages & Subscriptions",
     "packages": "Packages",
     "features": "Features",
-    "package_features": "Package Features Mapping"
+    "package_features": "Package Features Mapping",
+    "account_management": "Account & Security",
+    "profile_settings": "Profile Settings",
+    "security": "Security"
   },
   "header": {
     "ai_assistance": "AI Assistance"
@@ -679,6 +682,39 @@
     "save_success": "Profile updated successfully",
     "picture_uploaded": "Profile picture updated",
     "picture_deleted": "Profile picture removed"
+  },
+  "security": {
+    "security_overview": "Security Overview",
+    "security_desc": "Monitor and manage system security, sessions, and access controls.",
+    "active_sessions": "Active Sessions",
+    "admin_logs": "Admin Logs",
+    "failed_logins": "Failed Logins",
+    "blocked_entities": "Blocked Entities",
+    "security_alerts": "Security Alerts",
+    "security_logs": "Security Logs",
+    "system_sessions": "System Sessions",
+    "block_entity": "Block Entity",
+    "unblock_entity": "Unblock Entity",
+    "revoke_sessions": "Revoke Sessions",
+    "end_session": "End Session",
+    "update_entity_status": "Update Entity Status",
+    "manual_cleanup": "Manual Cleanup",
+    "register_admin": "Register Admin",
+    "reason_required": "Reason",
+    "action_success": "Action completed successfully",
+    "action_failed": "Action failed",
+    "permission_denied": "You do not have permission to perform this action",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "total_actions": "Total Admin Actions",
+    "last_24h": "Last 24h Actions",
+    "high_severity": "High Severity",
+    "suspicious_ips": "Suspicious IPs",
+    "deactivate_account": "Deactivate Account",
+    "reactivate_account": "Reactivate Account",
+    "profile_updated": "Profile updated successfully",
+    "profile_picture_uploaded": "Profile picture uploaded",
+    "profile_picture_deleted": "Profile picture deleted"
   },
   "packages": {
     "features_title": "System Features",

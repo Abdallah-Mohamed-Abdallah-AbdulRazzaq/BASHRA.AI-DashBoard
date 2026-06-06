@@ -4,7 +4,7 @@ import {
   Building2, BadgeCheck, Clock, LogOut, Plane, CreditCard, Wallet,
   ShieldCheck, Globe, Map, Navigation, Compass, Network,
   HeartPulse, BookOpen, Dna,
-  Package, Layers, Link, ServerCog
+  Package, Layers, Link, ServerCog, Settings
 } from "lucide-react";
 import { SidebarSection } from "@/types/navigation";
 
@@ -61,8 +61,24 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
       { title: t.sidebar?.features || "Features", icon: Layers, href: `/${lang}/packages-system/features` },
       { title: t.sidebar?.package_features || "Package Features Mapping", icon: Link, href: `/${lang}/packages-system/package-features` },
     ],
-  },  
-  
+  },
+
+  {
+    title: t.sidebar?.account_management || "Account & Security",
+    items: [
+      {
+        title: t.sidebar?.profile_settings || "Profile Settings",
+        icon: Settings,
+        href: `/${lang}/settings/profile`,
+      },
+      {
+        title: t.sidebar?.security || "Security",
+        icon: ShieldCheck,
+        href: `/${lang}/settings/security`,
+      },
+    ],
+  },
+
   {
     title: t.sidebar.address_management,
     items: [

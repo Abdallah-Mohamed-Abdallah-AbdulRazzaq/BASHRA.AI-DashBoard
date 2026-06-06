@@ -9,9 +9,6 @@ import {
   LockIcon, 
   EyeOffIcon, 
   EyeIcon, 
-  FacebookIcon, 
-  GoogleIcon, 
-  AppleIcon 
 } from "@/components/ui/icons/auth-icons";
 import { useDictionary } from "@/components/shared/dictionary-provider";
 import { loginAdmin } from "@/lib/admin-auth";
@@ -48,12 +45,14 @@ const FormInput = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          autoComplete={isPasswordField ? "current-password" : "email"}
           className="flex-1 bg-transparent font-inter text-[14px] font-normal leading-[21px] text-[#0A1B39] placeholder:text-[#9DA4B0] outline-none"
         />
         {isPasswordField && (
           <button 
             type="button"
             onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
             className="text-[#9DA4B0] hover:text-[#0A1B39] transition-colors flex items-center justify-center"
           >
             {showPassword ? <EyeIcon /> : <EyeOffIcon />}
@@ -72,7 +71,6 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -106,29 +104,29 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col w-[720px] max-w-full justify-end items-center gap-[74px]">
+    <div className="flex flex-col w-[480px] max-w-full justify-end items-center gap-[48px]">
       
       {/* Logo */}
       <div className="flex h-[28px] items-center gap-[6px]">
         <LogoIcon />
-        <span className="font-inter text-[20px] font-bold text-[#0A1B39]">Black Falcons</span>
+        <span className="font-inter text-[20px] font-bold text-[#0A1B39]">BashraAI</span>
       </div>
 
       {/* Form Container */}
-      <form onSubmit={handleSubmit} className="flex flex-col p-[40px] items-start gap-[30px] self-stretch rounded-[20px] border border-[#E7E8EB] bg-brand-white shadow-[0_1px_1px_0_rgba(0,0,0,0.05)]">
+      <form onSubmit={handleSubmit} className="flex flex-col p-[40px] items-start gap-[24px] self-stretch rounded-[20px] border border-[#E7E8EB] bg-brand-white shadow-[0_1px_1px_0_rgba(0,0,0,0.05)]">
         
         {/* Header */}
-        <div className="flex flex-col items-start gap-[20px] self-stretch">
-          <h2 className="self-stretch text-center font-inter text-[20px] font-bold leading-[24px] text-[#0A1B39]">
+        <div className="flex flex-col items-start gap-[8px] self-stretch">
+          <h1 className="self-stretch text-center font-inter text-[22px] font-bold leading-[28px] text-[#0A1B39]">
             {dictionary.auth.login_title}
-          </h2>
+          </h1>
           <p className="self-stretch text-center font-inter text-[14px] font-normal leading-[21px] text-[#6C7688] opacity-70">
             {dictionary.auth.login_subtitle}
           </p>
         </div>
 
         {/* Inputs Group */}
-        <div className="flex flex-col gap-[20px] self-stretch">
+        <div className="flex flex-col gap-[16px] self-stretch">
           
           {/* Email */}
           <FormInput 
@@ -146,40 +144,37 @@ export default function LoginPage() {
             id="password"
             label={dictionary.auth.password}
             type="password"
-            placeholder="************"
+            placeholder="••••••••••••"
             value={formData.password}
             onChange={handleChange}
             icon={<LockIcon />}
             isPasswordField={true}
           />
 
-          {/* Remember Me & Forgot Password Row */}
-          <div className="flex items-center justify-between self-stretch">
-            {/* Remember Me */}
-            <div className="flex items-center gap-[8px]">
-              <input 
-                  type="checkbox" 
-                  id="rememberMe" 
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-[14px] h-[14px] rounded border-[#E7E8EB] text-brand-primary focus:ring-brand-primary cursor-pointer"
-              />
-              <label htmlFor="rememberMe" className="font-inter text-[14px] font-normal leading-[21px] text-[#0A1B39] cursor-pointer">
-                  {dictionary.auth.remember_me}
-              </label>
-            </div>
-
-            {/* Forgot Password Link */}
+          {/* Forgot Password Link */}
+          <div className="flex items-center justify-end self-stretch">
             <Link 
               href={`/${lang}/forgot-password`} 
-              className="font-inter text-[14px] font-normal leading-[21px] text-[#EF1E1E] hover:underline"
+              className="font-inter text-[13px] font-medium leading-[19.5px] text-brand-primary hover:underline"
             >
               {dictionary.auth.forgot_password}
             </Link>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div role="alert" className="w-full rounded-[6px] border border-[#EF1E1E] bg-red-50 px-4 py-3 text-center">
+              <p className="font-inter text-[13px] font-medium text-[#EF1E1E]">{error}</p>
+            </div>
+          )}
+
           {/* Login Button */}
-          <button type="submit" disabled={loading} className="flex h-[38px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[6px] bg-brand-primary text-brand-white font-inter text-[14px] font-medium leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed">
+          <button
+            type="submit"
+            id="login-submit-btn"
+            disabled={loading}
+            className="flex h-[42px] px-[12px] py-[8px] justify-center items-center gap-[8px] self-stretch rounded-[8px] bg-brand-primary text-brand-white font-inter text-[14px] font-semibold leading-[21px] hover:opacity-90 transition-opacity active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+          >
             {loading ? (
               <span className="flex items-center gap-2">
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -188,46 +183,11 @@ export default function LoginPage() {
             ) : dictionary.auth.login}
           </button>
 
-          {/* Error Message */}
-          {error && (
-            <div className="w-full rounded-[6px] border border-[#EF1E1E] bg-red-50 px-4 py-3 text-center">
-              <p className="font-inter text-[13px] font-medium text-[#EF1E1E]">{error}</p>
-            </div>
-          )}
-
-          {/* Divider */}
-          <div className="flex items-center gap-[12px] self-stretch">
-            <div className="h-[1px] w-full bg-[#E7E8EB]" />
-            <span className="font-inter text-[13px] font-normal leading-[19.5px] text-[#6C7688]">{dictionary.auth.or}</span>
-            <div className="h-[1px] w-full bg-[#E7E8EB]" />
-          </div>
-
-          {/* Social Buttons */}
-          <div className="flex items-start gap-[16px] self-stretch">
-            <button type="button" className="flex flex-1 px-[12px] py-[8px] flex-col justify-center items-center gap-[10px] rounded-[6px] border-[1.1px] border-[#E7E8EB] bg-brand-white hover:bg-grey-50 transition-colors active:bg-grey-100">
-                <FacebookIcon />
-            </button>
-            <button type="button" className="flex flex-1 px-[12px] py-[8px] justify-center items-center gap-[10px] rounded-[6px] border-[1.1px] border-[#E7E8EB] bg-brand-white hover:bg-grey-50 transition-colors active:bg-grey-100">
-                <GoogleIcon />
-            </button>
-            <button type="button" className="flex flex-1 px-[12px] py-[8px] justify-center items-center gap-[10px] rounded-[6px] border-[1.1px] border-[#E7E8EB] bg-brand-white hover:bg-grey-50 transition-colors active:bg-grey-100">
-                <AppleIcon />
-            </button>
-          </div>
-
-          {/* Register Link */}
-          <div className="flex justify-center items-center gap-[5px] self-stretch mt-2">
-            <span className="font-inter text-[14px] font-normal leading-[21px] text-[#0A1B39]">{dictionary.auth.dont_have_account}</span>
-            <Link href={`/${lang}/register`} className="font-inter text-[14px] font-medium leading-[21px] text-brand-primary hover:underline">
-                {dictionary.auth.register_link}
-            </Link>
-          </div>
-
         </div>
       </form>
 
       {/* Copyright */}
-      <div className="text-center font-inter text-[14px] font-normal leading-[21px] text-[#0A1B39] opacity-80">
+      <div className="text-center font-inter text-[13px] font-normal leading-[21px] text-[#0A1B39] opacity-60">
         {dictionary.auth.copyright}
       </div>
 

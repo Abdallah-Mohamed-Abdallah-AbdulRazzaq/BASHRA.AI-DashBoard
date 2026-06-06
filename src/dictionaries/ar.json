@@ -131,7 +131,10 @@
     "packages_system": "الباقات والاشتراكات",
     "packages": "الباقات",
     "features": "الميزات (Features)",
-    "package_features": "ربط الميزات بالباقات"
+    "package_features": "ربط الميزات بالباقات",
+    "account_management": "الحساب والأمان",
+    "profile_settings": "إعدادات الملف الشخصي",
+    "security": "الأمان"
   },
   "header": {
     "ai_assistance": "مساعد AI"
@@ -679,6 +682,39 @@
     "save_success": "تم تحديث الملف الشخصي بنجاح",
     "picture_uploaded": "تم تحديث الصورة الشخصية",
     "picture_deleted": "تم إزالة الصورة الشخصية"
+  },
+  "security": {
+    "security_overview": "نظرة عامة على الأمان",
+    "security_desc": "مراقبة وإدارة أمان النظام والجلسات وصلاحيات الوصول.",
+    "active_sessions": "الجلسات النشطة",
+    "admin_logs": "سجلات الأدمن",
+    "failed_logins": "محاولات الدخول الفاشلة",
+    "blocked_entities": "الكيانات المحظورة",
+    "security_alerts": "تنبيهات الأمان",
+    "security_logs": "سجلات الأمان",
+    "system_sessions": "جلسات النظام",
+    "block_entity": "حظر كيان",
+    "unblock_entity": "رفع الحظر",
+    "revoke_sessions": "إلغاء الجلسات",
+    "end_session": "إنهاء جلسة",
+    "update_entity_status": "تحديث حالة الكيان",
+    "manual_cleanup": "تنظيف يدوي",
+    "register_admin": "تسجيل أدمن جديد",
+    "reason_required": "السبب",
+    "action_success": "تمت العملية بنجاح",
+    "action_failed": "فشلت العملية",
+    "permission_denied": "ليس لديك صلاحية لتنفيذ هذا الإجراء",
+    "loading": "جارٍ التحميل...",
+    "retry": "إعادة المحاولة",
+    "total_actions": "إجمالي إجراءات الأدمن",
+    "last_24h": "إجراءات آخر 24 ساعة",
+    "high_severity": "شدة عالية",
+    "suspicious_ips": "عناوين IP مشبوهة",
+    "deactivate_account": "تعطيل الحساب",
+    "reactivate_account": "إعادة تفعيل الحساب",
+    "profile_updated": "تم تحديث الملف الشخصي بنجاح",
+    "profile_picture_uploaded": "تم رفع الصورة الشخصية",
+    "profile_picture_deleted": "تم حذف الصورة الشخصية"
   },
   "packages": {
     "features_title": "ميزات النظام",

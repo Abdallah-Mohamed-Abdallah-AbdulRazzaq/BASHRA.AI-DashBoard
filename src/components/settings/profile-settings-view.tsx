@@ -7,12 +7,18 @@ import {
   MonitorDot, CreditCard, Settings2, ChevronDown, 
   Image as ImageIcon, Loader2
 } from "lucide-react";
-import { apiGet, apiPut, apiUpload, apiDelete } from "@/lib/api";
 import { getApiErrorMessage } from "@/lib/error-utils";
-import type { AdminCompleteProfile, ApiSuccessResponse, PictureUploadResponse } from "@/types/api";
+import {
+  getAdminCompleteProfile,
+  updateAdminProfile,
+  uploadAdminProfilePicture,
+  deleteAdminProfilePicture,
+  type ProfileUpdatePayload,
+} from "@/lib/admin-profile";
+import type { AdminCompleteProfile } from "@/types/api";
 
 interface ProfileSettingsViewProps {
-  t: any;
+  t: Record<string, Record<string, string>>;
 }
 
 export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
@@ -49,11 +55,9 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
     let cancelled = false;
     async function loadProfile() {
       try {
-        const res = await apiGet<ApiSuccessResponse<AdminCompleteProfile>>(
-          '/api/profile-admin/complete'
-        );
+        const data: AdminCompleteProfile = await getAdminCompleteProfile();
         if (cancelled) return;
-        const { account, profile } = res.data;
+        const { account, profile } = data;
         setFormData({
           email: account.email || "",
           phone: account.phone || "",
@@ -95,17 +99,21 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
     setError(null);
     setSuccess(null);
     try {
-      const body: Record<string, string> = {};
-      const fields: (keyof typeof formData)[] = [
-        'full_name', 'job_title', 'department',
-        'date_of_birth', 'gender', 'nationality',
-        'emergency_contact_phone', 'emergency_contact_name', 'emergency_contact_relationship',
-        'timezone', 'language_preference',
-      ];
-      for (const field of fields) {
-        if (formData[field]) body[field] = formData[field];
-      }
-      await apiPut<ApiSuccessResponse<unknown>>('/api/profile-admin', body);
+      // Only send fields that are documented in PUT /api/profile-admin
+      const body: ProfileUpdatePayload = {};
+      if (formData.full_name)                       body.full_name = formData.full_name;
+      if (formData.job_title)                       body.job_title = formData.job_title;
+      if (formData.department)                      body.department = formData.department;
+      if (formData.date_of_birth)                   body.date_of_birth = formData.date_of_birth;
+      if (formData.gender)                          body.gender = formData.gender as ProfileUpdatePayload['gender'];
+      if (formData.nationality)                     body.nationality = formData.nationality;
+      if (formData.emergency_contact_phone)         body.emergency_contact_phone = formData.emergency_contact_phone;
+      if (formData.emergency_contact_name)          body.emergency_contact_name = formData.emergency_contact_name;
+      if (formData.emergency_contact_relationship)  body.emergency_contact_relationship = formData.emergency_contact_relationship;
+      if (formData.timezone)                        body.timezone = formData.timezone;
+      if (formData.language_preference)             body.language_preference = formData.language_preference;
+
+      await updateAdminProfile(body);
       setSuccess(t.settings?.save_success || 'Profile updated successfully');
     } catch (err) {
       setError(getApiErrorMessage(err));
@@ -125,12 +133,8 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
     setUploading(true);
     setError(null);
     try {
-      const formDataUpload = new FormData();
-      formDataUpload.append('profile_picture', file);
-      const res = await apiUpload<PictureUploadResponse>(
-        '/api/profile-admin/picture',
-        formDataUpload
-      );
+      // uploadAdminProfilePicture uses FormData with field name 'profile_picture'
+      const res = await uploadAdminProfilePicture(file);
       setFormData(prev => ({ ...prev, profile_picture_url: res.data.profile_picture_url }));
       setSuccess(t.settings?.picture_uploaded || 'Profile picture updated');
     } catch (err) {
@@ -146,7 +150,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
     setUploading(true);
     setError(null);
     try {
-      await apiDelete('/api/profile-admin/picture');
+      await deleteAdminProfilePicture();
       setFormData(prev => ({ ...prev, profile_picture_url: '' }));
       setSuccess(t.settings?.picture_deleted || 'Profile picture removed');
     } catch (err) {
@@ -170,16 +174,16 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
   return (
     <div className="flex flex-col gap-6 w-full p-4 sm:p-6 bg-[#F5F6F8] min-h-screen">
       
-      <h2 className="text-[22px] font-bold text-[#0A1B39]">{t.settings.title}</h2>
+      <h2 className="text-[22px] font-bold text-[#0A1B39]">{t.settings?.title || 'Settings'}</h2>
 
       {error && (
-        <div className="w-full rounded-[8px] border border-[#EF1E1E] bg-red-50 px-4 py-3">
+        <div role="alert" className="w-full rounded-[8px] border border-[#EF1E1E] bg-red-50 px-4 py-3">
           <p className="text-[13px] font-medium text-[#EF1E1E]">{error}</p>
         </div>
       )}
 
       {success && (
-        <div className="w-full rounded-[8px] border border-green-500 bg-green-50 px-4 py-3">
+        <div role="status" className="w-full rounded-[8px] border border-green-500 bg-green-50 px-4 py-3">
           <p className="text-[13px] font-medium text-green-700">{success}</p>
         </div>
       )}
@@ -196,7 +200,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
               )}
             >
               <div className="flex items-center gap-3 text-[14px] font-semibold">
-                <UserCircle2 size={18} /> {t.settings.account_settings}
+                <UserCircle2 size={18} /> {t.settings?.account_settings || 'Account Settings'}
               </div>
               <ChevronDown size={16} className={cn("transition-transform duration-300", activeMenu === "account" ? "rotate-180" : "rotate-0")} />
             </button>
@@ -211,7 +215,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
                   )}
                 >
                   <span className={cn("w-1.5 h-1.5 rounded-full absolute left-[-14px] rtl:right-[-14px] rtl:left-auto", activeSubMenu === item ? "bg-[#2E37A4]" : "bg-[#E7E8EB]")}></span>
-                  {t.settings[item]}
+                  {t.settings?.[item] || item}
                 </button>
               ))}
             </div>
@@ -220,12 +224,12 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
           <hr className="border-[#E7E8EB] my-2" />
 
           {[
-            { id: "website", icon: <Globe size={18} />, label: t.settings.website_settings },
-            { id: "clinic", icon: <Building2 size={18} />, label: t.settings.clinic_settings },
-            { id: "app", icon: <Smartphone size={18} />, label: t.settings.app_settings },
-            { id: "system", icon: <MonitorDot size={18} />, label: t.settings.system_settings },
-            { id: "finance", icon: <CreditCard size={18} />, label: t.settings.finance_accounts },
-            { id: "other", icon: <Settings2 size={18} />, label: t.settings.other_settings },
+            { id: "website", icon: <Globe size={18} />, label: t.settings?.website_settings || 'Website Settings' },
+            { id: "clinic", icon: <Building2 size={18} />, label: t.settings?.clinic_settings || 'Clinic Settings' },
+            { id: "app", icon: <Smartphone size={18} />, label: t.settings?.app_settings || 'App Settings' },
+            { id: "system", icon: <MonitorDot size={18} />, label: t.settings?.system_settings || 'System Settings' },
+            { id: "finance", icon: <CreditCard size={18} />, label: t.settings?.finance_accounts || 'Finance & Accounts' },
+            { id: "other", icon: <Settings2 size={18} />, label: t.settings?.other_settings || 'Other Settings' },
           ].map((menu) => (
             <button key={menu.id} className="flex items-center justify-between w-full p-3 rounded-[8px] text-[#0A1B39] hover:bg-[#F9FAFB] transition-colors">
               <div className="flex items-center gap-3 text-[14px] font-medium">
@@ -241,15 +245,19 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
           
           {/* Section 1: Basic Information */}
           <div className="p-6 border-b border-[#E7E8EB]">
-            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.basic_info}</h3>
+            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings?.basic_info || 'Basic Information'}</h3>
             
             <div className="flex flex-col gap-6">
               {/* Profile Image Upload */}
               <div className="flex flex-col gap-2">
-                <label className="text-[13px] font-semibold text-[#0A1B39]">{t.settings.profile_image}</label>
+                <label className="text-[13px] font-semibold text-[#0A1B39]">{t.settings?.profile_image || 'Profile Image'}</label>
                 <div className="flex items-end gap-3">
                   <div
                     onClick={handleProfilePictureClick}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Upload profile picture"
+                    onKeyDown={(e) => e.key === 'Enter' && handleProfilePictureClick()}
                     className="relative w-[80px] h-[80px] rounded-full border border-[#E7E8EB] bg-[#F5F6F8] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity overflow-hidden group shadow-sm"
                   >
                     {formData.profile_picture_url ? (
@@ -289,29 +297,30 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
               {/* Grid Form */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                 <InputGroup
-                  label={t.settings.full_name}
+                  label={t.settings?.full_name || 'Full Name'}
                   name="full_name"
                   value={formData.full_name}
                   onChange={handleChange}
                   required
                 />
                 <InputGroup
-                  label={t.settings.email}
+                  label={t.settings?.email || 'Email'}
                   value={formData.email}
                   type="email"
                   dir="ltr"
                   readonly
                 />
                 <InputGroup
-                  label={t.settings.phone}
+                  label={t.settings?.phone || 'Phone Number'}
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   type="tel"
                   dir="ltr"
+                  readonly
                 />
                 <InputGroup
-                  label={t.settings.dob}
+                  label={t.settings?.dob || 'Date of Birth'}
                   name="date_of_birth"
                   value={formData.date_of_birth}
                   onChange={handleChange}
@@ -319,14 +328,20 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
                   dir="ltr"
                 />
                 <SelectGroup
-                  label={t.settings.gender}
+                  label={t.settings?.gender || 'Gender'}
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  options={["male", "female", "other", "prefer_not_to_say"]}
+                  options={[
+                    { value: "", label: "— Select —" },
+                    { value: "male", label: "Male" },
+                    { value: "female", label: "Female" },
+                    { value: "other", label: "Other" },
+                    { value: "prefer_not_to_say", label: "Prefer not to say" },
+                  ]}
                 />
                 <InputGroup
-                  label={t.settings.nationality}
+                  label={t.settings?.nationality || 'Nationality'}
                   name="nationality"
                   value={formData.nationality}
                   onChange={handleChange}
@@ -335,39 +350,57 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
             </div>
           </div>
 
-          {/* Section 2: Employment Details (Read-only) */}
+          {/* Section 2: Employment Details — editable per docs (job_title, department in PUT body) */}
           <div className="p-6 border-b border-[#E7E8EB] bg-[#FAFBFC]/50">
-            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.employment_details}</h3>
+            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings?.employment_details || 'Employment Details'}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-              <InputGroup label={t.settings.job_title} value={formData.job_title} readonly />
-              <InputGroup label={t.settings.department} value={formData.department} readonly />
+              {/* job_title and department are editable — both are valid PUT body fields per docs */}
               <InputGroup
-                label={t.settings.admin_type}
+                label={t.settings?.job_title || 'Job Title'}
+                name="job_title"
+                value={formData.job_title}
+                onChange={handleChange}
+              />
+              <InputGroup
+                label={t.settings?.department || 'Department'}
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+              />
+              {/* admin_type and hire_date are read-only — not editable via profile PUT */}
+              <InputGroup
+                label={t.settings?.admin_type || 'Admin Role'}
                 value={formData.admin_type.replace(/_/g, ' ').toUpperCase()}
                 readonly
               />
-              <InputGroup label={t.settings.hire_date} value={formData.hire_date} type="date" readonly dir="ltr" />
+              <InputGroup
+                label={t.settings?.hire_date || 'Hire Date'}
+                value={formData.hire_date}
+                type="date"
+                readonly
+                dir="ltr"
+              />
             </div>
           </div>
 
           {/* Section 3: Emergency Contact */}
           <div className="p-6 border-b border-[#E7E8EB]">
-            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.emergency_contact}</h3>
+            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings?.emergency_contact || 'Emergency Contact'}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
               <InputGroup
-                label={t.settings.contact_name}
+                label={t.settings?.contact_name || 'Contact Name'}
                 name="emergency_contact_name"
                 value={formData.emergency_contact_name}
                 onChange={handleChange}
               />
               <InputGroup
-                label={t.settings.relationship}
+                label={t.settings?.relationship || 'Relationship'}
                 name="emergency_contact_relationship"
                 value={formData.emergency_contact_relationship}
                 onChange={handleChange}
               />
               <InputGroup
-                label={t.settings.phone}
+                label={t.settings?.phone || 'Phone Number'}
                 name="emergency_contact_phone"
                 value={formData.emergency_contact_phone}
                 onChange={handleChange}
@@ -379,22 +412,33 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
 
           {/* Section 4: System Preferences */}
           <div className="p-6">
-            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings.system_preferences}</h3>
+            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-6">{t.settings?.system_preferences || 'System Preferences'}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
               <SelectGroup
-                label={t.settings.timezone}
+                label={t.settings?.timezone || 'Timezone'}
                 name="timezone"
                 value={formData.timezone}
                 onChange={handleChange}
-                options={["UTC", "GMT", "EST", "PST", "AST", "Africa/Cairo", "Asia/Riyadh"]}
+                options={[
+                  { value: "UTC", label: "UTC" },
+                  { value: "GMT", label: "GMT" },
+                  { value: "EST", label: "EST" },
+                  { value: "PST", label: "PST" },
+                  { value: "AST", label: "AST" },
+                  { value: "Africa/Cairo", label: "Africa/Cairo" },
+                  { value: "Asia/Riyadh", label: "Asia/Riyadh" },
+                ]}
                 dir="ltr"
               />
               <SelectGroup
-                label={t.settings.language}
+                label={t.settings?.language || 'Language Preference'}
                 name="language_preference"
                 value={formData.language_preference}
                 onChange={handleChange}
-                options={["en", "ar"]}
+                options={[
+                  { value: "en", label: "English" },
+                  { value: "ar", label: "العربية" },
+                ]}
               />
             </div>
           </div>
@@ -405,15 +449,16 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
               onClick={() => window.location.reload()}
               className="px-5 py-2.5 bg-[#F5F6F8] text-[#0A1B39] text-[13px] font-bold rounded-[8px] hover:bg-[#E7E8EB] transition-colors border border-[#E7E8EB]"
             >
-              {t.settings.cancel}
+              {t.settings?.cancel || 'Cancel'}
             </button>
             <button
+              id="profile-save-btn"
               onClick={handleSave}
               disabled={saving}
               className="px-5 py-2.5 bg-[#2E37A4] text-white text-[13px] font-bold rounded-[8px] hover:bg-[#252D88] transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {saving && <Loader2 size={14} className="animate-spin" />}
-              {t.settings.save_changes}
+              {t.settings?.save_changes || 'Save Changes'}
             </button>
           </div>
 
@@ -425,7 +470,19 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
 }
 
 // --- Helper Components ---
-const InputGroup = ({ label, name, value, onChange, required, type = "text", dir = "auto", readonly = false }: any) => (
+
+interface InputGroupProps {
+  label: string;
+  name?: string;
+  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+  type?: string;
+  dir?: string;
+  readonly?: boolean;
+}
+
+const InputGroup = ({ label, name, value, onChange, required, type = "text", dir = "auto", readonly = false }: InputGroupProps) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-[13px] font-semibold text-[#0A1B39]">
       {label} {required && <span className="text-[#EF1E1E]">*</span>}
@@ -445,7 +502,21 @@ const InputGroup = ({ label, name, value, onChange, required, type = "text", dir
   </div>
 );
 
-const SelectGroup = ({ label, name, value, onChange, options, dir = "auto" }: any) => (
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface SelectGroupProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: SelectOption[];
+  dir?: string;
+}
+
+const SelectGroup = ({ label, name, value, onChange, options, dir = "auto" }: SelectGroupProps) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-[13px] font-semibold text-[#0A1B39]">{label}</label>
     <div className="relative">
@@ -454,10 +525,10 @@ const SelectGroup = ({ label, name, value, onChange, options, dir = "auto" }: an
         value={value}
         onChange={onChange}
         dir={dir}
-        className="w-full h-[42px] px-3 bg-white border border-[#E7E8EB] rounded-[8px] text-[14px] text-[#0A1B39] appearance-none focus:outline-none focus:border-[#2E37A4] transition-colors cursor-pointer capitalize"
+        className="w-full h-[42px] px-3 bg-white border border-[#E7E8EB] rounded-[8px] text-[14px] text-[#0A1B39] appearance-none focus:outline-none focus:border-[#2E37A4] transition-colors cursor-pointer"
       >
-        {options.map((opt: string) => (
-          <option key={opt} value={opt}>{opt.replace(/_/g, ' ')}</option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>{opt.label}</option>
         ))}
       </select>
       <ChevronDown size={16} className="absolute right-3 rtl:left-3 rtl:right-auto top-1/2 -translate-y-1/2 text-[#9DA4B0] pointer-events-none" />
