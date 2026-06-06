@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { getDoctorById, getDoctorProfileComplete, getDoctorPersonalData, getDoctorProfessionalData, getDoctorDocuments, getDoctorDocumentsSummary, getDoctorContactDetailsByDoctorId } from "@/lib/admin-doctors";
-import { getApiErrorMessage } from "@/lib/error-utils";
-import type { DoctorDetailData, DoctorProfileCompleteData, DoctorPersonalData, DoctorProfessionalData, DoctorDocumentsData, DoctorDocumentsSummaryData, DoctorContactDetailsData } from "@/types/admin-doctors";
+import { getDoctorById, getDoctorProfileComplete, getDoctorPersonalData, getDoctorProfessionalData, getDoctorDocuments, getDoctorDocumentsSummary, getDoctorContactDetailsByDoctorId, approveDoctor, rejectDoctor, suspendDoctor, updateDoctorStatus, verifyDoctor, updateDoctorApprovalStatus } from "@/lib/admin-doctors";
+import { getApiErrorMessage, isForbiddenError } from "@/lib/error-utils";
+import type { DoctorDetailData, DoctorProfileCompleteData, DoctorPersonalData, DoctorProfessionalData, DoctorDocumentsData, DoctorDocumentsSummaryData, DoctorContactDetailsData, DoctorStatus, DoctorApprovalStatus } from "@/types/admin-doctors";
 import { DoctorDetailsHeader } from "./doctor-details-header";
 import { GeneralInfoTab } from "./tabs/general-info-tab";
 import { ProfileDetailsTab } from "./tabs/profile-details-tab";
@@ -37,6 +37,13 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
   const [contactDetails, setContactDetails] = useState<DoctorContactDetailsData | null>(null);
   const [contactLoading, setContactLoading] = useState(false);
   const [contactError, setContactError] = useState<string | null>(null);
+
+  const [actionModal, setActionModal] = useState<{ type: 'approve' | 'reject' | 'suspend' | 'status' | 'verify' | 'approval_status'; label: string } | null>(null);
+  const [actionStatus, setActionStatus] = useState<DoctorStatus>('active');
+  const [actionApprovalStatus, setActionApprovalStatus] = useState<DoctorApprovalStatus>('approved');
+  const [actionIsVerified, setActionIsVerified] = useState(true);
+  const [actionReason, setActionReason] = useState('');
+  const [actionSubmitting, setActionSubmitting] = useState(false);
 
   const tabs = [
     { id: "general", label: t.clinic.tab_general_info },
@@ -122,6 +129,59 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
     setContactLoading(false);
   }, [doctorId, t]);
 
+  const openActionModal = (type: 'approve' | 'reject' | 'suspend' | 'status' | 'verify' | 'approval_status') => {
+    setActionReason('');
+    setActionStatus(doctor?.status || 'active');
+    setActionApprovalStatus(doctor?.approval_status || 'approved');
+    setActionIsVerified(!doctor?.is_verified);
+    const labels: Record<string, string> = {
+      approve: t.clinic?.approve_doctor || 'Approve Doctor',
+      reject: t.clinic?.reject_doctor || 'Reject Doctor',
+      suspend: t.clinic?.suspend_doctor || 'Suspend Doctor',
+      status: t.clinic?.update_status || 'Update Status',
+      verify: doctor?.is_verified ? (t.clinic?.unverify_doctor || 'Unverify Doctor') : (t.clinic?.verify_doctor || 'Verify Doctor'),
+      approval_status: t.clinic?.update_approval_status || 'Update Approval Status',
+    };
+    setActionModal({ type, label: labels[type] });
+  };
+
+  const handleAction = async () => {
+    if (!doctor || !doctorId || !actionModal) return;
+    const requiresReason: Record<string, boolean> = { approve: false, reject: true, suspend: true, status: true, verify: true, approval_status: true };
+    if (requiresReason[actionModal.type]) {
+      const trimmed = actionReason.trim();
+      if (trimmed.length < 10 || trimmed.length > 500) {
+        alert(t.clinic?.reason_required || "Reason must be between 10 and 500 characters");
+        return;
+      }
+    }
+    setActionSubmitting(true);
+    try {
+      const id = Number(doctorId);
+      const reason = actionReason.trim();
+      switch (actionModal.type) {
+        case 'approve': await approveDoctor(id, { reason }); break;
+        case 'reject': await rejectDoctor(id, { reason }); break;
+        case 'suspend': await suspendDoctor(id, { reason }); break;
+        case 'status': await updateDoctorStatus(id, { status: actionStatus, reason }); break;
+        case 'verify': await verifyDoctor(id, { is_verified: actionIsVerified, reason }); break;
+        case 'approval_status': await updateDoctorApprovalStatus(id, { approval_status: actionApprovalStatus, reason }); break;
+      }
+      setActionModal(null);
+      setActionReason('');
+      await fetchDoctor();
+      alert(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      if (isForbiddenError(err)) {
+        alert(t.clinic?.permission_denied || "You do not have permission to perform this action");
+      } else {
+        alert(getApiErrorMessage(err));
+      }
+    } finally {
+      setActionSubmitting(false);
+    }
+  };
+
   useEffect(() => { fetchDoctor(); }, [fetchDoctor]);
 
   if (loading) {
@@ -177,6 +237,25 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
     <div className="flex flex-col gap-6 w-full p-4 sm:p-6 bg-[#F5F6F8] min-h-screen">
       <DoctorDetailsHeader t={t} doctor={doctor!} />
 
+      <div className="bg-white border border-[#E7E8EB] rounded-[12px] p-4 shadow-sm">
+        <div className="flex flex-wrap items-center gap-4">
+          <h3 className="text-[14px] font-bold text-[#0A1B39] whitespace-nowrap">{t.clinic?.doctor_actions || 'Doctor Actions'}</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-[11px] font-semibold text-[#6C7688] uppercase">{t.clinic?.quick_actions || 'Quick'}</span>
+            <button onClick={() => openActionModal('approve')} className="px-3 py-1.5 bg-[#F0FDF4] text-[#27AE60] text-[12px] font-semibold rounded-[6px] border border-[#27AE60]/20 hover:bg-[#E0F7E4] transition-colors">{t.clinic?.approve_doctor || 'Approve'}</button>
+            <button onClick={() => openActionModal('reject')} className="px-3 py-1.5 bg-[#FEF2F2] text-[#EF1E1E] text-[12px] font-semibold rounded-[6px] border border-[#EF1E1E]/20 hover:bg-[#FEE2E2] transition-colors">{t.clinic?.reject_doctor || 'Reject'}</button>
+            <button onClick={() => openActionModal('suspend')} className="px-3 py-1.5 bg-[#FFF9F2] text-[#F2994A] text-[12px] font-semibold rounded-[6px] border border-[#F2994A]/20 hover:bg-[#FEF3E2] transition-colors">{t.clinic?.suspend_doctor || 'Suspend'}</button>
+          </div>
+          <div className="hidden sm:block w-px h-6 bg-[#E7E8EB]" />
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-[11px] font-semibold text-[#6C7688] uppercase">{t.clinic?.advanced_actions || 'Advanced'}</span>
+            <button onClick={() => openActionModal('status')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{t.clinic?.update_status || 'Status'}</button>
+            <button onClick={() => openActionModal('verify')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{doctor?.is_verified ? (t.clinic?.unverify_doctor || 'Unverify') : (t.clinic?.verify_doctor || 'Verify')}</button>
+            <button onClick={() => openActionModal('approval_status')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{t.clinic?.update_approval_status || 'Approval'}</button>
+          </div>
+        </div>
+      </div>
+
       <div className="w-full border-b border-[#E7E8EB] flex items-center gap-6 overflow-x-auto custom-scrollbar mt-2">
         {tabs.map((tab) => (
           <button
@@ -231,6 +310,42 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
           />
         )}
       </div>
+      {actionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-[12px] p-6 w-full max-w-md mx-4 shadow-xl">
+            <h3 className="text-[16px] font-bold text-[#0A1B39] mb-4">{actionModal.label}</h3>
+            <div className="flex flex-col gap-4">
+              {actionModal.type === 'status' && (
+                <select value={actionStatus} onChange={(e) => setActionStatus(e.target.value as DoctorStatus)} className="w-full h-10 px-3 border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39]">
+                  <option value="active">{t.clinic?.active || 'Active'}</option>
+                  <option value="inactive">{t.clinic?.status_inactive || 'Inactive'}</option>
+                  <option value="suspended">{t.clinic?.status_suspended || 'Suspended'}</option>
+                  <option value="pending_verification">{t.clinic?.status_pending_verification || 'Pending Verification'}</option>
+                </select>
+              )}
+              {actionModal.type === 'approval_status' && (
+                <select value={actionApprovalStatus} onChange={(e) => setActionApprovalStatus(e.target.value as DoctorApprovalStatus)} className="w-full h-10 px-3 border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39]">
+                  <option value="approved">{t.clinic?.approved || 'Approved'}</option>
+                  <option value="pending">{t.clinic?.pending || 'Pending'}</option>
+                  <option value="rejected">{t.clinic?.reject_doctor || 'Rejected'}</option>
+                  <option value="suspended">{t.clinic?.status_suspended || 'Suspended'}</option>
+                </select>
+              )}
+              {actionModal.type === 'verify' && (
+                <select value={actionIsVerified ? 'true' : 'false'} onChange={(e) => setActionIsVerified(e.target.value === 'true')} className="w-full h-10 px-3 border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39]">
+                  <option value="true">{t.clinic?.verified || 'Verified'}</option>
+                  <option value="false">{t.clinic?.unverified || 'Unverified'}</option>
+                </select>
+              )}
+              <textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder={actionModal.type === 'approve' ? (t.clinic?.action_reason || 'Reason (optional)') : (t.clinic?.reason_required || 'Reason (10-500 char)')} className="w-full h-24 px-3 py-2 border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] resize-none" />
+              <div className="flex justify-end gap-3">
+                <button onClick={() => { setActionModal(null); setActionReason(''); }} className="px-4 py-2 bg-[#F5F6F8] text-[#6C7688] text-[13px] font-medium rounded-[6px]">{t.clinic?.close || 'Cancel'}</button>
+                <button onClick={handleAction} disabled={actionSubmitting} className="px-4 py-2 bg-[#2E37A4] text-white text-[13px] font-medium rounded-[6px] disabled:opacity-50">{actionSubmitting ? '...' : (t.clinic?.confirm_action || 'Confirm')}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
