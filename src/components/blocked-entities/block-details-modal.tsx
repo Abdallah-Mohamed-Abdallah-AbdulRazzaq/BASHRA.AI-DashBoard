@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { X, Loader2, Clock, ShieldAlert, AlertCircle, Ban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getBlockDetails, getBlockHistory } from "@/lib/admin-blocked-entities";
@@ -22,13 +22,7 @@ export function BlockDetailsModal({ isOpen, onClose, blockId, entityType, entity
   const [details, setDetails] = useState<BlockedEntity | null>(null);
   const [history, setHistory] = useState<BlockedEntity[]>([]);
 
-  useEffect(() => {
-    if (isOpen && blockId && entityType && entityId) {
-      loadData();
-    }
-  }, [isOpen, blockId, entityType, entityId]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -43,7 +37,13 @@ export function BlockDetailsModal({ isOpen, onClose, blockId, entityType, entity
     } finally {
       setLoading(false);
     }
-  };
+  }, [blockId, entityType, entityId]);
+
+  useEffect(() => {
+    if (isOpen && blockId && entityType && entityId) {
+      loadData();
+    }
+  }, [isOpen, blockId, entityType, entityId, loadData]);
 
   if (!isOpen) return null;
 
