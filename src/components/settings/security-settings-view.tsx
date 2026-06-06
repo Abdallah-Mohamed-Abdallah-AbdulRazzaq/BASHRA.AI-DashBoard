@@ -545,7 +545,6 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     { id: 'sessions', label: t.security?.active_sessions || 'Active Sessions', icon: <Activity size={14} /> },
     { id: 'admin-logs', label: t.security?.admin_logs || 'Admin Logs', icon: <Server size={14} /> },
     { id: 'failed-logins', label: t.security?.failed_logins || 'Failed Logins', icon: <AlertTriangle size={14} /> },
-    { id: 'blocked', label: t.security?.blocked_entities || 'Blocked Entities', icon: <Ban size={14} /> },
     { id: 'alerts', label: t.security?.security_alerts || 'Alerts', icon: <Shield size={14} /> },
     { id: 'security-logs', label: t.security?.security_logs || 'Security Logs', icon: <Clock size={14} /> },
   ];
@@ -562,16 +561,6 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
             {t.security?.security_desc || 'Monitor and manage system security, sessions, and access controls.'}
           </p>
         </div>
-        {isSystemAdmin && (
-          <button
-            onClick={() => setModal({ type: 'block' })}
-            id="block-entity-btn"
-            className="flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white text-[13px] font-bold rounded-[8px] hover:bg-red-700 transition-colors shadow-sm"
-          >
-            <Ban size={15} />
-            {t.security?.block_entity || 'Block Entity'}
-          </button>
-        )}
       </div>
 
       {/* Stats Cards */}
@@ -769,85 +758,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
         </Section>
       )}
 
-      {activeTab === 'blocked' && (
-        <Section
-          title={t.security?.blocked_entities || 'Blocked Entities'}
-          icon={<Ban size={16} />}
-          loading={blockedLoading}
-          error={blockedError}
-          onRetry={loadBlockedEntities}
-          empty={blockedEntities.length === 0}
-          emptyText="No blocked entities found."
-        >
-          <table className="w-full text-[12px]">
-            <thead className="bg-[#F5F6F8]">
-              <tr>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Target ID</th>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Type</th>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Block Type</th>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Reason</th>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Until</th>
-                <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Status</th>
-                {isSystemAdmin && <th className="px-4 py-3 text-start text-[#6C7688] font-semibold">Actions</th>}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#F5F6F8]">
-              {blockedEntities.map((b) => {
-                const targetId = b.blocked_user_id ?? b.blocked_doctor_id ?? b.blocked_assistant_id;
-                return (
-                  <tr key={b.id} className="hover:bg-[#FAFBFC] transition-colors">
-                    <td className="px-4 py-3 font-mono text-[#0A1B39]">#{targetId ?? '—'}</td>
-                    <td className="px-4 py-3 capitalize text-[#6C7688]">{b.entity_type ?? '—'}</td>
-                    <td className="px-4 py-3">
-                      <span className={cn(
-                        "px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize",
-                        b.block_type === 'permanent' ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"
-                      )}>
-                        {b.block_type ?? '—'}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-[#6C7688] max-w-[200px] truncate">{b.reason ?? '—'}</td>
-                    <td className="px-4 py-3 text-[#6C7688]">{formatDate(b.blocked_until)}</td>
-                    <td className="px-4 py-3">
-                      <span className={cn(
-                        "px-2 py-0.5 rounded-full text-[10px] font-semibold",
-                        b.is_active ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-500"
-                      )}>
-                        {b.is_active ? 'Blocked' : 'Removed'}
-                      </span>
-                    </td>
-                    {isSystemAdmin && (
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1">
-                          {b.is_active && (
-                            <button
-                              onClick={() => setModal({ type: 'unblock', entity: b })}
-                              id={`unblock-${b.id}`}
-                              className="flex items-center gap-1 px-2 py-1 text-[11px] font-semibold text-green-700 bg-green-50 rounded-[5px] hover:bg-green-100 transition-colors"
-                            >
-                              <Unlock size={11} /> Unblock
-                            </button>
-                          )}
-                          <button
-                            onClick={() => {
-                              const eType = b.entity_type ?? 'user';
-                              setModal({ type: 'update-status', targetId: targetId ?? 0, entityType: eType });
-                            }}
-                            id={`update-status-${b.id}`}
-                            className="flex items-center gap-1 px-2 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 rounded-[5px] hover:bg-blue-100 transition-colors"
-                          >
-                            <Settings size={11} /> Status
-                          </button>
-                        </div>
-                      </td>
-                    )}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </Section>
-      )}
+
 
       {activeTab === 'alerts' && (
         <Section

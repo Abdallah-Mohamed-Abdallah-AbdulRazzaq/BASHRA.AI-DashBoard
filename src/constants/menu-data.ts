@@ -5,7 +5,7 @@ import {
   ShieldCheck, Globe, Map, Navigation, Compass, Network,
   HeartPulse, BookOpen, Dna,
   Package, Layers, Link, ServerCog, Settings,
-  Pill, ClipboardList, Star, Cpu
+  Pill, ClipboardList, Star, Cpu, Ban
 } from "lucide-react";
 import { SidebarSection } from "@/types/navigation";
 
@@ -102,6 +102,11 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
         title: t.sidebar?.security || "Security",
         icon: ShieldCheck,
         href: `/${lang}/settings/security`,
+      },
+      {
+        title: t.sidebar?.blocked_entities || "Blocked Entities",
+        icon: Ban,
+        href: `/${lang}/blocked-entities`,
       },
       {
         title: t.sidebar?.files_management || "Files Management",
