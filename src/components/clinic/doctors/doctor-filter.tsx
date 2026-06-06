@@ -14,9 +14,10 @@ const CloseIcon = () => (
 
 interface DoctorFilterProps {
   t: any;
+  onApply?: (filters: Record<string, string>) => void;
 }
 
-export const DoctorFilter = ({ t }: DoctorFilterProps) => {
+export const DoctorFilter = ({ t, onApply }: DoctorFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +49,11 @@ export const DoctorFilter = ({ t }: DoctorFilterProps) => {
 
   const handleChange = (field: string, value: string) => { setFilters(prev => ({ ...prev, [field]: value })); };
   const handleReset = (field: string) => { setFilters(prev => ({ ...prev, [field]: "" })); };
-  const handleClearAll = () => { setFilters({ doctor: "", designation: "", department: "", date: "", amount: "", status: "" }); };
+  const handleClearAll = () => {
+    const cleared = { doctor: "", designation: "", department: "", date: "", amount: "", status: "" };
+    setFilters(cleared);
+    onApply?.(cleared);
+  };
 
   const FieldLabel = ({ label, fieldKey }: { label: string, fieldKey: string }) => (
     <div className="flex justify-between items-center mb-1.5">
@@ -119,8 +124,6 @@ export const DoctorFilter = ({ t }: DoctorFilterProps) => {
               <FieldLabel label={t.sidebar.doctors} fieldKey="doctor" />
               <select value={filters.doctor} onChange={(e) => handleChange("doctor", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
                 <option value="" disabled>{t.clinic.select_option}</option>
-                <option value="dr_mick">Dr. Mick Thompson</option>
-                <option value="dr_sarah">Dr. Sarah Johnson</option>
               </select>
             </div>
 
@@ -176,7 +179,7 @@ export const DoctorFilter = ({ t }: DoctorFilterProps) => {
             <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-[#F5F6F8] text-[#6C7688] text-[13px] font-medium rounded-[6px] hover:bg-[#E7E8EB] transition-colors">
               {t.clinic.close}
             </button>
-            <button onClick={() => { console.log("Filtering...", filters); setIsOpen(false); }} className="px-4 py-2 bg-[#2E37A4] text-white text-[13px] font-medium rounded-[6px] hover:bg-[#252D88] transition-colors shadow-sm">
+            <button onClick={() => { onApply?.(filters); setIsOpen(false); }} className="px-4 py-2 bg-[#2E37A4] text-white text-[13px] font-medium rounded-[6px] hover:bg-[#252D88] transition-colors shadow-sm">
               {t.clinic.apply}
             </button>
           </div>

@@ -16,23 +16,30 @@ interface DoctorHeaderProps {
   view: "list" | "grid";
   setView: (view: "list" | "grid") => void;
   totalDoctors: number;
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  currentSortLabel: string;
+  onSortChange: (value: string) => void;
+  onApplyFilters: (filters: Record<string, string>) => void;
 }
 
-export const DoctorHeader = ({ t, view, setView, totalDoctors }: DoctorHeaderProps) => {
+export const DoctorHeader = ({ t, view, setView, totalDoctors, searchQuery, onSearchChange, currentSortLabel, onSortChange, onApplyFilters }: DoctorHeaderProps) => {
   
-  // ... (Keep sortItems and exportItems same as before) ...
   const exportItems = [
-    { label: "Download as PDF", onClick: () => console.log("PDF") },
-    { label: "Download as Excel", onClick: () => console.log("Excel") },
+    { label: "Download as PDF", onClick: () => {} },
+    { label: "Download as Excel", onClick: () => {} },
   ];
 
   const sortItems = [
-    { label: "Recently Added", onClick: () => console.log("Recent") },
-    { label: "Ascending", onClick: () => console.log("Asc") },
-    { label: "Descending", onClick: () => console.log("Desc") },
-    { label: "Last Month", onClick: () => console.log("Month") },
-    { label: "Last 7 Days", onClick: () => console.log("Week") },
-  ];
+    { value: "recent", label: "Recently Added" },
+    { value: "oldest", label: "Oldest" },
+    { value: "email_asc", label: "Email A-Z" },
+    { value: "rating_desc", label: "Highest Rated" },
+    { value: "verified_desc", label: "Verified First" },
+  ].map((item) => ({
+    ...item,
+    onClick: () => onSortChange(item.value),
+  }));
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -66,7 +73,7 @@ export const DoctorHeader = ({ t, view, setView, totalDoctors }: DoctorHeaderPro
             />
           ) : (
             // Grid View - Using the Filter Component
-            <DoctorFilter t={t} />
+            <DoctorFilter t={t} onApply={onApplyFilters} />
           )}
 
           <DoctorViewToggle view={view} onChange={setView} />
@@ -86,6 +93,8 @@ export const DoctorHeader = ({ t, view, setView, totalDoctors }: DoctorHeaderPro
             <input 
               type="text" 
               placeholder={t.clinic.search} 
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
               className="w-full pl-4 pr-10 rtl:pr-4 rtl:pl-10 py-2.5 bg-white border border-[#E7E8EB] rounded-[8px] text-[13px] text-[#0A1B39] placeholder:text-[#9DA4B0] focus:outline-none focus:border-[#2E37A4] transition-colors"
             />
             <span className="absolute right-3 rtl:left-3 top-1/2 -translate-y-1/2 text-[#9DA4B0]">
@@ -97,13 +106,13 @@ export const DoctorHeader = ({ t, view, setView, totalDoctors }: DoctorHeaderPro
           <div className="flex items-center gap-3 w-full sm:w-auto">
             
             {/* Filter Component (Here too) */}
-            <DoctorFilter t={t} />
+            <DoctorFilter t={t} onApply={onApplyFilters} />
 
             {/* Sort Dropdown */}
             <CustomDropdown 
               trigger={
                 <button className="flex items-center gap-2 px-3 py-2.5 bg-white border border-[#E7E8EB] rounded-[8px] text-[13px] font-medium text-[#6C7688] hover:text-[#0A1B39] hover:border-[#D1D5DB] transition-all min-w-[160px] justify-between">
-                   {t.clinic.sort_by} : <span className="text-[#0A1B39] font-semibold">{t.clinic.recent}</span> <ChevronDownSmall />
+                   {t.clinic.sort_by} : <span className="text-[#0A1B39] font-semibold">{currentSortLabel}</span> <ChevronDownSmall />
                 </button>
               }
               items={sortItems}

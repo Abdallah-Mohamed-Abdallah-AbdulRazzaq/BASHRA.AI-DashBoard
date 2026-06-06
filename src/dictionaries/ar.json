@@ -339,6 +339,8 @@
     "personal_email": "البريد الإلكتروني الشخصي",
     "contact_notes": "ملاحظات الاتصال",
     "last_updated": "آخر تحديث",
+    "account_contact": "معلومات الاتصال بالحساب",
+    "no_contact_details": "لا توجد تفاصيل اتصال متاحة لهذا الطبيب.",
     "current_plan": "خطة الاشتراك الحالية",
     "plan_features": "ميزات الباقة",
     "subscription_history": "سجل الاشتراكات",

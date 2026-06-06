@@ -339,6 +339,8 @@
     "personal_email": "Personal Email",
     "contact_notes": "Contact Notes",
     "last_updated": "Last Updated",
+    "account_contact": "Account Contact Info",
+    "no_contact_details": "No contact details available for this doctor.",
     "current_plan": "Current Subscription Plan",
     "plan_features": "Plan Features",
     "subscription_history": "Subscription History",

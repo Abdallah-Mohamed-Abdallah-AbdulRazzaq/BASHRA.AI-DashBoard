@@ -1225,6 +1225,11 @@
                       "icon": "⚛️"
                     },
                     {
+                      "name": "patient-profiles-list.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
                       "name": "patient-view-toggle.tsx",
                       "type": "file",
                       "icon": "⚛️"
@@ -1656,7 +1661,7 @@
     }
   ],
   "metadata": {
-    "generated": "2026-06-06T00:22:11.248Z",
+    "generated": "2026-06-06T12:56:31.241Z",
     "generator": "FileTree Pro Extension",
     "version": "0.2.0",
     "showIcons": true,
