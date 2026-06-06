@@ -13,14 +13,15 @@ const CloseIcon = () => (
 
 interface PatientFilterProps {
   t: any;
+  onVerifiedFilterChange?: (value: string) => void;
 }
 
-export const PatientFilter = ({ t }: PatientFilterProps) => {
+export const PatientFilter = ({ t, onVerifiedFilterChange }: PatientFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
   const [filters, setFilters] = useState({
-    bloodGroup: "", ageRange: "", gender: "", lastVisit: "", status: ""
+    gender: "", verified: ""
   });
 
   useEffect(() => {
@@ -41,7 +42,12 @@ export const PatientFilter = ({ t }: PatientFilterProps) => {
 
   const handleChange = (field: string, value: string) => setFilters(prev => ({ ...prev, [field]: value }));
   const handleReset = (field: string) => setFilters(prev => ({ ...prev, [field]: "" }));
-  const handleClearAll = () => setFilters({ bloodGroup: "", ageRange: "", gender: "", lastVisit: "", status: "" });
+  const handleClearAll = () => setFilters({ gender: "", verified: "" });
+
+  const handleApply = () => {
+    onVerifiedFilterChange?.(filters.verified);
+    setIsOpen(false);
+  };
 
   const FieldLabel = ({ label, fieldKey }: { label: string, fieldKey: string }) => (
     <div className="flex justify-between items-center mb-1.5">
@@ -96,17 +102,6 @@ export const PatientFilter = ({ t }: PatientFilterProps) => {
 
           <div className="p-4 flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 bg-white">
             <div>
-              <FieldLabel label={t.clinic.blood_group} fieldKey="bloodGroup" />
-              <select value={filters.bloodGroup} onChange={(e) => handleChange("bloodGroup", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option || "Select Option"}</option>
-                <option value="A+">A+</option><option value="A-">A-</option>
-                <option value="B+">B+</option><option value="B-">B-</option>
-                <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                <option value="O+">O+</option><option value="O-">O-</option>
-              </select>
-            </div>
-
-            <div>
               <FieldLabel label={t.clinic.gender} fieldKey="gender" />
               <select value={filters.gender} onChange={(e) => handleChange("gender", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
                 <option value="" disabled>{t.clinic.select_option || "Select Option"}</option>
@@ -116,21 +111,13 @@ export const PatientFilter = ({ t }: PatientFilterProps) => {
             </div>
 
             <div>
-              <FieldLabel label={t.clinic.age} fieldKey="ageRange" />
-              <select value={filters.ageRange} onChange={(e) => handleChange("ageRange", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
+              <FieldLabel label={t.clinic.verified || "Verified"} fieldKey="verified" />
+              <select value={filters.verified} onChange={(e) => handleChange("verified", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
                 <option value="" disabled>{t.clinic.select_option || "Select Option"}</option>
-                <option value="0-12">0 - 12 Years</option>
-                <option value="13-18">13 - 18 Years</option>
-                <option value="19-40">19 - 40 Years</option>
-                <option value="40+">40+ Years</option>
+                <option value="">{t.clinic.all_statuses || "All"}</option>
+                <option value="true">Verified</option>
+                <option value="false">Unverified</option>
               </select>
-            </div>
-
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                 <span className="text-[13px] font-semibold text-[#0A1B39]">{t.clinic.last_visit}</span>
-              </div>
-              <input type="date" value={filters.lastVisit} onChange={(e) => handleChange("lastVisit", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4] uppercase" />
             </div>
 
           </div>
@@ -139,7 +126,7 @@ export const PatientFilter = ({ t }: PatientFilterProps) => {
             <button onClick={() => setIsOpen(false)} className="px-4 py-2 bg-[#F5F6F8] text-[#6C7688] text-[13px] font-medium rounded-[6px] hover:bg-[#E7E8EB] transition-colors">
               {t.clinic.close || "Close"}
             </button>
-            <button onClick={() => { console.log("Filtering...", filters); setIsOpen(false); }} className="px-4 py-2 bg-[#2E37A4] text-white text-[13px] font-medium rounded-[6px] hover:bg-[#252D88] transition-colors shadow-sm">
+            <button onClick={handleApply} className="px-4 py-2 bg-[#2E37A4] text-white text-[13px] font-medium rounded-[6px] hover:bg-[#252D88] transition-colors shadow-sm">
               {t.clinic.apply || "Apply"}
             </button>
           </div>
