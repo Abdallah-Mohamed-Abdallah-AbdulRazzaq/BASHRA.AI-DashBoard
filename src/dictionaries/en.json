@@ -653,7 +653,10 @@
     "edit_disease": "Edit Disease Info",
     "website_link": "Reference Link (Website)",
     "visit_link": "Visit Link",
-    "search_diseases": "Search skin diseases..."
+    "search_diseases": "Search skin diseases...",
+    "no_tips_found": "No tips found.",
+    "no_articles_found": "No articles found.",
+    "no_skin_diseases_found": "No skin diseases found."
   },
   "settings": {
     "title": "Settings",

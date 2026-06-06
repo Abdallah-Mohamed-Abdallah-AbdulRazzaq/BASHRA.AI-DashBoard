@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MedicalArticleModal } from "./medical-article-modal";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
 import { cn } from "@/lib/utils";
 import { 
   PlusIcon, 
-  SearchIcon, 
-  MoreVerticalIcon 
+  MoreVerticalIcon,
 } from "@/components/ui/icons/dashboard-icons";
+import { 
+  getMedicalArticles, 
+  deleteMedicalArticle, 
+  toggleMedicalArticleStatus 
+} from "@/lib/admin-content";
+import { MedicalArticle, ContentPagination } from "@/types/admin-content";
 
 interface ArticlesViewProps {
   t: any;
@@ -16,71 +21,91 @@ interface ArticlesViewProps {
 
 export default function ArticlesView({ t }: ArticlesViewProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingData, setEditingData] = useState<any>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [editingData, setEditingData] = useState<MedicalArticle | null>(null);
+  
+  const [articles, setArticles] = useState<MedicalArticle[]>([]);
+  const [pagination, setPagination] = useState<ContentPagination>({ page: 1, limit: 10, total: 0, pages: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [actionLoadingId, setActionLoadingId] = useState<number | null>(null);
 
-  // --- Dummy Data (Matching `medical_articles` SQL Table) ---
-  const [articles, setArticles] = useState([
-    { 
-      id: 1, 
-      title_en: "The Benefits of Vitamin C", 
-      title_ar: "فوائد فيتامين سي", 
-      sub_title_en: "How it protects and brightens your skin",
-      sub_title_ar: "كيف يحمي ويضيء بشرتك",
-      description_en: "Vitamin C is a potent antioxidant that can neutralize free radicals...",
-      description_ar: "فيتامين سي هو مضاد أكسدة قوي يمكنه تحييد الجذور الحرة...",
-      is_active: true, 
-      created_at: "2025-02-15 10:30 AM" 
-    },
-    { 
-      id: 2, 
-      title_en: "Understanding Eczema", 
-      title_ar: "فهم الإكزيما", 
-      sub_title_en: "Causes, Triggers, and Treatments",
-      sub_title_ar: "الأسباب، المحفزات، والعلاجات",
-      description_en: "Eczema is a condition that makes your skin red and itchy...",
-      description_ar: "الإكزيما هي حالة تجعل بشرتك حمراء ومثيرة للحكة...",
-      is_active: true, 
-      created_at: "2025-02-10 02:15 PM" 
-    },
-    { 
-      id: 3, 
-      title_en: "Daily Skincare Routine", 
-      title_ar: "روتين العناية بالبشرة اليومي", 
-      sub_title_en: "Basic steps for healthy and glowing skin",
-      sub_title_ar: "خطوات أساسية لبشرة صحية ومشرقة",
-      description_en: "A good skincare routine is essential. Start with a gentle cleanser...",
-      description_ar: "روتين العناية الجيد ضروري. ابدأ بغسول لطيف...",
-      is_active: false, 
-      created_at: "2025-01-25 09:00 AM" 
-    },
-  ]);
+  const fetchArticles = useCallback(async (page: number) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const res = await getMedicalArticles({ page, limit: 10 } as any);
+      if (res.success) {
+        setArticles(res.data);
+        setPagination(res.pagination);
+      } else {
+        setError(res.message || t.common?.error || "Failed to load articles");
+      }
+    } catch (err: any) {
+      setError(err.getDisplayMessage ? err.getDisplayMessage() : "An error occurred while loading articles.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [t]);
+
+  useEffect(() => {
+    fetchArticles(pagination.page);
+  }, [fetchArticles, pagination.page]);
 
   const handleAddNew = () => {
     setEditingData(null);
     setIsModalOpen(true);
   };
 
-  const handleEdit = (article: any) => {
+  const handleEdit = (article: MedicalArticle) => {
     setEditingData(article);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: number) => {
-    if(confirm("Are you sure you want to delete this article?")) {
-      setArticles(articles.filter(a => a.id !== id));
+  const handleDelete = async (id: number, title: string) => {
+    const confirmMessage = `Are you sure you want to permanently delete "${title}"?\nType DELETE to confirm.`;
+    const userInput = prompt(confirmMessage);
+    if (userInput !== "DELETE") {
+      if (userInput !== null) alert("Deletion cancelled.");
+      return;
+    }
+
+    try {
+      setActionLoadingId(id);
+      const res = await deleteMedicalArticle(id);
+      if (res.success) {
+        fetchArticles(1); // Reset to page 1
+      }
+    } catch (err: any) {
+      alert(err.getDisplayMessage ? err.getDisplayMessage() : "Failed to delete article.");
+    } finally {
+      setActionLoadingId(null);
     }
   };
 
-  const handleToggleStatus = (id: number) => {
-    setArticles(articles.map(a => a.id === id ? { ...a, is_active: !a.is_active } : a));
+  const handleToggleStatus = async (id: number) => {
+    try {
+      setActionLoadingId(id);
+      const res = await toggleMedicalArticleStatus(id);
+      if (res.success) {
+        setArticles(articles.map(a => a.id === id ? { ...a, is_active: !a.is_active } : a));
+      }
+    } catch (err: any) {
+      alert(err.getDisplayMessage ? err.getDisplayMessage() : "Failed to update status.");
+    } finally {
+      setActionLoadingId(null);
+    }
   };
 
-  const filteredArticles = articles.filter(article => 
-    article.title_en.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    article.title_ar.includes(searchTerm) ||
-    article.sub_title_en.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleModalSuccess = () => {
+    setIsModalOpen(false);
+    fetchArticles(pagination.page);
+  };
+
+  const changePage = (newPage: number) => {
+    if (newPage >= 1 && newPage <= pagination.pages) {
+      setPagination(prev => ({ ...prev, page: newPage }));
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6 w-full p-4 sm:p-6 bg-[#F5F6F8] min-h-screen">
@@ -90,23 +115,11 @@ export default function ArticlesView({ t }: ArticlesViewProps) {
         <div className="flex items-center gap-3">
           <h2 className="text-[20px] sm:text-[22px] font-bold text-[#0A1B39]">{t.health_tips.articles_title}</h2>
           <span className="px-3 py-1 bg-[#E0E2F4]/50 text-[#2E37A4] text-[12px] font-semibold rounded-[6px] border border-[#E0E2F4]">
-            {articles.length}
+            {pagination.total}
           </span>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-          <div className="relative w-full sm:w-[280px]">
-            <input 
-              type="text" 
-              placeholder={t.health_tips.search_articles}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-4 pr-10 rtl:pr-4 rtl:pl-10 py-2.5 bg-[#F9FAFB] border border-[#E7E8EB] rounded-[8px] text-[13px] text-[#0A1B39] placeholder:text-[#9DA4B0] focus:outline-none focus:border-[#2E37A4] transition-colors"
-            />
-            <span className="absolute right-3 rtl:left-3 rtl:right-auto top-1/2 -translate-y-1/2 text-[#9DA4B0]">
-               <SearchIcon />
-            </span>
-          </div>
-
           <button 
             onClick={handleAddNew}
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2E37A4] text-white rounded-[8px] text-[13px] font-semibold hover:bg-[#252D88] transition-colors shadow-sm shadow-indigo-200 shrink-0"
@@ -115,6 +128,16 @@ export default function ArticlesView({ t }: ArticlesViewProps) {
           </button>
         </div>
       </div>
+
+      {/* Error State */}
+      {error && (
+        <div className="bg-[#FEF2F2] border border-[#EF1E1E] text-[#EF1E1E] p-4 rounded-[12px] flex items-center justify-between">
+          <p className="text-[14px] font-medium">{error}</p>
+          <button onClick={() => fetchArticles(pagination.page)} className="px-4 py-2 bg-white text-[#EF1E1E] rounded-[8px] text-[13px] font-semibold hover:bg-[#FEF2F2] transition-colors">
+            {t.common?.retry || "Retry"}
+          </button>
+        </div>
+      )}
 
       {/* 2. Data Table */}
       <div className="bg-white border border-[#E7E8EB] rounded-[12px] shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -130,72 +153,107 @@ export default function ArticlesView({ t }: ArticlesViewProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredArticles.map((article) => (
-                <tr key={article.id} className="border-b border-[#E7E8EB] last:border-0 hover:bg-[#F9FAFB] transition-colors group">
-                  
-                  <td className="py-4 px-6">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors">{article.title_en}</span>
-                      <span className="text-[12px] text-[#6C7688] font-medium truncate max-w-[250px]">{article.sub_title_en}</span>
-                    </div>
-                  </td>
-
-                  <td className="py-4 px-6">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors">{article.title_ar}</span>
-                      <span className="text-[12px] text-[#6C7688] font-medium truncate max-w-[250px]">{article.sub_title_ar}</span>
-                    </div>
-                  </td>
-
-                  <td className="py-4 px-6">
-                    <span className="text-[13px] text-[#6C7688] font-medium" dir="ltr">{article.created_at}</span>
-                  </td>
-
-                  <td className="py-4 px-6">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" checked={article.is_active} onChange={() => handleToggleStatus(article.id)} />
-                      <div className="w-9 h-5 bg-[#D1D5DB] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] rtl:after:right-[2px] rtl:after:left-auto after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#27AE60]"></div>
-                      <span className={cn("ml-2 rtl:mr-2 rtl:ml-0 text-[11px] font-bold", article.is_active ? "text-[#27AE60]" : "text-[#9DA4B0]")}>
-                        {article.is_active ? t.health_tips.active : t.health_tips.inactive}
-                      </span>
-                    </label>
-                  </td>
-
-                  <td className="py-4 px-6 text-end">
-                    <CustomDropdown 
-                      trigger={
-                        <button className="w-8 h-8 flex items-center justify-center rounded-[6px] border border-[#E7E8EB] text-[#6C7688] hover:border-[#2E37A4] hover:text-[#2E37A4] hover:bg-white transition-all">
-                          <MoreVerticalIcon />
-                        </button>
-                      }
-                      items={[
-                        { label: t.health_tips.edit_article, onClick: () => handleEdit(article) },
-                        { label: t.common?.delete || "Delete", onClick: () => handleDelete(article.id), className: "text-[#EF1E1E] hover:text-[#EF1E1E] hover:bg-[#FEF2F2]" }
-                      ]}
-                      width="w-32"
-                      align="end"
-                    />
-                  </td>
-
-                </tr>
-              ))}
-              
-              {filteredArticles.length === 0 && (
+              {isLoading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[14px] text-[#6C7688]">
-                    No articles found.
+                    <div className="flex flex-col items-center gap-2">
+                       <div className="w-6 h-6 border-2 border-[#2E37A4] border-t-transparent rounded-full animate-spin"></div>
+                       {t.common?.loading || "Loading..."}
+                    </div>
                   </td>
                 </tr>
+              ) : articles.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-12 text-center text-[14px] text-[#6C7688]">
+                    {t.health_tips?.no_articles_found || "No articles found."}
+                  </td>
+                </tr>
+              ) : (
+                articles.map((article) => (
+                  <tr key={article.id} className="border-b border-[#E7E8EB] last:border-0 hover:bg-[#F9FAFB] transition-colors group">
+                    
+                    <td className="py-4 px-6">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors">{article.title_en || "—"}</span>
+                        <span className="text-[12px] text-[#6C7688] font-medium truncate max-w-[250px]">{article.sub_title_en || "—"}</span>
+                      </div>
+                    </td>
+
+                    <td className="py-4 px-6">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors">{article.title_ar}</span>
+                        <span className="text-[12px] text-[#6C7688] font-medium truncate max-w-[250px]">{article.sub_title_ar || "—"}</span>
+                      </div>
+                    </td>
+
+                    <td className="py-4 px-6">
+                      <span className="text-[13px] text-[#6C7688] font-medium" dir="ltr">{article.created_at ? new Date(article.created_at).toLocaleDateString() : "—"}</span>
+                    </td>
+
+                    <td className="py-4 px-6">
+                      <label className={cn("relative inline-flex items-center cursor-pointer", actionLoadingId === article.id && "opacity-50 pointer-events-none")}>
+                        <input type="checkbox" className="sr-only peer" checked={article.is_active} onChange={() => handleToggleStatus(article.id)} />
+                        <div className="w-9 h-5 bg-[#D1D5DB] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] rtl:after:right-[2px] rtl:after:left-auto after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#27AE60]"></div>
+                        <span className={cn("ml-2 rtl:mr-2 rtl:ml-0 text-[11px] font-bold", article.is_active ? "text-[#27AE60]" : "text-[#9DA4B0]")}>
+                          {article.is_active ? t.health_tips.active : t.health_tips.inactive}
+                        </span>
+                      </label>
+                    </td>
+
+                    <td className="py-4 px-6 text-end">
+                      <CustomDropdown 
+                        trigger={
+                          <button className="w-8 h-8 flex items-center justify-center rounded-[6px] border border-[#E7E8EB] text-[#6C7688] hover:border-[#2E37A4] hover:text-[#2E37A4] hover:bg-white transition-all disabled:opacity-50" disabled={actionLoadingId === article.id}>
+                            <MoreVerticalIcon />
+                          </button>
+                        }
+                        items={[
+                          { label: t.health_tips.edit_article, onClick: () => handleEdit(article) },
+                          { label: t.common?.delete || "Delete", onClick: () => handleDelete(article.id, article.title_en || article.title_ar), className: "text-[#EF1E1E] hover:text-[#EF1E1E] hover:bg-[#FEF2F2]" }
+                        ]}
+                        width="w-32"
+                        align="end"
+                      />
+                    </td>
+
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        {!isLoading && pagination.pages > 1 && (
+          <div className="p-4 border-t border-[#E7E8EB] flex items-center justify-between">
+            <span className="text-[13px] text-[#6C7688]">
+              Showing page {pagination.page} of {pagination.pages}
+            </span>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => changePage(pagination.page - 1)} 
+                disabled={pagination.page <= 1}
+                className="px-3 py-1.5 text-[13px] border border-[#E7E8EB] rounded-[6px] text-[#0A1B39] disabled:opacity-50 hover:bg-[#F9FAFB] transition-colors"
+              >
+                Previous
+              </button>
+              <button 
+                onClick={() => changePage(pagination.page + 1)} 
+                disabled={pagination.page >= pagination.pages}
+                className="px-3 py-1.5 text-[13px] border border-[#E7E8EB] rounded-[6px] text-[#0A1B39] disabled:opacity-50 hover:bg-[#F9FAFB] transition-colors"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 3. The Modal */}
       <MedicalArticleModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        onSuccess={handleModalSuccess}
         t={t} 
         editData={editingData} 
       />

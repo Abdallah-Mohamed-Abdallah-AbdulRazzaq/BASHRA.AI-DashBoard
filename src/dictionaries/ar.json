@@ -653,7 +653,10 @@
     "edit_disease": "تعديل معلومات المرض",
     "website_link": "الرابط المرجعي (الموقع)",
     "visit_link": "زيارة الرابط",
-    "search_diseases": "ابحث في الأمراض الجلدية..."
+    "search_diseases": "ابحث في الأمراض الجلدية...",
+    "no_tips_found": "لا توجد نصائح.",
+    "no_articles_found": "لا توجد مقالات.",
+    "no_skin_diseases_found": "لا توجد أمراض جلدية."
   },
   "settings": {
     "title": "الإعدادات",
