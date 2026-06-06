@@ -264,7 +264,14 @@
     "gynecology": "Gynecology",
     "psychiatrist": "Psychiatrist",
     "general": "General",
-    "name_designation": "Name & Designation"
+    "name_designation": "Name & Designation",
+    "loading_dashboard": "Loading dashboard...",
+    "dashboard_load_error": "Failed to load dashboard data",
+    "retry": "Retry",
+    "active": "Active",
+    "verified": "Verified",
+    "ai_requests": "AI Requests",
+    "tokens_used": "Tokens Used"
   },
   "clinic": {
     "doctor_list": "Doctor List",

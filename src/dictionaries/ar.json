@@ -264,7 +264,14 @@
     "gynecology": "النساء",
     "psychiatrist": "النفسية",
     "general": "عام",
-    "name_designation": "الاسم واللقب"
+    "name_designation": "الاسم واللقب",
+    "loading_dashboard": "جارٍ تحميل لوحة التحكم...",
+    "dashboard_load_error": "فشل تحميل بيانات لوحة التحكم",
+    "retry": "إعادة المحاولة",
+    "active": "نشط",
+    "verified": "موثق",
+    "ai_requests": "طلبات الذكاء الاصطناعي",
+    "tokens_used": "الرموز المستخدمة"
   },
   "clinic": {
     "doctor_list": "قائمة الأطباء",

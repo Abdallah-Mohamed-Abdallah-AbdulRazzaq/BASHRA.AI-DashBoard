@@ -1249,6 +1249,11 @@
                   "icon": "⚛️"
                 },
                 {
+                  "name": "dashboard-stats-section.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
                   "name": "dashboard-widgets.tsx",
                   "type": "file",
                   "icon": "⚛️"
@@ -1514,6 +1519,11 @@
               "icon": "📘"
             },
             {
+              "name": "admin-dashboard.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "api.ts",
               "type": "file",
               "icon": "📘"
@@ -1545,6 +1555,11 @@
           "type": "folder",
           "icon": "📁",
           "children": [
+            {
+              "name": "admin-dashboard.ts",
+              "type": "file",
+              "icon": "📘"
+            },
             {
               "name": "api.ts",
               "type": "file",
@@ -1628,15 +1643,10 @@
       "name": "tsconfig.json",
       "type": "file",
       "icon": "⚙️"
-    },
-    {
-      "name": "tsconfig.tsbuildinfo",
-      "type": "file",
-      "icon": "📄"
     }
   ],
   "metadata": {
-    "generated": "2026-06-05T23:30:22.975Z",
+    "generated": "2026-06-06T00:01:55.370Z",
     "generator": "FileTree Pro Extension",
     "version": "0.2.0",
     "showIcons": true,

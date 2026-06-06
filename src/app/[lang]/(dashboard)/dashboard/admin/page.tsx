@@ -1,7 +1,7 @@
 import React from "react";
 import { getDictionary } from "@/lib/dictionary";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { StatsCard } from "@/components/dashboard/stats-card";
+import { DashboardStatsSection } from "@/components/dashboard/dashboard-stats-section";
 import { 
   AppointmentStatistics, 
   PopularDoctors, 
@@ -13,11 +13,7 @@ import {
   TopPatients,    
   RecentTransactions,
   LeaveRequests 
-} from "@/components/dashboard/dashboard-widgets"; 
-import { 
-  StatDoctorIcon, StatPatientIcon, StatAppointmentIcon, StatRevenueIcon,
-  ChartDoctors, ChartPatients, ChartAppointment, ChartRevenue
-} from "@/components/ui/icons/dashboard-icons";
+} from "@/components/dashboard/dashboard-widgets";
 
 export default async function AdminDashboardPage({ params }: { params: { lang: string } }) {
   const dictionary = await getDictionary(params.lang);
@@ -32,53 +28,8 @@ export default async function AdminDashboardPage({ params }: { params: { lang: s
         btnSchedule={dictionary.dashboard.schedule_availability}
       />
 
-      {/* 2. Top Stats Section (Grid 4) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-        {/* Doctors */}
-        <StatsCard 
-          title={dictionary.dashboard.doctors}
-          value="247"
-          badgeValue="+95%"
-          badgeText={dictionary.dashboard.last_7_days}
-          badgeColor="bg-[#27AE60]" 
-          icon={<StatDoctorIcon />}
-          iconBgColor="bg-[#2E37A4]" 
-          chart={<ChartDoctors />}
-        />
-        {/* Patients */}
-        <StatsCard 
-          title={dictionary.dashboard.patients}
-          value="4178"
-          badgeValue="+25%"
-          badgeText={dictionary.dashboard.last_7_days}
-          badgeColor="bg-[#27AE60]" 
-          icon={<StatPatientIcon />}
-          iconBgColor="bg-[#EF1E1E]" 
-          chart={<ChartPatients />}
-        />
-        {/* Appointments */}
-        <StatsCard 
-          title={dictionary.dashboard.appointments}
-          value="12178"
-          badgeValue="-15%"
-          badgeText={dictionary.dashboard.last_7_days}
-          badgeColor="bg-[#EF1E1E]" 
-          icon={<StatAppointmentIcon />}
-          iconBgColor="bg-[#2F80ED]" 
-          chart={<ChartAppointment />}
-        />
-        {/* Revenue */}
-        <StatsCard 
-          title={dictionary.dashboard.revenue}
-          value="$55,1240"
-          badgeValue="+25%"
-          badgeText={dictionary.dashboard.last_7_days}
-          badgeColor="bg-[#27AE60]" 
-          icon={<StatRevenueIcon />}
-          iconBgColor="bg-[#27AE60]" 
-          chart={<ChartRevenue />}
-        />
-      </div>
+      {/* 2. Top Stats Section (Grid 4) — Real API Data */}
+      <DashboardStatsSection />
 
       {/* 3. Middle Section: Charts & Widgets */}
       <div className="grid grid-cols-12 gap-6 w-full">
