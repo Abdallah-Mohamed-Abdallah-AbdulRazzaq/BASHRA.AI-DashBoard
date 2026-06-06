@@ -568,7 +568,8 @@
     "missing_patient_id": "Missing patient ID",
     "patient_profiles": "Patient Profiles",
     "no_patient_profiles": "No patient profiles found",
-    "tab_accounts": "Patient Accounts"
+    "tab_accounts": "Patient Accounts",
+    "verification_status": "Verification Status"
   },
   "address": {
     "add_new": "Add New",

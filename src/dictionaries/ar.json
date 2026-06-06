@@ -568,7 +568,8 @@
     "missing_patient_id": "معرف المريض مفقود",
     "patient_profiles": "الملفات الشخصية للمرضى",
     "no_patient_profiles": "لم يتم العثور على ملفات شخصية للمرضى",
-    "tab_accounts": "حسابات المرضى"
+    "tab_accounts": "حسابات المرضى",
+    "verification_status": "حالة التوثيق"
   },
   "address": {
     "add_new": "إضافة جديد",

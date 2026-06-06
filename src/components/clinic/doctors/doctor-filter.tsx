@@ -22,8 +22,8 @@ export const DoctorFilter = ({ t, onApply }: DoctorFilterProps) => {
   const filterRef = useRef<HTMLDivElement>(null);
 
   // --- Filter States ---
-  const [filters, setFilters] = useState({
-    doctor: "", designation: "", department: "", date: "", amount: "", status: ""
+  const [filters, setFilters] = useState<Record<string, string>>({
+    status: "", approval_status: "", is_verified: ""
   });
 
   // إغلاق عند النقر بالخارج (للديسكتوب فقط)
@@ -50,7 +50,7 @@ export const DoctorFilter = ({ t, onApply }: DoctorFilterProps) => {
   const handleChange = (field: string, value: string) => { setFilters(prev => ({ ...prev, [field]: value })); };
   const handleReset = (field: string) => { setFilters(prev => ({ ...prev, [field]: "" })); };
   const handleClearAll = () => {
-    const cleared = { doctor: "", designation: "", department: "", date: "", amount: "", status: "" };
+    const cleared = { status: "", approval_status: "", is_verified: "" };
     setFilters(cleared);
     onApply?.(cleared);
   };
@@ -121,54 +121,33 @@ export const DoctorFilter = ({ t, onApply }: DoctorFilterProps) => {
           <div className="p-4 flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 bg-white">
             
             <div>
-              <FieldLabel label={t.sidebar.doctors} fieldKey="doctor" />
-              <select value={filters.doctor} onChange={(e) => handleChange("doctor", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option}</option>
-              </select>
-            </div>
-
-            <div>
-              <FieldLabel label={t.clinic.designation} fieldKey="designation" />
-              <select value={filters.designation} onChange={(e) => handleChange("designation", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option}</option>
-                <option value="senior">Senior Doctor</option>
-                <option value="junior">Junior Doctor</option>
-              </select>
-            </div>
-
-            <div>
-              <FieldLabel label={t.clinic.department} fieldKey="department" />
-              <select value={filters.department} onChange={(e) => handleChange("department", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option}</option>
-                <option value="cardiology">{t.dashboard.cardiology}</option>
-                <option value="orthopedics">{t.dashboard.urology}</option>
-                <option value="pediatrics">{t.dashboard.pediatrics}</option>
-              </select>
-            </div>
-
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                 <span className="text-[13px] font-semibold text-[#0A1B39]">{t.clinic.date} <span className="text-[#EF1E1E]">*</span></span>
-              </div>
-              <input type="date" value={filters.date} onChange={(e) => handleChange("date", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4] uppercase" />
-            </div>
-
-            <div>
-              <FieldLabel label={t.clinic.amount} fieldKey="amount" />
-              <select value={filters.amount} onChange={(e) => handleChange("amount", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option}</option>
-                <option value="low">$100 - $300</option>
-                <option value="medium">$300 - $500</option>
-                <option value="high">$500+</option>
-              </select>
-            </div>
-
-            <div>
-              <FieldLabel label={t.clinic.status} fieldKey="status" />
+              <FieldLabel label={t.clinic?.status || "Status"} fieldKey="status" />
               <select value={filters.status} onChange={(e) => handleChange("status", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
-                <option value="" disabled>{t.clinic.select_option}</option>
-                <option value="available">{t.clinic.available}</option>
-                <option value="unavailable">{t.clinic.unavailable}</option>
+                <option value="" disabled>{t.clinic?.select_option || "Select option"}</option>
+                <option value="active">{t.clinic?.active || "Active"}</option>
+                <option value="inactive">{t.clinic?.status_inactive || "Inactive"}</option>
+                <option value="suspended">{t.clinic?.status_suspended || "Suspended"}</option>
+                <option value="pending_verification">{t.clinic?.status_pending_verification || "Pending Verification"}</option>
+              </select>
+            </div>
+
+            <div>
+              <FieldLabel label={t.clinic?.approval_status || "Approval Status"} fieldKey="approval_status" />
+              <select value={filters.approval_status} onChange={(e) => handleChange("approval_status", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
+                <option value="" disabled>{t.clinic?.select_option || "Select option"}</option>
+                <option value="approved">{t.clinic?.approved || "Approved"}</option>
+                <option value="pending">{t.clinic?.pending || "Pending"}</option>
+                <option value="rejected">{t.clinic?.reject_doctor || "Rejected"}</option>
+                <option value="suspended">{t.clinic?.status_suspended || "Suspended"}</option>
+              </select>
+            </div>
+
+            <div>
+              <FieldLabel label={t.clinic?.verification_status || "Verification Status"} fieldKey="is_verified" />
+              <select value={filters.is_verified} onChange={(e) => handleChange("is_verified", e.target.value)} className="w-full h-10 px-3 bg-white border border-[#E7E8EB] rounded-[6px] text-[13px] text-[#0A1B39] focus:outline-none focus:border-[#2E37A4]">
+                <option value="" disabled>{t.clinic?.select_option || "Select option"}</option>
+                <option value="true">{t.clinic?.verified || "Verified"}</option>
+                <option value="false">{t.clinic?.unverified || "Unverified"}</option>
               </select>
             </div>
 

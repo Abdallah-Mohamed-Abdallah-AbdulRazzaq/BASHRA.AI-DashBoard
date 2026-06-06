@@ -74,6 +74,9 @@ export default function DoctorsView({ t }: DoctorsViewProps) {
         if (debouncedSearch) reqParams.search = debouncedSearch;
         reqParams.sort_by = currentSort.sortBy;
         reqParams.sort_order = currentSort.sortOrder;
+        if (filters.status) reqParams.status = filters.status;
+        if (filters.approval_status) reqParams.approval_status = filters.approval_status;
+        if (filters.is_verified) reqParams.is_verified = filters.is_verified === "true";
       }
       let res;
       if (activeMode === "pending") {
@@ -98,7 +101,7 @@ export default function DoctorsView({ t }: DoctorsViewProps) {
     } finally {
       setLoading(false);
     }
-  }, [activeMode, currentPage, debouncedSearch, currentSort]);
+  }, [activeMode, currentPage, debouncedSearch, currentSort, filters]);
 
   const fetchStatistics = useCallback(async () => {
     try {
