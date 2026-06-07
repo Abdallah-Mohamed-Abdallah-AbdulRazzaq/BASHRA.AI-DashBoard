@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { MoreVerticalIcon } from "@/components/ui/icons/dashboard-icons";
+import { UserAvatar } from "@/components/users/user-avatar";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { AdminUserListItem } from "@/types/admin-users";
@@ -42,11 +43,7 @@ export const PatientCard = ({ t, patient }: PatientCardProps) => {
     <div className="flex p-4 bg-white border border-[#E7E8EB] rounded-[12px] hover:shadow-md transition-all duration-300 relative group">
       
       <div className="w-[100px] h-[100px] sm:w-[110px] sm:h-[110px] bg-[#F5F6F8] rounded-[8px] overflow-hidden flex-shrink-0 mr-4 rtl:mr-0 rtl:ml-4">
-        <img 
-          src={patient.profile?.profile_picture_url || "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop"} 
-          alt={patient.profile?.full_name || ""} 
-          className="w-full h-full object-cover object-top mix-blend-multiply" 
-        />
+        <UserAvatar user={patient} />
       </div>
 
       <div className="flex flex-col flex-1 min-w-0">

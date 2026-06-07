@@ -220,17 +220,24 @@ export type DoctorContactDetailsData = {
   additional_phone?: string;
   personal_email?: string;
   contact_notes?: string;
+  email?: string;
+  phone?: string;
+  emergency_contact_phone?: string;
   created_at?: string;
   updated_at?: string;
 };
 
 export type DoctorContactDetailsParams = {
   doctor_id?: number | string;
+  page?: number;
+  limit?: number;
+  search?: string;
 };
 
 export type DoctorContactDetailsListResponse = {
   success: boolean;
   data?: DoctorContactDetailsData[];
+  pagination?: DoctorListPagination;
 };
 
 export type DoctorContactDetailsByDoctorResponse = {

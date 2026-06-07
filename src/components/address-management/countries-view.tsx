@@ -27,7 +27,7 @@ export default function CountriesView({ t, lang = "en" }: CountriesViewProps) {
     try {
       setLoading(true);
       setError(null);
-      const res = await AdminLocationsService.getLocations({ level_type: "country", lang: lang as "en" | "ar" });
+      const res = await AdminLocationsService.getCountries(lang as "ar" | "en");
       if (res.success) {
         setCountries(res.data || []);
       } else {

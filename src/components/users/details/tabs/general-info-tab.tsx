@@ -59,8 +59,18 @@ export const GeneralInfoTab = ({ t, patient, medicalProfile, logs }: GeneralInfo
   const patientProfile = medicalProfile?.patient_profile;
   const translations = patientProfile?.translations;
 
-  const isEmailVerified = !!user?.email_verified_at;
-  const isPhoneVerified = !!user?.phone_verified_at;
+  const isEmailVerified = !!user?.verification?.email_verified;
+  const isPhoneVerified = !!user?.verification?.phone_verified;
+
+  const getFullName = (userObj: any, profileObj: any) => {
+    if (userObj?.full_name) return userObj.full_name;
+    if (userObj?.first_name || userObj?.last_name) return `${userObj.first_name || ""} ${userObj.last_name || ""}`.trim();
+    if (profileObj?.full_name) return profileObj.full_name;
+    if (profileObj?.translations?.full_name) return profileObj.translations.full_name;
+    if (Array.isArray(profileObj?.translations) && profileObj.translations[0]?.full_name) return profileObj.translations[0].full_name;
+    if (userObj?.name) return userObj.name;
+    return "-";
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -90,12 +100,13 @@ export const GeneralInfoTab = ({ t, patient, medicalProfile, logs }: GeneralInfo
             value={
               <span className={cn(
                 "px-2.5 py-1 text-[11px] font-bold rounded-[6px] border inline-block",
-                user?.is_id_verified ? "bg-[#EFF6FF] text-[#2F80ED] border-[#2F80ED]/20" : "bg-[#FEF2F2] text-[#EF1E1E] border-[#EF1E1E]/20"
+                user?.verification?.id_verified ? "bg-[#EFF6FF] text-[#2F80ED] border-[#2F80ED]/20" : "bg-[#FEF2F2] text-[#EF1E1E] border-[#EF1E1E]/20"
               )}>
-                {user?.is_id_verified ? "ID Verified" : "Pending ID"}
+                {user?.verification?.id_verified ? "ID Verified" : "Pending ID"}
               </span>
             } 
           />
+          <DataRow label={t.clinic?.role || "Role"} value={<span className="capitalize">{user?.role || "—"}</span>} />
           <DataRow 
             label={t.clinic.active || "Active"} 
             value={
@@ -107,19 +118,24 @@ export const GeneralInfoTab = ({ t, patient, medicalProfile, logs }: GeneralInfo
               </span>
             } 
           />
-          <DataRow label={t.clinic.last_login} value={user?.last_login_at} dir="ltr" />
-          <DataRow label={t.clinic.last_activity} value={user?.last_activity_at} dir="ltr" />
+          <DataRow label={t.clinic.last_login || "Last Login"} value={user?.activity?.last_login_at} dir="ltr" />
+          <DataRow label={t.clinic.last_activity || "Last Activity"} value={user?.activity?.last_activity_at} dir="ltr" />
+          <DataRow label={t.clinic?.created_at || "Created At"} value={user?.timestamps?.created_at} dir="ltr" />
+          <DataRow label={t.clinic?.updated_at || "Updated At"} value={user?.timestamps?.updated_at} dir="ltr" />
+          
+          <DataRow label={t.clinic?.login_attempts || "Login Attempts"} value={user?.activity?.login_attempts ?? 0} />
+          <DataRow label={t.clinic?.locked_until || "Locked Until"} value={user?.activity?.locked_until} dir="ltr" />
         </SectionCard>
 
         <SectionCard title={t.clinic.system_preferences} icon={<SettingsOutlineIcon />}>
           <DataRow 
             label={t.clinic.timezone || "Timezone"} 
-            value={<span className="font-mono text-[12px] bg-[#F5F6F8] px-2 py-1 rounded">{profile?.timezone}</span>} 
+            value={<span className="font-mono text-[12px] bg-[#F5F6F8] px-2 py-1 rounded">{profile?.preferences?.timezone || "—"}</span>} 
             dir="ltr" 
           />
           <DataRow 
             label={t.clinic.language_preference || "System Language"} 
-            value={<span className="uppercase">{profile?.language_preference}</span>} 
+            value={<span className="uppercase">{profile?.preferences?.language || profile?.language_preference || "—"}</span>} 
             dir="ltr" 
           />
         </SectionCard>
@@ -145,17 +161,17 @@ export const GeneralInfoTab = ({ t, patient, medicalProfile, logs }: GeneralInfo
 
       <div className="flex flex-col gap-6">
 
-        <SectionCard title={t.clinic.personal_info} icon={<UsersOutlineIcon />}>
-          <DataRow label={t.clinic.full_name} value={profile?.full_name} />
-          <DataRow label={t.clinic.dob} value={profile?.date_of_birth} dir="ltr" />
-          <DataRow label={t.clinic.gender} value={<span className="capitalize">{profile?.gender?.replace(/_/g, ' ')}</span>} />
-          <DataRow label={t.clinic.nationality} value={profile?.nationality} />
+        <SectionCard title={t.clinic.personal_info || "Personal Information"} icon={<UsersOutlineIcon />}>
+          <DataRow label={t.clinic.full_name || "Full Name"} value={getFullName(user, profile)} />
+          <DataRow label={t.clinic.dob || "Date of Birth"} value={profile?.date_of_birth} dir="ltr" />
+          <DataRow label={t.clinic.gender || "Gender"} value={<span className="capitalize">{profile?.gender?.replace(/_/g, ' ')}</span>} />
+          <DataRow label={t.clinic.nationality || "Nationality"} value={profile?.nationality} />
         </SectionCard>
 
         <SectionCard title={t.clinic.emergency_contact} icon={<AlertCircleOutlineIcon />}>
-          <DataRow label={t.clinic.contact_name || "Name"} value={profile?.emergency_contact_name} />
-          <DataRow label={t.clinic.relationship || "Relationship"} value={profile?.emergency_contact_relationship} />
-          <DataRow label={t.clinic.phone_number} value={user?.phone} dir="ltr" />
+          <DataRow label={t.clinic.contact_name || "Name"} value={profile?.emergency_contact?.name} />
+          <DataRow label={t.clinic.relationship || "Relationship"} value={profile?.emergency_contact?.relationship} />
+          <DataRow label={t.clinic.phone_number || "Phone"} value={profile?.emergency_contact?.phone} dir="ltr" />
         </SectionCard>
 
         {translations && (

@@ -181,6 +181,9 @@ export async function apiRequest<T>(
 
   const requestHeaders: Record<string, string> = { ...headers };
 
+  // Always set Accept-Language to Arabic for all requests
+  requestHeaders['Accept-Language'] = 'ar';
+
   if (!isFormData) {
     requestHeaders['Content-Type'] = 'application/json';
   }

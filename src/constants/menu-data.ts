@@ -16,11 +16,19 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
       {
         title: t.common.dashboard,
         icon: LayoutDashboard,
-        submenu: [
-          { title: t.sidebar.admin_dashboard, href: `/${lang}/dashboard/admin` },
-        ],
+        href: `/${lang}`,
       },
     ],
+  },
+  {
+    title: t.sidebar?.user_management || "User Management",
+    items: [
+      {
+        title: t.sidebar?.all_users || "All Users",
+        icon: Users,
+        href: `/${lang}/users`
+      }
+    ]
   },
   {
     title: t.sidebar.clinic,
@@ -31,17 +39,13 @@ export const getSidebarData = (t: any, lang: string): SidebarSection[] => [
         href: "#",
         submenu: [
           { title: t.sidebar.all_doctors, href: `/${lang}/clinic/doctors` },
-          { title: t.sidebar.doctor_details, href: `/${lang}/clinic/doctors/details` },
+          { title: t.clinic?.all_doctors_contact_details || "Contact Details", href: `/${lang}/clinic/doctors/contact-details` },
         ]
       },
       { 
         title: t.sidebar.patients, 
         icon: Users, 
-        href: "#",
-        submenu: [
-          { title: t.sidebar.all_patients, href: `/${lang}/clinic/patients` },
-          { title: t.sidebar.patient_details, href: `/${lang}/clinic/patients/details` },
-        ]
+        href: `/${lang}/clinic/patients`
       },
       {
         title: t.sidebar.appointments || t.clinic?.appointments || "Appointments",

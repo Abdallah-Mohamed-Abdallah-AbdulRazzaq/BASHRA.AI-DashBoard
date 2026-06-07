@@ -5,7 +5,6 @@ import { DoctorViewToggle } from "./doctor-view-toggle";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
 import { DoctorFilter } from "./doctor-filter"; // 👈 Import New Component
 import { 
-  PlusIcon, 
   FilterIcon, 
   ChevronDownSmall,
   SearchIcon 
@@ -21,13 +20,15 @@ interface DoctorHeaderProps {
   currentSortLabel: string;
   onSortChange: (value: string) => void;
   onApplyFilters: (filters: Record<string, string>) => void;
+  onExportPDF?: () => void;
+  onExportExcel?: () => void;
 }
 
-export const DoctorHeader = ({ t, view, setView, totalDoctors, searchQuery, onSearchChange, currentSortLabel, onSortChange, onApplyFilters }: DoctorHeaderProps) => {
+export const DoctorHeader = ({ t, view, setView, totalDoctors, searchQuery, onSearchChange, currentSortLabel, onSortChange, onApplyFilters, onExportPDF, onExportExcel }: DoctorHeaderProps) => {
   
   const exportItems = [
-    { label: "Download as PDF", onClick: () => {} },
-    { label: "Download as Excel", onClick: () => {} },
+    { label: "Download as PDF", onClick: () => onExportPDF?.() },
+    { label: "Download as CSV/Excel", onClick: () => onExportExcel?.() },
   ];
 
   const sortItems = [
@@ -77,10 +78,6 @@ export const DoctorHeader = ({ t, view, setView, totalDoctors, searchQuery, onSe
           )}
 
           <DoctorViewToggle view={view} onChange={setView} />
-
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#2E37A4] text-white rounded-[8px] text-[13px] font-semibold hover:bg-[#252D88] transition-colors shadow-sm shadow-indigo-200">
-            <PlusIcon /> {t.clinic.new_doctor}
-          </button>
         </div>
       </div>
 

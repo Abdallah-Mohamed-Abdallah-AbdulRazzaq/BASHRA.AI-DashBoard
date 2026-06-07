@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PhoneOutlineIcon } from "@/components/ui/icons/dashboard-icons";
+import { UserAvatar } from "../user-avatar";
 import { cn } from "@/lib/utils";
 import type { AdminUserDetailsData } from "@/types/admin-users";
 
@@ -33,27 +33,34 @@ export const PatientDetailsHeader = ({ t, patient }: PatientHeaderProps) => {
     }
   };
 
+  const getFullName = (userObj: any) => {
+    if (!userObj) return null;
+    if (userObj.full_name) return userObj.full_name;
+    if (userObj.first_name || userObj.last_name) return `${userObj.first_name || ""} ${userObj.last_name || ""}`.trim();
+    if (userObj.profile?.full_name) return userObj.profile.full_name;
+    if (userObj.profile?.translations?.full_name) return userObj.profile.translations.full_name;
+    if (Array.isArray(userObj.profile?.translations) && userObj.profile.translations[0]?.full_name) return userObj.profile.translations[0].full_name;
+    if (userObj.name) return userObj.name;
+    return null;
+  };
+
   return (
     <div className="flex flex-col gap-4 w-full">
       
-      <Link href={`/${lang}/clinic/patients`} className="flex items-center gap-2 text-[15px] font-bold text-[#0A1B39] hover:text-[#2E37A4] transition-colors w-fit">
-        <BackArrowIcon /> {t.clinic.back_to_patients || "Back to Patients"}
+      <Link href={`/${lang}/users`} className="flex items-center gap-2 text-[15px] font-bold text-[#0A1B39] hover:text-[#2E37A4] transition-colors w-fit">
+        <BackArrowIcon /> {t.clinic?.back_to_users || "Back to Users"}
       </Link>
 
       <div className="bg-white border border-[#E7E8EB] rounded-[12px] p-5 shadow-sm flex flex-col xl:flex-row justify-between items-start xl:items-center gap-6">
         
         <div className="flex items-center gap-5">
-          <div className="w-[100px] h-[100px] rounded-[12px] overflow-hidden bg-[#F5F6F8] shrink-0 border-[3px] border-[#F9FAFB]">
-            <img 
-              src={profile?.profile_picture_url || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop"} 
-              alt={profile?.full_name || ""} 
-              className="w-full h-full object-cover" 
-            />
+          <div className="w-[100px] h-[100px] rounded-[12px] overflow-hidden bg-[#F5F6F8] shrink-0 border-[3px] border-[#F9FAFB] relative">
+            <UserAvatar user={patient} />
           </div>
 
           <div className="flex flex-col">
             <div className="flex items-center gap-3 mb-1">
-              <h2 className="text-[20px] font-bold text-[#0A1B39]">{profile?.full_name || user?.email || user?.uuid || `User #${user?.id}`}</h2>
+              <h2 className="text-[20px] font-bold text-[#0A1B39]">{getFullName(user) || profile?.full_name || user?.email || user?.uuid || `User #${user?.id}`}</h2>
               <span className={cn("px-2.5 py-1 text-[11px] font-bold rounded-[6px] shadow-sm capitalize", getStatusColor(user?.status))}>
                 {user?.status || "—"}
               </span>
@@ -79,14 +86,14 @@ export const PatientDetailsHeader = ({ t, patient }: PatientHeaderProps) => {
             </div>
 
             <div className="flex items-center gap-4 text-[12px] text-[#9DA4B0] mt-1 flex-wrap">
-              {user?.created_at && (
-                <span>{t.clinic.member_since || "Member since"}: {user.created_at}</span>
+              {user?.timestamps?.created_at && (
+                <span>{t.clinic.member_since || "Member since"}: {user.timestamps.created_at}</span>
               )}
-              {user?.last_login_at && (
-                <span>{t.clinic.last_login || "Last login"}: {user.last_login_at}</span>
+              {user?.activity?.last_login_at && (
+                <span>{t.clinic.last_login || "Last login"}: {user.activity.last_login_at}</span>
               )}
-              {user?.last_activity_at && (
-                <span>{t.clinic.last_activity || "Last activity"}: {user.last_activity_at}</span>
+              {user?.activity?.last_activity_at && (
+                <span>{t.clinic.last_activity || "Last activity"}: {user.activity.last_activity_at}</span>
               )}
             </div>
           </div>

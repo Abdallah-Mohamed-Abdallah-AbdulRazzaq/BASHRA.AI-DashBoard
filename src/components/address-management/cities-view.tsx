@@ -28,7 +28,7 @@ export default function CitiesView({ t, lang = "en" }: CitiesViewProps) {
       setLoading(true);
       setError(null);
       const [countriesRes, citiesRes] = await Promise.all([
-        AdminLocationsService.getLocations({ level_type: "country", lang: lang as "en" | "ar" }),
+        AdminLocationsService.getCountries(lang as "ar" | "en"),
         AdminLocationsService.getLocations({ level_type: "city", lang: lang as "en" | "ar" })
       ]);
 

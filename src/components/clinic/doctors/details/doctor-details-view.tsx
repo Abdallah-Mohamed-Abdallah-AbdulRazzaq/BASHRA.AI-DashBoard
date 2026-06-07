@@ -10,6 +10,22 @@ import { DoctorDetailsHeader } from "./doctor-details-header";
 import { GeneralInfoTab } from "./tabs/general-info-tab";
 import { ProfileDetailsTab } from "./tabs/profile-details-tab";
 import { ContactDetailsTab } from "./tabs/contact-details-tab";
+import { ComprehensiveVerificationModal } from "@/components/clinic/doctors/modals/comprehensive-verification-modal";
+import { EditDoctorPersonalModal } from "@/components/clinic/doctors/modals/edit-doctor-personal-modal";
+import { EditDoctorProfessionalModal } from "@/components/clinic/doctors/modals/edit-doctor-professional-modal";
+import { ReviewDocumentModal } from "@/components/clinic/doctors/modals/review-document-modal";
+import { ReviewProfileModal } from "@/components/clinic/doctors/modals/review-profile-modal";
+import { DeleteProfileModal } from "@/components/clinic/doctors/modals/delete-profile-modal";
+import { 
+  updateDoctorVerificationStatus,
+  updateDoctorPersonalData,
+  updateDoctorProfessionalData,
+  updateDoctorDocumentStatus,
+  approveDoctorProfile,
+  rejectDoctorProfile,
+  deleteDoctorProfile
+} from "@/lib/admin-doctors";
+import type { UpdateDoctorPersonalDataPayload, UpdateDoctorProfessionalDataPayload } from "@/types/admin-doctors";
 
 interface DoctorDetailsViewProps {
   t: any;
@@ -38,12 +54,31 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
   const [contactLoading, setContactLoading] = useState(false);
   const [contactError, setContactError] = useState<string | null>(null);
 
-  const [actionModal, setActionModal] = useState<{ type: 'approve' | 'reject' | 'suspend' | 'status' | 'verify' | 'approval_status'; label: string } | null>(null);
+  const [actionModal, setActionModal] = useState<{ type: 'approve' | 'reject' | 'suspend' | 'status' | 'verify' | 'approval_status', label: string } | null>(null);
   const [actionStatus, setActionStatus] = useState<DoctorStatus>('active');
   const [actionApprovalStatus, setActionApprovalStatus] = useState<DoctorApprovalStatus>('approved');
   const [actionIsVerified, setActionIsVerified] = useState(true);
   const [actionReason, setActionReason] = useState('');
   const [actionSubmitting, setActionSubmitting] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
+
+  const showFeedback = (msg: string, isError = false) => {
+    if (isError) {
+      setActionError(msg);
+      setTimeout(() => setActionError(null), 5000);
+    } else {
+      setActionSuccess(msg);
+      setTimeout(() => setActionSuccess(null), 5000);
+    }
+  };
+
+  const [isComprehensiveModalOpen, setIsComprehensiveModalOpen] = useState(false);
+  const [isPersonalModalOpen, setIsPersonalModalOpen] = useState(false);
+  const [isProfessionalModalOpen, setIsProfessionalModalOpen] = useState(false);
+  const [reviewDocument, setReviewDocument] = useState<{ id: number, status: "approved" | "rejected" } | null>(null);
+  const [profileReviewAction, setProfileReviewAction] = useState<"approve" | "reject" | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const tabs = [
     { id: "general", label: t.clinic.tab_general_info },
@@ -151,7 +186,7 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
     if (requiresReason[actionModal.type]) {
       const trimmed = actionReason.trim();
       if (trimmed.length < 10 || trimmed.length > 500) {
-        alert(t.clinic?.reason_required || "Reason must be between 10 and 500 characters");
+        showFeedback(t.clinic?.reason_required || "Reason must be between 10 and 500 characters", true);
         return;
       }
     }
@@ -170,15 +205,93 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
       setActionModal(null);
       setActionReason('');
       await fetchDoctor();
-      alert(t.clinic?.action_success || "Action completed successfully");
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
     } catch (err: unknown) {
       if (isForbiddenError(err)) {
-        alert(t.clinic?.permission_denied || "You do not have permission to perform this action");
+        showFeedback(t.clinic?.permission_denied || "You do not have permission to perform this action", true);
       } else {
-        alert(getApiErrorMessage(err));
+        showFeedback(getApiErrorMessage(err), true);
       }
     } finally {
       setActionSubmitting(false);
+    }
+  };
+
+  const handleComprehensiveConfirm = async (isVerified: boolean, approvalStatus: DoctorApprovalStatus, reason: string) => {
+    if (!doctorId) return;
+    try {
+      await updateDoctorVerificationStatus(Number(doctorId), { is_verified: isVerified, approval_status: approvalStatus, reason });
+      setIsComprehensiveModalOpen(false);
+      await fetchDoctor();
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
+    }
+  };
+
+  const handlePersonalConfirm = async (payload: UpdateDoctorPersonalDataPayload) => {
+    if (!doctorId) return;
+    try {
+      await updateDoctorPersonalData(Number(doctorId), payload);
+      setIsPersonalModalOpen(false);
+      await fetchDoctor();
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
+    }
+  };
+
+  const handleProfessionalConfirm = async (payload: UpdateDoctorProfessionalDataPayload) => {
+    if (!doctorId) return;
+    try {
+      await updateDoctorProfessionalData(Number(doctorId), payload);
+      setIsProfessionalModalOpen(false);
+      await fetchDoctor();
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
+    }
+  };
+
+  const handleDocumentReviewConfirm = async (reason?: string) => {
+    if (!doctorId || !reviewDocument) return;
+    try {
+      await updateDoctorDocumentStatus(Number(doctorId), reviewDocument.id, { 
+        status: reviewDocument.status, 
+        rejection_reason: reviewDocument.status === "rejected" ? reason : undefined 
+      });
+      setReviewDocument(null);
+      await fetchDoctor();
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
+    }
+  };
+
+  const handleProfileReviewConfirm = async (reason: string) => {
+    if (!doctorId || !profileReviewAction) return;
+    try {
+      if (profileReviewAction === "approve") {
+        await approveDoctorProfile(Number(doctorId), { reason });
+      } else {
+        await rejectDoctorProfile(Number(doctorId), { reason });
+      }
+      setProfileReviewAction(null);
+      await fetchDoctor();
+      showFeedback(t.clinic?.action_success || "Action completed successfully");
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
+    }
+  };
+
+  const handleDeleteProfileConfirm = async (reason: string) => {
+    if (!doctorId) return;
+    try {
+      await deleteDoctorProfile(Number(doctorId), { reason });
+      setIsDeleteModalOpen(false);
+      window.location.href = `/${lang}/clinic/doctors`;
+    } catch (err: unknown) {
+      showFeedback(getApiErrorMessage(err), true);
     }
   };
 
@@ -237,6 +350,17 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
     <div className="flex flex-col gap-6 w-full p-4 sm:p-6 bg-[#F5F6F8] min-h-screen">
       <DoctorDetailsHeader t={t} doctor={doctor!} />
 
+      {actionError && (
+        <div className="mb-4 p-3 rounded-[8px] bg-[#FFE5E5] text-[#D80027] text-[13px] font-medium border border-[#FFCCCC]">
+          {actionError}
+        </div>
+      )}
+      {actionSuccess && (
+        <div className="mb-4 p-3 rounded-[8px] bg-[#E5FFE9] text-[#00A63E] text-[13px] font-medium border border-[#CCFFD6]">
+          {actionSuccess}
+        </div>
+      )}
+
       <div className="bg-white border border-[#E7E8EB] rounded-[12px] p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-4">
           <h3 className="text-[14px] font-bold text-[#0A1B39] whitespace-nowrap">{t.clinic?.doctor_actions || 'Doctor Actions'}</h3>
@@ -252,6 +376,10 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
             <button onClick={() => openActionModal('status')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{t.clinic?.update_status || 'Status'}</button>
             <button onClick={() => openActionModal('verify')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{doctor?.is_verified ? (t.clinic?.unverify_doctor || 'Unverify') : (t.clinic?.verify_doctor || 'Verify')}</button>
             <button onClick={() => openActionModal('approval_status')} className="px-3 py-1.5 bg-[#F5F6F8] text-[#0A1B39] text-[12px] font-semibold rounded-[6px] border border-[#E7E8EB] hover:bg-[#EEF0F2] transition-colors">{t.clinic?.update_approval_status || 'Approval'}</button>
+            <div className="w-px h-4 bg-[#E7E8EB]" />
+            <button onClick={() => setIsComprehensiveModalOpen(true)} className="px-3 py-1.5 bg-[#2E37A4] text-white text-[12px] font-semibold rounded-[6px] hover:bg-[#252E8A] transition-colors">
+              {t.clinic?.update_verification_status || 'Comprehensive Verification'}
+            </button>
           </div>
         </div>
       </div>
@@ -307,6 +435,12 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
             documentsData={documentsData}
             documentsSummary={documentsSummary}
             documentsError={documentsError}
+            onEditPersonalClick={() => personalData && setIsPersonalModalOpen(true)}
+            onEditProfessionalClick={() => professionalData && setIsProfessionalModalOpen(true)}
+            onReviewDocumentClick={(id, status) => setReviewDocument({ id, status })}
+            onProfileApproveClick={() => setProfileReviewAction("approve")}
+            onProfileRejectClick={() => setProfileReviewAction("reject")}
+            onProfileDeleteClick={() => setIsDeleteModalOpen(true)}
           />
         )}
       </div>
@@ -345,6 +479,61 @@ export default function DoctorDetailsView({ t }: DoctorDetailsViewProps) {
             </div>
           </div>
         </div>
+      )}
+
+      {isComprehensiveModalOpen && doctor && (
+        <ComprehensiveVerificationModal
+          t={t}
+          initialIsVerified={doctor.is_verified ?? false}
+          initialApprovalStatus={doctor.approval_status ?? 'pending'}
+          onClose={() => setIsComprehensiveModalOpen(false)}
+          onConfirm={handleComprehensiveConfirm}
+        />
+      )}
+
+      {isPersonalModalOpen && personalData && (
+        <EditDoctorPersonalModal
+          t={t}
+          initialData={personalData}
+          onClose={() => setIsPersonalModalOpen(false)}
+          onConfirm={handlePersonalConfirm}
+        />
+      )}
+
+      {isProfessionalModalOpen && professionalData && (
+        <EditDoctorProfessionalModal
+          t={t}
+          initialData={professionalData}
+          onClose={() => setIsProfessionalModalOpen(false)}
+          onConfirm={handleProfessionalConfirm}
+        />
+      )}
+
+      {reviewDocument && (
+        <ReviewDocumentModal
+          t={t}
+          status={reviewDocument.status}
+          onClose={() => setReviewDocument(null)}
+          onConfirm={handleDocumentReviewConfirm}
+        />
+      )}
+
+      {profileReviewAction && (
+        <ReviewProfileModal
+          t={t}
+          action={profileReviewAction}
+          onClose={() => setProfileReviewAction(null)}
+          onConfirm={handleProfileReviewConfirm}
+        />
+      )}
+
+      {isDeleteModalOpen && doctorId && (
+        <DeleteProfileModal
+          t={t}
+          doctorId={Number(doctorId)}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleDeleteProfileConfirm}
+        />
       )}
     </div>
   );

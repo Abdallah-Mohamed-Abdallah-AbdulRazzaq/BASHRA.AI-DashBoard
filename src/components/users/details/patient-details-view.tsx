@@ -58,7 +58,7 @@ export default function PatientDetailsView({ t }: PatientDetailsViewProps) {
         getAdminUserById(id),
         getAdminUserMedicalProfile(id).catch(() => null),
         getPatientProfileByUserId(id).catch(() => null),
-        getAdminUserLogs(id, { page: 1, limit: 10 }).catch(() => []),
+        getAdminUserLogs(id, { page: 1, limit: 10 }).then(res => res.logs).catch(() => []),
       ]);
       setPatient(userData);
       setMedicalProfile(medicalData);

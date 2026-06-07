@@ -20,13 +20,22 @@ interface ProfileDetailsTabProps {
   documentsData: DoctorDocumentsData | null;
   documentsSummary: DoctorDocumentsSummaryData | null;
   documentsError: string | null;
+  onEditPersonalClick?: () => void;
+  onEditProfessionalClick?: () => void;
+  onReviewDocumentClick?: (docId: number, status: "approved" | "rejected") => void;
+  onProfileApproveClick?: () => void;
+  onProfileRejectClick?: () => void;
+  onProfileDeleteClick?: () => void;
 }
 
-const SectionCard = ({ title, icon, children }: { title: string, icon: React.ReactNode, children: React.ReactNode }) => (
+const SectionCard = ({ title, icon, action, children }: { title: string, icon: React.ReactNode, action?: React.ReactNode, children: React.ReactNode }) => (
   <div className="bg-white border border-[#E7E8EB] rounded-[12px] shadow-[0_2px_4px_rgba(0,0,0,0.02)] overflow-hidden">
-    <div className="flex items-center gap-2.5 px-5 py-4 border-b border-[#E7E8EB] bg-[#FAFBFC]">
-      <div className="text-[#2E37A4]">{icon}</div>
-      <h3 className="text-[15px] font-bold text-[#0A1B39]">{title}</h3>
+    <div className="flex items-center justify-between px-5 py-4 border-b border-[#E7E8EB] bg-[#FAFBFC]">
+      <div className="flex items-center gap-2.5">
+        <div className="text-[#2E37A4]">{icon}</div>
+        <h3 className="text-[15px] font-bold text-[#0A1B39]">{title}</h3>
+      </div>
+      {action && <div>{action}</div>}
     </div>
     <div className="p-5 flex flex-col">
       {children}
@@ -47,7 +56,9 @@ export const ProfileDetailsTab = ({
   t, lang, doctor,
   profileComplete, personalData, professionalData,
   profileLoading, profileError,
-  documentsData, documentsSummary, documentsError
+  documentsData, documentsSummary, documentsError,
+  onEditPersonalClick, onEditProfessionalClick, onReviewDocumentClick,
+  onProfileApproveClick, onProfileRejectClick, onProfileDeleteClick
 }: ProfileDetailsTabProps) => {
 
   if (profileLoading) {
@@ -123,7 +134,11 @@ export const ProfileDetailsTab = ({
         </SectionCard>
 
         {/* 2. Professional Identity */}
-        <SectionCard title={t.clinic.professional_identity} icon={<StethoscopeOutlineIcon />}>
+        <SectionCard 
+          title={t.clinic.professional_identity} 
+          icon={<StethoscopeOutlineIcon />}
+          action={onEditProfessionalClick ? <button onClick={onEditProfessionalClick} className="text-[12px] font-semibold text-[#2E37A4] hover:underline">{t.clinic.edit || "Edit"}</button> : undefined}
+        >
           <DataRow label={t.sidebar.doctor_details} value={perFullName} />
           <DataRow label={t.clinic.specialty} value={profSpecialty} />
           <DataRow label={t.clinic.sub_specialty} value={profSubSpecialty} />
@@ -153,7 +168,11 @@ export const ProfileDetailsTab = ({
       <div className="flex flex-col gap-6">
 
         {/* 4. Personal & Demographics */}
-        <SectionCard title={t.clinic.personal_demographics} icon={<UsersOutlineIcon />}>
+        <SectionCard 
+          title={t.clinic.personal_demographics} 
+          icon={<UsersOutlineIcon />}
+          action={onEditPersonalClick ? <button onClick={onEditPersonalClick} className="text-[12px] font-semibold text-[#2E37A4] hover:underline">{t.clinic.edit || "Edit"}</button> : undefined}
+        >
           <DataRow label={t.clinic.dob} value={personalData?.date_of_birth || "—"} dir="ltr" />
           <DataRow label={t.clinic.gender} value={personalData?.gender ? <span className="capitalize">{personalData.gender}</span> : "—"} />
           <DataRow label={t.clinic.nationality} value={personalData?.nationality || "—"} />
@@ -236,6 +255,12 @@ export const ProfileDetailsTab = ({
                       )}>
                         {doc.status ? doc.status.charAt(0).toUpperCase() + doc.status.slice(1) : "—"}
                       </span>
+                      {doc.status === "pending" && onReviewDocumentClick && (
+                        <>
+                          <button onClick={() => onReviewDocumentClick(doc.id!, "approved")} className="px-2 py-1 bg-[#F0FDF4] text-[#27AE60] text-[11px] font-bold rounded border border-[#27AE60]/20 hover:bg-[#E0F7E4]">Approve</button>
+                          <button onClick={() => onReviewDocumentClick(doc.id!, "rejected")} className="px-2 py-1 bg-[#FEF2F2] text-[#EF1E1E] text-[11px] font-bold rounded border border-[#EF1E1E]/20 hover:bg-[#FEE2E2]">Reject</button>
+                        </>
+                      )}
                       {doc.file_url && (
                         <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="text-[#2E37A4] text-[12px] font-semibold hover:underline shrink-0">
                           {t.clinic.view || "View"}
@@ -262,6 +287,40 @@ export const ProfileDetailsTab = ({
           </SectionCard>
         </div>
       )}
+
+      {/* Profile Review Actions & Danger Zone */}
+      <div className="lg:col-span-2 w-full mt-6 space-y-6">
+        <div className="bg-white border border-[#E7E8EB] rounded-[12px] p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 className="text-[15px] font-bold text-[#0A1B39]">{t.clinic.profile_review || "Profile Review"}</h4>
+            <p className="text-[13px] text-[#6C7688] mt-1">
+              Approve or reject the entire profile.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={onProfileApproveClick} className="px-5 py-2 bg-[#F0FDF4] text-[#27AE60] text-[13px] font-bold rounded-[8px] border border-[#27AE60]/20 hover:bg-[#E0F7E4] transition-colors">
+              {t.clinic.approve_profile || "Approve Profile"}
+            </button>
+            <button onClick={onProfileRejectClick} className="px-5 py-2 bg-[#FEF2F2] text-[#EF1E1E] text-[13px] font-bold rounded-[8px] border border-[#EF1E1E]/20 hover:bg-[#FEE2E2] transition-colors">
+              {t.clinic.reject_profile || "Reject Profile"}
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-[#FEF2F2] border border-[#EF1E1E]/30 rounded-[12px] p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 className="text-[15px] font-bold text-[#EF1E1E]">Danger Zone</h4>
+            <p className="text-[13px] text-[#EF1E1E]/80 mt-1">
+              Permanently delete this doctor's profile. This action cannot be undone.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={onProfileDeleteClick} className="px-5 py-2 bg-[#EF1E1E] text-white text-[13px] font-bold rounded-[8px] hover:bg-[#DC2626] transition-colors shadow-sm">
+              {t.clinic.delete_profile || "Delete Profile"}
+            </button>
+          </div>
+        </div>
+      </div>
 
     </div>
   );

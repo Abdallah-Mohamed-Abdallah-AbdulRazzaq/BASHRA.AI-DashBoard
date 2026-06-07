@@ -50,34 +50,38 @@ export async function getAIUsagePolicies(params?: {
 
 /**
  * Get Policy by ID
+ * Returns: ApiDataResponse<{ policy: AIUsagePolicy }>
  */
 export async function getAIUsagePolicyById(id: number): Promise<AIUsagePolicy> {
-  // It returns data? Need to check the shape. According to docs, usually ApiDataResponse.
-  // Wait, the docs didn't specify the exact response shape for GET /policies/:id. 
-  // Let's assume ApiDataResponse<AIUsagePolicy> based on conventions.
-  const res = await apiGet<ApiDataResponse<AIUsagePolicy>>(`/api/admin/ai-usage/policies/${id}`);
-  return res.data;
+  const res = await apiGet<ApiDataResponse<{ policy: AIUsagePolicy }>>(`/api/admin/ai-usage/policies/${id}`);
+  return res.data.policy;
 }
 
 /**
  * Create Policy (Requires Super Admin)
+ * Returns: 201 with data.policy
  */
 export async function createAIUsagePolicy(payload: AIPolicyCreatePayload): Promise<AIUsagePolicy> {
-  const res = await apiPost<ApiDataResponse<AIUsagePolicy>>('/api/admin/ai-usage/policies', payload);
-  return res.data;
+  const res = await apiPost<ApiDataResponse<{ policy: AIUsagePolicy }>>('/api/admin/ai-usage/policies', payload);
+  return res.data.policy;
 }
 
 /**
  * Update Policy (Requires Super Admin)
+ * Returns: 200 with data.policy
  */
 export async function updateAIUsagePolicy(id: number, payload: AIPolicyUpdatePayload): Promise<AIUsagePolicy> {
-  const res = await apiPatch<ApiDataResponse<AIUsagePolicy>>(`/api/admin/ai-usage/policies/${id}`, payload);
-  return res.data;
+  const res = await apiPatch<ApiDataResponse<{ policy: AIUsagePolicy }>>(`/api/admin/ai-usage/policies/${id}`, payload);
+  return res.data.policy;
 }
 
 /**
  * Update Policy Status (Requires Super Admin)
+ * PATCH /api/admin/ai-usage/policies/:id/status
+ * Body: { is_active: boolean }
+ * Returns: 200 with data.policy
  */
-export async function updateAIUsagePolicyStatus(id: number, payload: AIPolicyStatusPayload): Promise<void> {
-  await apiPatch(`/api/admin/ai-usage/policies/${id}/status`, payload);
+export async function updateAIUsagePolicyStatus(id: number, payload: AIPolicyStatusPayload): Promise<AIUsagePolicy> {
+  const res = await apiPatch<ApiDataResponse<{ policy: AIUsagePolicy }>>(`/api/admin/ai-usage/policies/${id}/status`, payload);
+  return res.data.policy;
 }

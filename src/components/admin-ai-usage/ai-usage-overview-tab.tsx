@@ -11,7 +11,7 @@ import {
   ChartRevenue
 } from "@/components/ui/icons/dashboard-icons";
 import { StatsCard } from "@/components/dashboard/stats-card";
-import { Cpu, CheckCircle, XCircle } from "lucide-react";
+import { Cpu, CheckCircle, XCircle, FileText } from "lucide-react";
 
 interface AIUsageOverviewTabProps {
   t: any;
@@ -79,6 +79,7 @@ export function AIUsageOverviewTab({ t, lang }: AIUsageOverviewTabProps) {
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Period selector */}
       <div className="flex justify-between items-center bg-white p-4 rounded-[12px] border border-[#E7E8EB]">
         <h2 className="text-[16px] font-bold text-[#0A1B39]">{t.ai_usage?.usage_overview || "Usage Overview"}</h2>
         <div className="flex items-center gap-2">
@@ -92,7 +93,8 @@ export function AIUsageOverviewTab({ t, lang }: AIUsageOverviewTabProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      {/* Stats Cards — 4 cards: Total Requests, Active Users, Chat+Image, Documents */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
         <StatsCard
           title={t.ai_usage?.total_requests || "Total Requests"}
           value={totalRequests.toString()}
@@ -114,20 +116,32 @@ export function AIUsageOverviewTab({ t, lang }: AIUsageOverviewTabProps) {
           chart={<ChartRevenue />}
         />
         <StatsCard
-          title={t.ai_usage?.chat || "Chat"}
+          title={t.ai_usage?.chat || "Chat Messages"}
           value={(c?.chat_messages_count || 0).toString()}
           badgeValue={(c?.image_analyses_count || 0).toString()}
-          badgeText={t.ai_usage?.image || "Image"}
+          badgeText={t.ai_usage?.image || "Image Analyses"}
           badgeColor="bg-[#F2994A]"
           icon={<StatRevenueIcon />}
           iconBgColor="bg-[#27AE60]"
           chart={<ChartRevenue />}
         />
+        <StatsCard
+          title={t.ai_usage?.document_analyses || "Document Analyses"}
+          value={(c?.document_analyses_count || 0).toString()}
+          badgeValue={""}
+          badgeText=""
+          badgeColor="bg-transparent"
+          icon={<FileText className="w-5 h-5 text-white" />}
+          iconBgColor="bg-[#9B59B6]"
+          chart={<ChartRevenue />}
+        />
       </div>
 
+      {/* Provider Summary Table */}
       <div className="bg-white border border-[#E7E8EB] rounded-[12px] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#E7E8EB]">
           <h3 className="text-[16px] font-bold text-[#0A1B39]">{t.ai_usage?.provider || "Provider Summary"}</h3>
+          <p className="text-[12px] text-[#6C7688] mt-1">{t.ai_usage?.provider_note || "Note: Provider summary may reflect all-time logs, not just the selected period."}</p>
         </div>
         <div className="w-full overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse">
@@ -139,14 +153,14 @@ export function AIUsageOverviewTab({ t, lang }: AIUsageOverviewTabProps) {
                 <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39] whitespace-nowrap">{t.ai_usage?.status || "Status"}</th>
                 <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39] whitespace-nowrap">{t.ai_usage?.total_requests || "Requests"}</th>
                 <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39] whitespace-nowrap">{t.ai_usage?.tokens_used || "Tokens"}</th>
-                <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39] whitespace-nowrap">{t.ai_usage?.latency || "Latency"}</th>
+                <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39] whitespace-nowrap">{t.ai_usage?.latency || "Avg Latency"}</th>
               </tr>
             </thead>
             <tbody>
               {data?.provider_summary && data.provider_summary.length > 0 ? (
                 data.provider_summary.map((p, idx) => (
                   <tr key={idx} className="border-b border-[#E7E8EB] hover:bg-[#F9FAFB] transition-colors">
-                    <td className="px-6 py-4 text-[14px] text-[#0A1B39]">{p.provider || "—"}</td>
+                    <td className="px-6 py-4 text-[14px] text-[#0A1B39] font-medium">{p.provider || "—"}</td>
                     <td className="px-6 py-4 text-[14px] text-[#0A1B39]">{p.model || "—"}</td>
                     <td className="px-6 py-4 text-[14px] text-[#0A1B39]">{p.request_type || "—"}</td>
                     <td className="px-6 py-4">
@@ -178,6 +192,45 @@ export function AIUsageOverviewTab({ t, lang }: AIUsageOverviewTabProps) {
           </table>
         </div>
       </div>
+
+      {/* Policies Summary */}
+      {data?.policies_summary && data.policies_summary.length > 0 && (
+        <div className="bg-white border border-[#E7E8EB] rounded-[12px] overflow-hidden">
+          <div className="px-6 py-4 border-b border-[#E7E8EB]">
+            <h3 className="text-[16px] font-bold text-[#0A1B39]">{t.ai_usage?.policies_summary || "Policies Summary"}</h3>
+          </div>
+          <div className="w-full overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#F5F6F8] border-b border-[#E7E8EB]">
+                  <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39]">{t.ai_usage?.scope_type || "Scope Type"}</th>
+                  <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39]">{t.ai_usage?.status || "Status"}</th>
+                  <th className="px-6 py-4 text-[13px] font-semibold text-[#0A1B39]">{t.ai_usage?.count || "Count"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.policies_summary.map((ps, idx) => (
+                  <tr key={idx} className="border-b border-[#E7E8EB] hover:bg-[#F9FAFB] transition-colors">
+                    <td className="px-6 py-4 text-[14px] text-[#0A1B39] capitalize">{ps.scope_type}</td>
+                    <td className="px-6 py-4">
+                      {ps.is_active ? (
+                        <span className="text-[#27AE60] bg-[#E8F8EE] px-2 py-1 rounded-[6px] text-[12px] font-medium">
+                          {t.ai_usage?.activate || "Active"}
+                        </span>
+                      ) : (
+                        <span className="text-[#EF1E1E] bg-[#FDE8E8] px-2 py-1 rounded-[6px] text-[12px] font-medium">
+                          {t.ai_usage?.deactivate || "Inactive"}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-[14px] text-[#0A1B39] font-semibold">{ps.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

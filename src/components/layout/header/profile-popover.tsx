@@ -82,7 +82,7 @@ export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
             {dictionary.profile.profile_settings}
           </button>
 
-          <button className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-foreground hover:bg-secondary/50 hover:text-primary transition-colors group">
+          {/* <button className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-foreground hover:bg-secondary/50 hover:text-primary transition-colors group">
             <Settings size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
             {dictionary.profile.account_settings}
           </button>
@@ -100,7 +100,7 @@ export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
           <button className="flex items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-foreground hover:bg-secondary/50 hover:text-primary transition-colors group">
             <CreditCard size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
             {dictionary.profile.transactions}
-          </button>
+          </button> */}
         </div>
 
         <div className="border-t border-border mt-1 p-2">

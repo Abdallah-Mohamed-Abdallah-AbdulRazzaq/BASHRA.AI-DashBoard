@@ -9,6 +9,7 @@ interface DoctorCardProps {
   t: any;
   doctor: DoctorListItem;
   lang?: string;
+  onActionClick?: (actionType: string, doctorId: number) => void;
 }
 
 function getInitials(name: string): string {
@@ -28,7 +29,7 @@ function statusColor(status: string | undefined): string {
   }
 }
 
-export const DoctorCard = ({ t, doctor, lang = "en" }: DoctorCardProps) => {
+export const DoctorCard = ({ t, doctor, lang = "en", onActionClick }: DoctorCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +46,12 @@ export const DoctorCard = ({ t, doctor, lang = "en" }: DoctorCardProps) => {
   const displayName = doctor.full_name || doctor.email || `Doctor #${doctor.id}`;
   const displaySpecialty = doctor.specialty || "—";
   const avatarUrl = doctor.profile_picture_url;
-  const detailsHref = `/${lang}/clinic/doctors/details?id=${doctor.id}`;
+  const detailsHref = `/${lang}/clinic/doctors/details?id=${doctor.id!}`;
+
+  const handleActionClick = (action: string) => {
+    setIsMenuOpen(false);
+    onActionClick?.(action, doctor.id!);
+  };
 
   return (
     <div className="flex p-4 bg-white border border-[#E7E8EB] rounded-[12px] hover:shadow-md transition-all duration-300 relative group">
@@ -85,12 +91,24 @@ export const DoctorCard = ({ t, doctor, lang = "en" }: DoctorCardProps) => {
             </button>
 
             {isMenuOpen && (
-              <div className="absolute right-0 rtl:left-0 top-8 w-32 bg-white border border-[#E7E8EB] rounded-[8px] shadow-lg z-20 py-1 animate-in fade-in zoom-in-95 duration-200">
-                <a href={detailsHref} className="block w-full text-left px-3 py-2 text-[13px] text-[#0A1B39] hover:bg-[#F5F6F8] transition-colors">
-                  {t.clinic.edit}
-                </a>
-                <button className="w-full text-left px-3 py-2 text-[13px] text-[#EF1E1E] hover:bg-[#FEF2F2] transition-colors">
-                  {t.clinic.delete}
+              <div className="absolute right-0 rtl:left-0 top-8 w-40 bg-white border border-[#E7E8EB] rounded-[8px] shadow-lg z-20 py-1 animate-in fade-in zoom-in-95 duration-200">
+                <button onClick={() => handleActionClick("approve")} className="w-full text-left px-3 py-2 text-[13px] text-[#0A1B39] hover:bg-[#F5F6F8] transition-colors">
+                  Approve
+                </button>
+                <button onClick={() => handleActionClick("reject")} className="w-full text-left px-3 py-2 text-[13px] text-[#EF1E1E] hover:bg-[#FEF2F2] transition-colors">
+                  Reject
+                </button>
+                <button onClick={() => handleActionClick("suspend")} className="w-full text-left px-3 py-2 text-[13px] text-[#E8A317] hover:bg-[#FFF5E6] transition-colors">
+                  Suspend
+                </button>
+                <button onClick={() => handleActionClick("verify")} className="w-full text-left px-3 py-2 text-[13px] text-[#27AE60] hover:bg-[#E8F8F0] transition-colors">
+                  Verify Profile
+                </button>
+                <button onClick={() => handleActionClick("unverify")} className="w-full text-left px-3 py-2 text-[13px] text-[#0A1B39] hover:bg-[#F5F6F8] transition-colors">
+                  Unverify Profile
+                </button>
+                <button onClick={() => handleActionClick("update_status")} className="w-full text-left px-3 py-2 text-[13px] text-[#0A1B39] hover:bg-[#F5F6F8] transition-colors">
+                  Update Status
                 </button>
               </div>
             )}
@@ -130,7 +148,7 @@ export const DoctorCard = ({ t, doctor, lang = "en" }: DoctorCardProps) => {
           {doctor.rating_average !== undefined && doctor.rating_average !== null && (
             <span className="flex items-center gap-1">
               <span className="text-[#E8A317]">★</span>
-              <span>{doctor.rating_average.toFixed(1)}</span>
+              <span>{Number(doctor.rating_average).toFixed(1)}</span>
             </span>
           )}
           {doctor.total_consultations !== undefined && doctor.total_consultations !== null && (

@@ -20,11 +20,11 @@ import {
 // ---------------------------------------------------------
 
 export async function getDailyTips(params?: BaseContentListParams): Promise<ContentListResponse<DailyTip>> {
-  return apiGet<ContentListResponse<DailyTip>>('/api/health-tips/daily-tips', { params: params as unknown as Record<string, string | number> });
+  return apiGet<ContentListResponse<DailyTip>>('/api/health-tips/daily-tips', { params: { ...params, lang: 'all' } as unknown as Record<string, string | number> });
 }
 
 export async function getActiveDailyTips(): Promise<ContentListResponse<DailyTip>> {
-  return apiGet<ContentListResponse<DailyTip>>('/api/health-tips/daily-tips/active');
+  return apiGet<ContentListResponse<DailyTip>>('/api/health-tips/daily-tips/active', { params: { lang: 'all' } });
 }
 
 export async function getLatestDailyTip(): Promise<ContentSingleResponse<DailyTip>> {
@@ -32,7 +32,7 @@ export async function getLatestDailyTip(): Promise<ContentSingleResponse<DailyTi
 }
 
 export async function getDailyTipById(id: number): Promise<ContentSingleResponse<DailyTip>> {
-  return apiGet<ContentSingleResponse<DailyTip>>(`/api/health-tips/daily-tips/${id}`);
+  return apiGet<ContentSingleResponse<DailyTip>>(`/api/health-tips/daily-tips/${id}`, { params: { lang: 'all' } });
 }
 
 export async function createDailyTip(payload: DailyTipPayload): Promise<ContentSingleResponse<DailyTip>> {
@@ -56,15 +56,15 @@ export async function deleteDailyTip(id: number): Promise<{ success: boolean; me
 // ---------------------------------------------------------
 
 export async function getMedicalArticles(params?: BaseContentListParams): Promise<ContentListResponse<MedicalArticle>> {
-  return apiGet<ContentListResponse<MedicalArticle>>('/api/health-tips/medical-articles', { params: params as unknown as Record<string, string | number> });
+  return apiGet<ContentListResponse<MedicalArticle>>('/api/health-tips/medical-articles', { params: { ...params, lang: 'all' } as unknown as Record<string, string | number> });
 }
 
 export async function getActiveMedicalArticles(): Promise<ContentListResponse<MedicalArticle>> {
-  return apiGet<ContentListResponse<MedicalArticle>>('/api/health-tips/medical-articles/active');
+  return apiGet<ContentListResponse<MedicalArticle>>('/api/health-tips/medical-articles/active', { params: { lang: 'all' } });
 }
 
 export async function getMedicalArticleById(id: number): Promise<ContentSingleResponse<MedicalArticle>> {
-  return apiGet<ContentSingleResponse<MedicalArticle>>(`/api/health-tips/medical-articles/${id}`);
+  return apiGet<ContentSingleResponse<MedicalArticle>>(`/api/health-tips/medical-articles/${id}`, { params: { lang: 'all' } });
 }
 
 export async function createMedicalArticle(payload: MedicalArticlePayload): Promise<ContentSingleResponse<MedicalArticle>> {
@@ -88,15 +88,15 @@ export async function deleteMedicalArticle(id: number): Promise<{ success: boole
 // ---------------------------------------------------------
 
 export async function getSkinDiseases(params?: BaseContentListParams): Promise<ContentListResponse<SkinDisease>> {
-  return apiGet<ContentListResponse<SkinDisease>>('/api/health-tips/skin-diseases', { params: params as unknown as Record<string, string | number> });
+  return apiGet<ContentListResponse<SkinDisease>>('/api/health-tips/skin-diseases', { params: { ...params, lang: 'all' } as unknown as Record<string, string | number> });
 }
 
 export async function getActiveSkinDiseases(): Promise<ContentListResponse<SkinDisease>> {
-  return apiGet<ContentListResponse<SkinDisease>>('/api/health-tips/skin-diseases/active');
+  return apiGet<ContentListResponse<SkinDisease>>('/api/health-tips/skin-diseases/active', { params: { lang: 'all' } });
 }
 
 export async function getSkinDiseaseById(id: number): Promise<ContentSingleResponse<SkinDisease>> {
-  return apiGet<ContentSingleResponse<SkinDisease>>(`/api/health-tips/skin-diseases/${id}`);
+  return apiGet<ContentSingleResponse<SkinDisease>>(`/api/health-tips/skin-diseases/${id}`, { params: { lang: 'all' } });
 }
 
 export async function createSkinDisease(payload: SkinDiseasePayload): Promise<ContentSingleResponse<SkinDisease>> {
@@ -124,15 +124,15 @@ export async function getHealthContentStatistics(): Promise<AdvancedStatisticsRe
 }
 
 export async function searchHealthContent(params: AdvancedSearchParams): Promise<any> {
-  return apiGet<any>('/api/health-tips/advanced/search', { params: params as unknown as Record<string, string | number> });
+  return apiGet<any>('/api/health-tips/advanced/search', { params: { ...params, lang: 'all' } as unknown as Record<string, string | number> });
 }
 
 export async function getRecentHealthContent(limit?: number): Promise<any> {
-  return apiGet<any>('/api/health-tips/advanced/recent', { params: limit ? { limit } : undefined });
+  return apiGet<any>('/api/health-tips/advanced/recent', { params: limit ? { limit, lang: 'all' } : { lang: 'all' } });
 }
 
 export async function getHealthContentByAdmin(adminId: number, params?: BaseContentListParams): Promise<any> {
-  return apiGet<any>(`/api/health-tips/advanced/by-admin/${adminId}`, { params: params as unknown as Record<string, string | number> });
+  return apiGet<any>(`/api/health-tips/advanced/by-admin/${adminId}`, { params: { ...params, lang: 'all' } as unknown as Record<string, string | number> });
 }
 
 export async function bulkUpdateContentStatus(payload: BulkStatusPayload): Promise<{ success: boolean; message?: string }> {

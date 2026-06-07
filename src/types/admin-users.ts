@@ -2,34 +2,64 @@ export type UserStatus = "active" | "inactive" | "suspended" | "pending_verifica
 
 export interface AdminUserProfile {
   full_name?: string;
-  date_of_birth?: string;
-  gender?: string;
-  nationality?: string;
-  profile_picture_url?: string;
+  date_of_birth?: string | null;
+  gender?: string | null;
+  nationality?: string | null;
+  profile_picture_url?: string | null;
   language_preference?: string;
-  emergency_contact_name?: string;
-  emergency_contact_relationship?: string;
-  timezone?: string;
+  emergency_contact?: {
+    name?: string | null;
+    phone?: string | null;
+    relationship?: string | null;
+  };
+  preferences?: {
+    timezone?: string;
+    language?: string;
+  };
 }
 
-export interface AdminUserBase {
+export interface AdminUserListItem {
   id: number;
   uuid?: string;
   email?: string;
   phone?: string;
+  role?: string;
   status?: UserStatus;
   is_active?: boolean;
-  email_verified_at?: string | null;
-  phone_verified_at?: string | null;
-  is_id_verified?: boolean;
+  email_verified?: boolean;
+  phone_verified?: boolean;
+  id_verified?: boolean;
   last_login_at?: string | null;
   last_activity_at?: string | null;
   created_at?: string;
-  updated_at?: string;
+  profile?: AdminUserProfile | null;
 }
 
-export interface AdminUserListItem extends AdminUserBase {
-  profile?: AdminUserProfile | null;
+export interface AdminUserDetail {
+  id: number;
+  uuid?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+  status?: UserStatus;
+  is_active?: boolean;
+  verification?: {
+    email_verified?: boolean;
+    email_verified_at?: string | null;
+    phone_verified?: boolean;
+    phone_verified_at?: string | null;
+    id_verified?: boolean;
+  };
+  activity?: {
+    last_login_at?: string | null;
+    last_activity_at?: string | null;
+    login_attempts?: number;
+    locked_until?: string | null;
+  };
+  timestamps?: {
+    created_at?: string;
+    updated_at?: string;
+  };
 }
 
 export interface PaginationMeta {
@@ -49,7 +79,7 @@ export interface AdminUserListData {
 export type AdminUserListResponse = AdminUserListData;
 
 export interface AdminUserDetailsData {
-  user: AdminUserBase;
+  user: AdminUserDetail;
   profile?: AdminUserProfile | null;
   has_patient_profile?: boolean;
 }
@@ -95,7 +125,11 @@ export interface AdminUserLog {
   created_at?: string;
 }
 
-export type AdminUserLogsResponse = AdminUserLog[];
+export interface AdminUserLogsResponse {
+  user_id: number;
+  logs: AdminUserLog[];
+  pagination: PaginationMeta;
+}
 
 export interface UpdateUserStatusPayload {
   status: UserStatus;
@@ -133,14 +167,31 @@ export interface AdminUserLogsQueryParams {
 }
 
 export interface UserStatsData {
-  total_users?: number;
-  active_users?: number;
-  inactive_users?: number;
-  suspended_users?: number;
-  pending_verification_users?: number;
-  email_verified_users?: number;
-  phone_verified_users?: number;
-  id_verified_users?: number;
+  total_users: number;
+  by_status: {
+    active: number;
+    inactive: number;
+    suspended: number;
+    pending_verification: number;
+  };
+  verification: {
+    email_verified: number;
+    phone_verified: number;
+    id_verified: number;
+    fully_verified: number;
+  };
+  activity: {
+    last_7_days: number;
+    last_30_days: number;
+    never_logged_in: number;
+  };
+  registrations: {
+    today: number;
+    this_week: number;
+    this_month: number;
+  };
+  with_patient_profile: number;
+  generated_at: string;
 }
 
 export type UserStatsResponse = UserStatsData;

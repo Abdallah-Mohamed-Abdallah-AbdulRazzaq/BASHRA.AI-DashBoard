@@ -319,7 +319,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setSessionsError(null);
     try {
       const res = await getAdminSessions();
-      setSessions(res.sessions ?? []);
+      setSessions(Array.isArray(res.sessions) ? res.sessions : []);
     } catch (err) {
       setSessionsError(isForbiddenError(err) ? 'Permission denied.' : getApiErrorMessage(err));
     } finally {
@@ -332,7 +332,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setAdminLogsError(null);
     try {
       const res = await getAdminLogs({ limit: 50, offset: 0 });
-      setAdminLogs(res.logs ?? []);
+      setAdminLogs(Array.isArray(res.logs) ? res.logs : []);
     } catch (err) {
       setAdminLogsError(isForbiddenError(err) ? 'Permission denied.' : getApiErrorMessage(err));
     } finally {
@@ -345,7 +345,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setFailedLoginsError(null);
     try {
       const res = await getFailedLogins({ limit: 50, offset: 0 });
-      setFailedLogins(res.attempts ?? []);
+      setFailedLogins(Array.isArray(res.attempts) ? res.attempts : []);
     } catch (err) {
       setFailedLoginsError(isForbiddenError(err) ? 'Permission denied.' : getApiErrorMessage(err));
     } finally {
@@ -358,7 +358,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setBlockedError(null);
     try {
       const res = await getBlockedEntities({ limit: 50, offset: 0 });
-      setBlockedEntities(res.blockedEntities ?? []);
+      setBlockedEntities(Array.isArray(res.blockedEntities) ? res.blockedEntities : []);
     } catch (err) {
       setBlockedError(isForbiddenError(err) ? 'Permission denied.' : getApiErrorMessage(err));
     } finally {
@@ -371,7 +371,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setAlertsError(null);
     try {
       const res = await getSecurityAlerts();
-      setAlerts(res.alerts ?? []);
+      setAlerts(Array.isArray(res.alerts) ? res.alerts : []);
     } catch (err) {
       setAlertsError(getApiErrorMessage(err));
     } finally {
@@ -384,7 +384,7 @@ export default function SecuritySettingsView({ t }: SecuritySettingsViewProps) {
     setSecurityLogsError(null);
     try {
       const res = await getSecurityLogs({ limit: 50 });
-      setSecurityLogs(res.logs ?? []);
+      setSecurityLogs(Array.isArray(res.logs) ? res.logs : []);
     } catch (err) {
       setSecurityLogsError(getApiErrorMessage(err));
     } finally {

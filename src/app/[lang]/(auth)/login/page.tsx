@@ -97,7 +97,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginAdmin({ email: formData.email, password: formData.password });
-      router.replace(`/${lang}/dashboard/admin`);
+      router.replace(`/${lang}`);
     } catch (err) {
       setError(getApiErrorMessage(err, lang as 'ar' | 'en'));
     } finally {

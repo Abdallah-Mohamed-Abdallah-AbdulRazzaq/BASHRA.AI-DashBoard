@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/icons/icons";
 import { useSidebarStore } from "@/hooks/use-sidebar-store";
 import { HamburgerIcon, SearchIconMobile } from "@/components/ui/icons/sidebar-icons";
-import { NotificationsPopover } from "./notifications-popover";
+// import { NotificationsPopover } from "./notifications-popover";
 import { ProfilePopover } from "./profile-popover";
 import { useDictionary } from "@/components/shared/dictionary-provider";
 import { getCurrentAdminFromStorage } from "@/lib/admin-auth";
@@ -77,17 +77,17 @@ export function Header() {
               <GlobeIcon />
             </button>
 
-            <button className="flex h-8 w-8 items-center justify-center rounded-[20px] border border-border bg-background text-foreground shadow-sm hover:bg-brand-light transition-colors">
+            {/* <button className="flex h-8 w-8 items-center justify-center rounded-[20px] border border-border bg-background text-foreground shadow-sm hover:bg-brand-light transition-colors">
               <SettingsIcon />
-            </button>
+            </button> */}
 
-            <div className="relative">
+            {/* <div className="relative">
               <button onClick={() => setIsNotificationsOpen(!isNotificationsOpen)} className="relative flex h-8 w-8 items-center justify-center rounded-[20px] border border-border bg-background text-foreground shadow-sm hover:bg-brand-light transition-colors">
                  <NotificationIcon />
                 <span className="absolute right-[10px] top-[8px] h-[6px] w-[6px] rounded-full bg-destructive" />
               </button>
               <NotificationsPopover isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} />
-            </div>
+            </div> */}
           </div>
 
           <div className="relative">

@@ -22,6 +22,8 @@ interface DoctorListProps {
   onPageChange?: (page: number) => void;
   onRetry?: () => void;
   lang?: string;
+  selectedDoctorIds?: number[];
+  onSelectionChange?: (ids: number[]) => void;
 }
 
 function statusColor(status: string | undefined): string {
@@ -48,13 +50,20 @@ export const DoctorList = ({
   totalPages = 0,
   onPageChange,
   onRetry,
-  lang = "en"
-}: DoctorListProps) => {
+  lang = "en",
+  selectedDoctorIds = [],
+  onSelectionChange,
+  onActionClick
+}: DoctorListProps & { onActionClick?: (actionType: string, doctorId: number) => void }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const actionItems = [
-    { label: t.clinic.edit, onClick: () => {} },
-    { label: t.clinic.delete, onClick: () => {}, className: "text-[#EF1E1E] hover:text-[#EF1E1E] hover:bg-[#FEF2F2]" },
+  const getActionItems = (docId: number) => [
+    { label: "Approve", onClick: () => onActionClick?.("approve", docId) },
+    { label: "Reject", onClick: () => onActionClick?.("reject", docId), className: "text-[#EF1E1E] hover:text-[#EF1E1E] hover:bg-[#FEF2F2]" },
+    { label: "Suspend", onClick: () => onActionClick?.("suspend", docId), className: "text-[#E8A317] hover:text-[#E8A317] hover:bg-[#FFF5E6]" },
+    { label: "Verify Profile", onClick: () => onActionClick?.("verify", docId), className: "text-[#27AE60] hover:text-[#27AE60] hover:bg-[#E8F8F0]" },
+    { label: "Unverify Profile", onClick: () => onActionClick?.("unverify", docId) },
+    { label: "Update Status", onClick: () => onActionClick?.("update_status", docId) },
   ];
 
   const rowsOptions = [
@@ -105,7 +114,21 @@ export const DoctorList = ({
         <table className="w-full min-w-[1000px]">
           <thead>
             <tr className="border-b border-[#E7E8EB] bg-white">
-              <th className="text-start py-4 px-6 text-[13px] font-bold text-[#0A1B39] w-[25%]">{t.clinic.name_designation}</th>
+              <th className="py-4 px-6 w-[5%]">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 rounded border-[#D0D5DD] text-[#2E37A4] focus:ring-[#2E37A4]"
+                  checked={doctors.length > 0 && selectedDoctorIds.length === doctors.length}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      onSelectionChange?.(doctors.map(d => d.id as number));
+                    } else {
+                      onSelectionChange?.([]);
+                    }
+                  }}
+                />
+              </th>
+              <th className="text-start py-4 px-2 text-[13px] font-bold text-[#0A1B39] w-[20%]">{t.clinic.name_designation}</th>
               <th className="text-start py-4 px-4 text-[13px] font-bold text-[#0A1B39] w-[15%]">{t.clinic.department}</th>
               <th className="text-start py-4 px-4 text-[13px] font-bold text-[#0A1B39] w-[15%]">{t.clinic.phone}</th>
               <th className="text-start py-4 px-4 text-[13px] font-bold text-[#0A1B39] w-[20%]">{t.clinic.email}</th>
@@ -120,6 +143,20 @@ export const DoctorList = ({
               return (
                 <tr key={doc.id} className="border-b border-[#E7E8EB] last:border-0 hover:bg-[#F9FAFB] transition-colors group">
                   <td className="py-3 px-6">
+                    <input 
+                      type="checkbox" 
+                      className="w-4 h-4 rounded border-[#D0D5DD] text-[#2E37A4] focus:ring-[#2E37A4]"
+                      checked={selectedDoctorIds.includes(doc.id as number)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          onSelectionChange?.([...selectedDoctorIds, doc.id as number]);
+                        } else {
+                          onSelectionChange?.(selectedDoctorIds.filter(id => id !== doc.id));
+                        }
+                      }}
+                    />
+                  </td>
+                  <td className="py-3 px-2">
                     <div className="flex items-center gap-3">
                       <a
                         href={`/${lang}/clinic/doctors/details?id=${doc.id}`}
@@ -135,7 +172,7 @@ export const DoctorList = ({
                       </a>
                       <div className="flex flex-col min-w-0">
                         <a
-                          href={`/${lang}/clinic/doctors/details?id=${doc.id}`}
+                          href={`/${lang}/clinic/doctors/details?id=${doc.id!}`}
                           className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors truncate"
                         >
                           {displayName}
@@ -172,8 +209,8 @@ export const DoctorList = ({
                             <MoreVerticalIcon />
                           </button>
                         }
-                        items={actionItems}
-                        width="w-32"
+                        items={getActionItems(doc.id!)}
+                        width="w-40"
                         align="end"
                       />
                     </div>

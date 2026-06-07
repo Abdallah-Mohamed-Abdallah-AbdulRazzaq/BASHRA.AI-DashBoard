@@ -6,6 +6,7 @@ import { useDictionary } from "@/components/shared/dictionary-provider";
 import { cn } from "@/lib/utils";
 import { AIUsageOverviewTab } from "@/components/admin-ai-usage/ai-usage-overview-tab";
 import { AIPoliciesTab } from "@/components/admin-ai-usage/ai-policies-tab";
+import { AIUserUsageTab } from "@/components/admin-ai-usage/ai-user-usage-tab";
 
 export default function AIUsagePage() {
   const params = useParams();
@@ -17,6 +18,7 @@ export default function AIUsagePage() {
 
   const tabs = [
     { id: "overview", label: t.ai_usage?.usage_overview || "Usage Overview" },
+    { id: "user", label: t.ai_usage?.user_usage_detail || "User Usage" },
     { id: "policies", label: t.ai_usage?.ai_policies || "AI Policies" },
   ];
 
@@ -46,6 +48,7 @@ export default function AIUsagePage() {
 
       <div className="w-full mt-2">
         {activeTab === "overview" && <AIUsageOverviewTab t={t} lang={lang} />}
+        {activeTab === "user" && <AIUserUsageTab t={t} lang={lang} />}
         {activeTab === "policies" && <AIPoliciesTab t={t} lang={lang} />}
       </div>
     </div>

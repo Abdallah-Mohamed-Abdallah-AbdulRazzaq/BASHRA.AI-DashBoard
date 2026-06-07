@@ -191,7 +191,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
       <div className="flex flex-col lg:flex-row gap-6 w-full">
         
         {/* --- Left Settings Sidebar --- */}
-        <div className="w-full lg:w-[260px] shrink-0 bg-white border border-[#E7E8EB] rounded-[12px] p-4 flex flex-col gap-2 h-fit">
+        {/* <div className="w-full lg:w-[260px] shrink-0 bg-white border border-[#E7E8EB] rounded-[12px] p-4 flex flex-col gap-2 h-fit">
           <div className="flex flex-col">
             <button 
               onClick={() => setActiveMenu(activeMenu === "account" ? "" : "account")}
@@ -238,7 +238,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
               <ChevronDown size={16} className="text-[#9DA4B0]" />
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* --- Right Content Area (Forms) --- */}
         <div className="flex-1 bg-white border border-[#E7E8EB] rounded-[12px] overflow-hidden flex flex-col h-fit">

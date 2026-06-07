@@ -32,7 +32,7 @@ export default function DistrictsView({ t, lang = "en" }: DistrictsViewProps) {
       setLoading(true);
       setError(null);
       const [countriesRes, citiesRes, regionsRes, districtsRes] = await Promise.all([
-        AdminLocationsService.getLocations({ level_type: "country", lang: lang as "en" | "ar" }),
+        AdminLocationsService.getCountries(lang as "ar" | "en"),
         AdminLocationsService.getLocations({ level_type: "city", lang: lang as "en" | "ar" }),
         AdminLocationsService.getLocations({ level_type: "region", lang: lang as "en" | "ar" }),
         AdminLocationsService.getLocations({ level_type: "district", lang: lang as "en" | "ar" })

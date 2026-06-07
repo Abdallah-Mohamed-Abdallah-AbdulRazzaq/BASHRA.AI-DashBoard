@@ -16,6 +16,7 @@ interface DoctorGridProps {
   onPageChange?: (page: number) => void;
   onRetry?: () => void;
   lang?: string;
+  onActionClick?: (actionType: string, doctorId: number) => void;
 }
 
 export const DoctorGrid = ({
@@ -27,7 +28,8 @@ export const DoctorGrid = ({
   totalPages = 0,
   onPageChange,
   onRetry,
-  lang = "en"
+  lang = "en",
+  onActionClick
 }: DoctorGridProps) => {
 
   if (loading) {
@@ -70,7 +72,7 @@ export const DoctorGrid = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
         {doctors.map((doctor) => (
-          <DoctorCard key={doctor.id} t={t} doctor={doctor} lang={lang} />
+          <DoctorCard key={doctor.id} t={t} doctor={doctor} lang={lang} onActionClick={onActionClick} />
         ))}
       </div>
 
