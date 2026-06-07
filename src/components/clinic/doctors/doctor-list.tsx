@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
 import { 
@@ -163,7 +164,7 @@ export const DoctorList = ({
                         className="shrink-0 w-10 h-10 rounded-full overflow-hidden border-[2px] border-[#F5F6F8] flex items-center justify-center bg-[#F5F6F8]"
                       >
                         {doc.profile_picture_url ? (
-                          <img src={doc.profile_picture_url} alt={displayName} className="w-full h-full object-cover" />
+                          <Image src={doc.profile_picture_url} alt={displayName} width={40} height={40} className="w-full h-full object-cover" unoptimized />
                         ) : (
                           <span className="text-[12px] font-bold text-[#2E37A4]">
                             {displayName.split(/\s+/).map(s => s.charAt(0)).join("").slice(0, 2).toUpperCase()}

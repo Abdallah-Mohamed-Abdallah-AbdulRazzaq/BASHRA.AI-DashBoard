@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { User, Settings, Bell, CreditCard, LogOut } from "lucide-react";
 import { useDictionary } from "@/components/shared/dictionary-provider";
@@ -62,7 +63,7 @@ export function ProfilePopover({ isOpen, onClose }: ProfilePopoverProps) {
         <div className="flex items-center gap-3 px-4 py-4 border-b border-border bg-secondary/10">
           <div className="relative h-10 w-10 flex-shrink-0">
             {profileImage ? (
-              <img src={profileImage} alt={displayName} className="h-full w-full rounded-full object-cover border border-border" />
+              <Image src={profileImage} alt={displayName} width={40} height={40} className="h-full w-full rounded-full object-cover border border-border" unoptimized />
             ) : (
               <div className="h-full w-full rounded-full bg-brand-primary flex items-center justify-center text-white text-sm font-bold border border-border">
                 {displayName.charAt(0).toUpperCase()}

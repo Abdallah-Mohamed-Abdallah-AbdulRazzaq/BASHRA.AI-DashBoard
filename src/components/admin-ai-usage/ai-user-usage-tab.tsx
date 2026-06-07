@@ -4,6 +4,7 @@ import React, { useState, useCallback } from "react";
 import { getAdminUserAIUsage } from "@/lib/admin-ai-usage";
 import { getApiErrorMessage } from "@/lib/error-utils";
 import type { AIUsageUserResponse } from "@/types/admin-ai-usage";
+import Image from "next/image";
 import { Search, User, CheckCircle, XCircle } from "lucide-react";
 
 interface AIUserUsageTabProps {
@@ -124,10 +125,13 @@ export function AIUserUsageTab({ t, lang }: AIUserUsageTabProps) {
           {/* User profile card */}
           <div className="bg-white border border-[#E7E8EB] rounded-[12px] p-6 flex items-center gap-4">
             {data.user.profile_picture_url ? (
-              <img
+              <Image
                 src={data.user.profile_picture_url}
-                alt={data.user.full_name}
+                alt={data.user.full_name || 'User'}
+                width={56}
+                height={56}
                 className="w-14 h-14 rounded-full object-cover border border-[#E7E8EB]"
+                unoptimized
               />
             ) : (
               <div className="w-14 h-14 rounded-full bg-[#EEF0FF] flex items-center justify-center">

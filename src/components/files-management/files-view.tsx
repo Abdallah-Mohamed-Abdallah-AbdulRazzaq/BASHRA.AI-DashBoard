@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { AdminFilesService } from "@/lib/admin-files";
 import { FileEntity } from "@/types/admin-files";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
@@ -211,7 +212,7 @@ export default function FilesView({ t, lang }: FilesViewProps) {
                           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
                             {file.file_url ? (
                               file.mime_type?.startsWith('image/') ? (
-                                <img src={file.file_url} alt={file.original_name} className="w-full h-full object-cover rounded-lg" />
+                                <Image src={file.file_url} alt={file.original_name || 'File'} width={40} height={40} className="w-full h-full object-cover rounded-lg" unoptimized />
                               ) : (
                                 <span className="text-xs font-bold text-gray-500">{file.mime_type?.split('/')[1]?.toUpperCase() || 'FILE'}</span>
                               )

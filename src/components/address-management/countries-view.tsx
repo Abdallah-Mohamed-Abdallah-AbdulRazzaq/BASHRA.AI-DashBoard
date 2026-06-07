@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { AddressHeader } from "./address-header";
 import { AddressModal } from "./address-modal";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
@@ -130,9 +131,9 @@ export default function CountriesView({ t, lang = "en" }: CountriesViewProps) {
                     <tr key={country.id} className="border-b border-[#E7E8EB] last:border-0 hover:bg-[#F9FAFB] transition-colors group">
                       
                       <td className="py-3 px-6">
-                        <div className="w-10 h-7 rounded-[4px] border border-[#E7E8EB] overflow-hidden bg-[#F5F6F8] flex items-center justify-center shadow-sm">
+                        <div className="w-10 h-7 relative rounded-[4px] border border-[#E7E8EB] overflow-hidden bg-[#F5F6F8] flex items-center justify-center shadow-sm">
                           {country.image ? (
-                            <img src={country.image} alt={country.name_en} className="w-full h-full object-cover" />
+                            <Image src={country.image} alt={country.name_en || 'Country'} fill className="object-cover" unoptimized />
                           ) : (
                             <span className="text-[10px] text-[#9DA4B0]">N/A</span>
                           )}

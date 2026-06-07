@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import {
   AiIcon, CalendarIcon, CommandIcon, NotificationIcon,
@@ -93,7 +94,7 @@ export function Header() {
           <div className="relative">
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="relative flex h-8 w-8 items-center justify-center rounded-full ring-2 ring-transparent hover:ring-border transition-all cursor-pointer">
               {admin?.profile_picture_url ? (
-                <img src={admin.profile_picture_url} alt="User" className="h-full w-full rounded-full object-cover"/>
+                <Image src={admin.profile_picture_url} alt="User" width={32} height={32} className="h-full w-full rounded-full object-cover" unoptimized />
               ) : (
                 <div className="h-full w-full rounded-full bg-brand-primary flex items-center justify-center text-white text-sm font-bold">
                   {(admin?.full_name || admin?.email || 'U').charAt(0).toUpperCase()}

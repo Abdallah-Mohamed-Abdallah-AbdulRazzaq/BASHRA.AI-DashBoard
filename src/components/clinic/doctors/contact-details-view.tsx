@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { getAllDoctorContactDetails } from "@/lib/admin-doctors";
 import { getApiErrorMessage } from "@/lib/error-utils";
@@ -40,7 +40,7 @@ export default function ContactDetailsView({ t }: ContactDetailsViewProps) {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -57,11 +57,11 @@ export default function ContactDetailsView({ t }: ContactDetailsViewProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, limit, debouncedSearch]);
 
   useEffect(() => {
     fetchContacts();
-  }, [page, limit, debouncedSearch]);
+  }, [fetchContacts]);
 
   const handleExportCSV = () => {
     if (!contacts.length) return;

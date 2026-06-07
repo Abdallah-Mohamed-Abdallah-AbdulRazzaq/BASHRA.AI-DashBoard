@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { MoreVerticalIcon, CalendarSettingIcon } from "@/components/ui/icons/dashboard-icons";
 import type { DoctorListItem } from "@/types/admin-doctors";
@@ -57,12 +58,14 @@ export const DoctorCard = ({ t, doctor, lang = "en", onActionClick }: DoctorCard
     <div className="flex p-4 bg-white border border-[#E7E8EB] rounded-[12px] hover:shadow-md transition-all duration-300 relative group">
       
       {/* Image Side */}
-      <div className="w-[100px] h-[100px] sm:w-[110px] sm:h-[110px] bg-[#F5F6F8] rounded-[8px] overflow-hidden flex-shrink-0 mr-4 rtl:mr-0 rtl:ml-4 flex items-center justify-center">
+      <div className="w-[100px] h-[100px] sm:w-[110px] sm:h-[110px] relative bg-[#F5F6F8] rounded-[8px] overflow-hidden flex-shrink-0 mr-4 rtl:mr-0 rtl:ml-4 flex items-center justify-center">
         {avatarUrl ? (
-          <img 
+          <Image 
             src={avatarUrl} 
             alt={displayName} 
-            className="w-full h-full object-cover object-top"
+            fill
+            className="object-cover object-top"
+            unoptimized
           />
         ) : (
           <span className="text-[24px] font-bold text-[#2E37A4]">{getInitials(displayName)}</span>

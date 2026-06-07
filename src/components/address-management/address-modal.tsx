@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "@/lib/cropUtils";
+import Image from "next/image";
 import { LinkIcon, UploadCloudIcon, CropIcon, TrashIcon, CheckCircleSolidIcon, XCircleSolidIcon } from "@/components/ui/icons/dashboard-icons";
 import { AdminLocationsService } from "@/lib/admin-locations";
 import { getApiErrorMessage } from "@/lib/error-utils";
@@ -282,7 +283,7 @@ export const AddressModal = ({ isOpen, onClose, t, lang = "en", levelType, editD
                   ) : (
                     <div className="w-full rounded-[12px] border border-[#E7E8EB] overflow-hidden bg-white">
                       <div className="w-full h-[200px] bg-[#F5F6F8] relative flex items-center justify-center group overflow-hidden">
-                        <img src={previewImage} alt="Preview" className="max-w-full max-h-full object-contain" />
+                        <Image src={previewImage} alt="Preview" fill className="object-contain" unoptimized />
                         
                         {!loading && uploadedFile && (
                           <div className="absolute inset-0 bg-[#0A1B39]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

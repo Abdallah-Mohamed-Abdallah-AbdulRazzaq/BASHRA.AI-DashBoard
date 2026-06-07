@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import Image from "next/image";
 import { AddressHeader } from "./address-header";
 import { AddressModal } from "./address-modal";
 import { CustomDropdown } from "@/components/ui/custom-dropdown";
@@ -198,8 +199,8 @@ export default function DistrictsView({ t, lang = "en" }: DistrictsViewProps) {
                   filteredDistricts.map((district) => (
                     <tr key={district.id} className="border-b border-[#E7E8EB] last:border-0 hover:bg-[#F9FAFB] transition-colors group">
                       <td className="py-3 px-6">
-                        <div className="w-10 h-10 rounded-[8px] border border-[#E7E8EB] overflow-hidden bg-[#F5F6F8] flex items-center justify-center shadow-sm">
-                          {district.image ? <img src={district.image} alt={district.name_en} className="w-full h-full object-cover" /> : <span className="text-[10px] text-[#9DA4B0]">N/A</span>}
+                        <div className="w-10 h-10 relative rounded-[8px] border border-[#E7E8EB] overflow-hidden bg-[#F5F6F8] flex items-center justify-center shadow-sm">
+                          {district.image ? <Image src={district.image} alt={district.name_en || 'District'} fill className="object-cover" unoptimized /> : <span className="text-[10px] text-[#9DA4B0]">N/A</span>}
                         </div>
                       </td>
                       <td className="py-3 px-6"><span className="text-[14px] font-bold text-[#0A1B39] group-hover:text-[#2E37A4] transition-colors">{district.name_en}</span></td>

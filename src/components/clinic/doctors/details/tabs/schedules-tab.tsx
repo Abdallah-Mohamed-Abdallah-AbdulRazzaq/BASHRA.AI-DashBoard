@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { 
   VideoCameraOutlineIcon, ClockOutlineIcon, WalletOutlineIcon,
@@ -96,8 +97,8 @@ export const SchedulesTab = ({ t, doctor }: SchedulesTabProps) => {
               {/* Left Side: Clinic Info & Image */}
               <div className="xl:w-[320px] bg-[#FAFBFC] border-b xl:border-b-0 xl:border-r border-[#E7E8EB] p-5 flex flex-col gap-4 shrink-0">
                 {/* Clinic Image */}
-                <div className="w-full h-[160px] rounded-[8px] overflow-hidden bg-gray-200 border border-[#E7E8EB]">
-                  <img src={clinic.image} alt={clinic.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="w-full h-[160px] relative rounded-[8px] overflow-hidden bg-gray-200 border border-[#E7E8EB]">
+                  <Image src={clinic.image} alt={clinic.name || 'Clinic'} fill className="object-cover group-hover:scale-105 transition-transform duration-500" unoptimized />
                 </div>
                 
                 {/* Clinic Details */}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { 
   UserCircle2, Globe, Building2, Smartphone, 
@@ -261,7 +262,7 @@ export default function ProfileSettingsView({ t }: ProfileSettingsViewProps) {
                     className="relative w-[80px] h-[80px] rounded-full border border-[#E7E8EB] bg-[#F5F6F8] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity overflow-hidden group shadow-sm"
                   >
                     {formData.profile_picture_url ? (
-                      <img src={formData.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+                      <Image src={formData.profile_picture_url} alt="Profile" width={80} height={80} className="w-full h-full object-cover" unoptimized />
                     ) : (
                       <UserCircle2 size={36} className="text-[#9DA4B0]" />
                     )}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons/dashboard-icons";
 import { getAdminAppointments, getAppointmentStatistics } from "@/lib/admin-appointments";
@@ -139,7 +140,7 @@ export const PopularDoctors = ({ t }: DashboardWidgetsProps) => {
             <div key={doc.id} className="flex items-center p-3 bg-white border border-[#E7E8EB] rounded-[10px] hover:shadow-md transition-all">
               <div className="relative mr-3 rtl:ml-3 rtl:mr-0">
                 {doc.profile_picture_url ? (
-                  <img src={doc.profile_picture_url} alt={doc.full_name} className="w-10 h-10 rounded-full object-cover border border-[#E7E8EB]" />
+                  <Image src={doc.profile_picture_url} alt={doc.full_name || "Doctor"} width={40} height={40} className="w-10 h-10 rounded-full object-cover border border-[#E7E8EB]" unoptimized />
                 ) : (
                   <div className="w-10 h-10 rounded-full bg-[#F5F6F8] flex items-center justify-center text-[#6C7688] text-[14px] font-bold border border-[#E7E8EB]">
                     {doc.full_name?.charAt(0) || "D"}
@@ -209,7 +210,7 @@ export const PendingDoctorsWidget = ({ t }: DashboardWidgetsProps) => {
             <div key={doc.id} className="flex items-center justify-between p-3 border border-[#E7E8EB] rounded-lg">
               <div className="flex items-center gap-3">
                  {doc.profile_picture_url ? (
-                  <img src={doc.profile_picture_url} alt={doc.full_name} className="w-10 h-10 rounded-full object-cover border border-[#E7E8EB]" />
+                  <Image src={doc.profile_picture_url} alt={doc.full_name || "Doctor"} width={40} height={40} className="w-10 h-10 rounded-full object-cover border border-[#E7E8EB]" unoptimized />
                 ) : (
                   <div className="w-10 h-10 rounded-full bg-[#F5F6F8] flex items-center justify-center text-[#6C7688] text-[14px] font-bold border border-[#E7E8EB]">
                     {doc.full_name?.charAt(0) || "D"}
@@ -440,7 +441,7 @@ export const AllAppointmentsTable = ({ t }: DashboardWidgetsProps) => {
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-3">
                       {item.doctor?.profile_picture_url ? (
-                        <img src={item.doctor.profile_picture_url} alt="doc" className="w-9 h-9 rounded-full object-cover border border-[#E7E8EB]" />
+                        <Image src={item.doctor.profile_picture_url} alt="doc" width={36} height={36} className="w-9 h-9 rounded-full object-cover border border-[#E7E8EB]" unoptimized />
                       ) : (
                         <div className="w-9 h-9 rounded-full bg-[#F5F6F8] flex items-center justify-center text-[12px] font-bold border border-[#E7E8EB]">D</div>
                       )}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { DoctorDetailData } from "@/types/admin-doctors";
@@ -45,7 +46,7 @@ export const DoctorDetailsHeader = ({ t, doctor }: DoctorHeaderProps) => {
         <div className="flex items-center gap-5">
           <div className="w-[100px] h-[100px] rounded-[12px] overflow-hidden bg-[#F5F6F8] shrink-0">
             {avatar ? (
-              <img src={avatar} alt={name} className="w-full h-full object-cover" />
+              <Image src={avatar} alt={name} width={100} height={100} className="w-full h-full object-cover" unoptimized />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[#9DA4B0] text-[32px] font-bold">
                 {name.charAt(0).toUpperCase()}

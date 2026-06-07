@@ -86,14 +86,13 @@ export function Sidebar() {
               "flex items-center gap-[10px] whitespace-nowrap transition-all duration-300",
               isCollapsed ? "justify-center w-full group-hover:justify-start group-hover:w-auto" : ""
             )}>
-              <img
+              <Image
                 src="/images/BashraAI_logo-32.svg"
                 alt="Logo"
-                // className="block w-[30px] h-[27px] object-contain"
-                // className="block w-[30px] h-[30px] object-cover rounded-full border-2 border-border overflow-hidden"
+                width={30}
+                height={30}
                 className="block w-[30px] h-[30px] object-cover rounded-full border border-border overflow-hidden"
-                // className="block w-[30px] h-[30px] object-contain rounded-full border-2 border-border overflow-hidden"
-
+                unoptimized
               />
               <span className={cn(
                 "font-inter text-[18px] font-bold text-foreground transition-opacity duration-200",
