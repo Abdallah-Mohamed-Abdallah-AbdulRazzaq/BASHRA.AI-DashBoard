@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { ChevronDown, ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/hooks/use-sidebar-store";
@@ -14,8 +13,7 @@ import {
   SwitchVerticalIcon, 
   TreeActiveIcon, 
   TreeInactiveIcon,
-  CloseIcon,
-  MoonIcon 
+  CloseIcon 
 } from "@/components/ui/icons/sidebar-icons";
 
 import Image from "next/image";
@@ -30,7 +28,6 @@ export function Sidebar() {
   
   const { isOpen, onClose, isCollapsed, toggleCollapse } = useSidebarStore();
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
   const { dictionary, lang, isRTL } = useDictionary(); 
 
   const sidebarData = getSidebarData(dictionary, lang);
@@ -53,10 +50,6 @@ export function Sidebar() {
     e.stopPropagation();
     if (isCollapsed) return;
     setOpenSubGroups((prev) => ({ ...prev, [title]: !prev[title] }));
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const currentWidth = isCollapsed ? "w-[88px]" : "w-[276px]";

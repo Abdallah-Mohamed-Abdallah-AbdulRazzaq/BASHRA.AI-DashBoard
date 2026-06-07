@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LogoIcon } from "@/components/ui/icons/sidebar-icons";
 import { 
@@ -13,6 +14,7 @@ import {
 import { useDictionary } from "@/components/shared/dictionary-provider";
 import { loginAdmin } from "@/lib/admin-auth";
 import { getApiErrorMessage } from "@/lib/error-utils";
+
 
 interface FormInputProps {
   id: string;
@@ -108,7 +110,14 @@ export default function LoginPage() {
       
       {/* Logo */}
       <div className="flex h-[28px] items-center gap-[6px]">
-        <LogoIcon />
+        {/* <LogoIcon /> */}
+          <Image 
+            src="/images/logo.png"
+            alt="BashraAI Logo"
+            width={40}
+            height={28}
+            className="rounded-[10px]"
+          />
         <span className="font-inter text-[20px] font-bold text-[#0A1B39]">BashraAI</span>
       </div>
 
