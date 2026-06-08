@@ -737,15 +737,63 @@
                       ]
                     },
                     {
+                      "name": "ai-usage",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "blocked-entities",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
                       "name": "clinic",
                       "type": "folder",
                       "icon": "📁",
                       "children": [
                         {
+                          "name": "appointments",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
                           "name": "doctors",
                           "type": "folder",
                           "icon": "📁",
                           "children": [
+                            {
+                              "name": "contact-details",
+                              "type": "folder",
+                              "icon": "📁",
+                              "children": [
+                                {
+                                  "name": "page.tsx",
+                                  "type": "file",
+                                  "icon": "⚛️"
+                                }
+                              ]
+                            },
                             {
                               "name": "details",
                               "type": "folder",
@@ -766,22 +814,58 @@
                           ]
                         },
                         {
+                          "name": "medical-records",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "medications",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
                           "name": "patients",
                           "type": "folder",
                           "icon": "📁",
                           "children": [
                             {
-                              "name": "details",
-                              "type": "folder",
-                              "icon": "📁",
-                              "children": [
-                                {
-                                  "name": "page.tsx",
-                                  "type": "file",
-                                  "icon": "⚛️"
-                                }
-                              ]
-                            },
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "prescriptions",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ratings",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
                             {
                               "name": "page.tsx",
                               "type": "file",
@@ -792,21 +876,14 @@
                       ]
                     },
                     {
-                      "name": "dashboard",
+                      "name": "files-management",
                       "type": "folder",
                       "icon": "📁",
                       "children": [
                         {
-                          "name": "admin",
-                          "type": "folder",
-                          "icon": "📁",
-                          "children": [
-                            {
-                              "name": "page.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            }
-                          ]
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
                         }
                       ]
                     },
@@ -858,6 +935,18 @@
                       "type": "folder",
                       "icon": "📁",
                       "children": [
+                        {
+                          "name": "doctor-subscriptions",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
                         {
                           "name": "features",
                           "type": "folder",
@@ -912,6 +1001,42 @@
                               "icon": "⚛️"
                             }
                           ]
+                        },
+                        {
+                          "name": "security",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "users",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "details",
+                          "type": "folder",
+                          "icon": "📁",
+                          "children": [
+                            {
+                              "name": "page.tsx",
+                              "type": "file",
+                              "icon": "⚛️"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "page.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
                         }
                       ]
                     },
@@ -1023,6 +1148,28 @@
               ]
             },
             {
+              "name": "admin-ai-usage",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "ai-policies-tab.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "ai-usage-overview-tab.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "ai-user-usage-tab.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
               "name": "auth",
               "type": "folder",
               "icon": "📁",
@@ -1035,10 +1182,64 @@
               ]
             },
             {
+              "name": "blocked-entities",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "block-details-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "block-entity-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "blocked-entities-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "update-block-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
               "name": "clinic",
               "type": "folder",
               "icon": "📁",
               "children": [
+                {
+                  "name": "appointments",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "appointment-details-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "appointments-list.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "appointments-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "cancel-appointment-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
                 {
                   "name": "doctors",
                   "type": "folder",
@@ -1094,6 +1295,58 @@
                       ]
                     },
                     {
+                      "name": "modals",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "bulk-doctor-status-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "comprehensive-verification-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "delete-profile-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "edit-doctor-personal-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "edit-doctor-professional-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "review-document-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "review-profile-modal.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "contact-details-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "doctor-action-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
                       "name": "doctor-card.tsx",
                       "type": "file",
                       "icon": "⚛️"
@@ -1131,74 +1384,64 @@
                   ]
                 },
                 {
-                  "name": "patients",
+                  "name": "medical-records",
                   "type": "folder",
                   "icon": "📁",
                   "children": [
                     {
-                      "name": "details",
-                      "type": "folder",
-                      "icon": "📁",
-                      "children": [
-                        {
-                          "name": "tabs",
-                          "type": "folder",
-                          "icon": "📁",
-                          "children": [
-                            {
-                              "name": "ai-diagnosis-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "appointments-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "general-info-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "medical-records-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "patient-profiles-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "patient-tabs.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "prescriptions-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            },
-                            {
-                              "name": "transactions-tab.tsx",
-                              "type": "file",
-                              "icon": "⚛️"
-                            }
-                          ]
-                        },
-                        {
-                          "name": "patient-details-header.tsx",
-                          "type": "file",
-                          "icon": "⚛️"
-                        },
-                        {
-                          "name": "patient-details-view.tsx",
-                          "type": "file",
-                          "icon": "⚛️"
-                        }
-                      ]
+                      "name": "medical-record-details-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
                     },
+                    {
+                      "name": "medical-records-list.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "medical-records-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "medications",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "medication-delete-dialog.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "medication-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "medications-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "medications-table.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "medications-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "patients",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
                     {
                       "name": "patient-card.tsx",
                       "type": "file",
@@ -1210,17 +1453,7 @@
                       "icon": "⚛️"
                     },
                     {
-                      "name": "patient-grid.tsx",
-                      "type": "file",
-                      "icon": "⚛️"
-                    },
-                    {
                       "name": "patient-header.tsx",
-                      "type": "file",
-                      "icon": "⚛️"
-                    },
-                    {
-                      "name": "patient-list.tsx",
                       "type": "file",
                       "icon": "⚛️"
                     },
@@ -1236,6 +1469,65 @@
                     },
                     {
                       "name": "patients-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "prescriptions",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "prescription-details-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "prescriptions-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "prescriptions-table.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "prescriptions-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "ratings",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "rating-details-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "rating-moderation-modal.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "ratings-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "ratings-table.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "ratings-view.tsx",
                       "type": "file",
                       "icon": "⚛️"
                     }
@@ -1265,6 +1557,18 @@
                 },
                 {
                   "name": "stats-card.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
+            },
+            {
+              "name": "files-management",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "files-view.tsx",
                   "type": "file",
                   "icon": "⚛️"
                 }
@@ -1371,6 +1675,16 @@
               "icon": "📁",
               "children": [
                 {
+                  "name": "doctor-subscription-modal.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "doctor-subscriptions-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
                   "name": "feature-modal.tsx",
                   "type": "file",
                   "icon": "⚛️"
@@ -1409,6 +1723,11 @@
               "children": [
                 {
                   "name": "profile-settings-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "security-settings-view.tsx",
                   "type": "file",
                   "icon": "⚛️"
                 }
@@ -1469,6 +1788,97 @@
                   "icon": "⚛️"
                 }
               ]
+            },
+            {
+              "name": "users",
+              "type": "folder",
+              "icon": "📁",
+              "children": [
+                {
+                  "name": "details",
+                  "type": "folder",
+                  "icon": "📁",
+                  "children": [
+                    {
+                      "name": "tabs",
+                      "type": "folder",
+                      "icon": "📁",
+                      "children": [
+                        {
+                          "name": "ai-diagnosis-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "appointments-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "general-info-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "medical-records-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "patient-profiles-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "patient-tabs.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "prescriptions-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        },
+                        {
+                          "name": "transactions-tab.tsx",
+                          "type": "file",
+                          "icon": "⚛️"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "patient-details-header.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    },
+                    {
+                      "name": "patient-details-view.tsx",
+                      "type": "file",
+                      "icon": "⚛️"
+                    }
+                  ]
+                },
+                {
+                  "name": "user-avatar.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "user-grid.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "user-list.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                },
+                {
+                  "name": "users-view.tsx",
+                  "type": "file",
+                  "icon": "⚛️"
+                }
+              ]
             }
           ]
         },
@@ -1519,12 +1929,87 @@
           "icon": "📁",
           "children": [
             {
+              "name": "admin-ai-usage.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-appointments.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "admin-auth.ts",
               "type": "file",
               "icon": "📘"
             },
             {
+              "name": "admin-blocked-entities.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-content.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "admin-dashboard.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-doctor-subscriptions.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-doctors.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-files.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-locations.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-medical-records.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-medications.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-packages.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-prescriptions.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-profile.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-ratings.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-security.ts",
               "type": "file",
               "icon": "📘"
             },
@@ -1566,7 +2051,77 @@
           "icon": "📁",
           "children": [
             {
+              "name": "admin-ai-usage.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-appointments.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-blocked-entities.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-content.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
               "name": "admin-dashboard.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-doctor-subscriptions.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-doctors.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-files.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-locations.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-medical-records.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-medications.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-packages.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-prescriptions.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-ratings.ts",
+              "type": "file",
+              "icon": "📘"
+            },
+            {
+              "name": "admin-security.ts",
               "type": "file",
               "icon": "📘"
             },
@@ -1661,7 +2216,7 @@
     }
   ],
   "metadata": {
-    "generated": "2026-06-06T12:56:31.241Z",
+    "generated": "2026-06-08T00:12:19.562Z",
     "generator": "FileTree Pro Extension",
     "version": "0.2.0",
     "showIcons": true,
